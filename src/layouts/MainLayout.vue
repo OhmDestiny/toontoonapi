@@ -1,7 +1,10 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <div class="fullscreen">
-      <div style="max-width: 1600px; margin: auto" class="shadow-2 bg-blue row">
+      <div
+        style="max-width: 1600px; margin: auto background-color:#f6f7fb"
+        class="shadow-2 row"
+      >
         <div class="leftdrawer shadow-3">
           <!-- user avatar -->
           <div class="row q-pa-md justify-center">
@@ -17,6 +20,14 @@
               <img src="../../public/image/book.svg" alt="" />
             </div>
             <div class="labelDiv">หนังสือ</div>
+          </div>
+          <!-- menu category -->
+          <div class="row bookLink q-ma-md q-pa-sm">
+            <div class="leftSpace"></div>
+            <div class="iconDiv">
+              <img src="../../public/image/book.svg" alt="" />
+            </div>
+            <div class="labelDiv">หมวดหมู่</div>
           </div>
         </div>
 
