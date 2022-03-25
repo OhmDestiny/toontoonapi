@@ -26,7 +26,26 @@ import axios from "axios";
 export default {
   data() {
     return {
-      userData: [],
+      userData: [
+        {
+          userid: 1,
+          username: "test",
+          book: 1,
+          category: 0,
+          rank: 1,
+          ads: 1,
+          admin: 1,
+        },
+        {
+          userid: 2,
+          username: "test1",
+          book: 1,
+          category: 0,
+          rank: 0,
+          ads: 1,
+          admin: 1,
+        },
+      ],
     };
   },
   methods: {
