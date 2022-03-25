@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <div class="fullscreen">
-      <div style="max-width: 1600px; margin: auto" class="shadow-2">
+      <div style="max-width: 1600px; margin: auto" class="shadow-2 bg-blue row">
         <div class="leftdrawer shadow-3">
           <div>123</div>
         </div>
