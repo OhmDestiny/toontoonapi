@@ -5,7 +5,6 @@ body {
   font-family: "prompt";
   font-size: 18px;
 }
-
 .shortActiveBtn {
   width: 120px;
   height: 45px;
@@ -13,4 +12,26 @@ body {
   background-color: #2d6be4;
   color: white;
   font-size: 16px;
+}
+.brx {
+  border: 1px solid red;
+}
+.bry {
+  border: 1px solid green;
+}
+// ----------  font ----------
+.font22 {
+  font-size: 22px;
+}
+.font18 {
+  font-size: 18px;
+}
+.font14 {
+  font-size: 14px;
+}
+.fontU {
+  text-decoration: underline;
+}
+.fontB {
+  font-weight: bold;
 }
