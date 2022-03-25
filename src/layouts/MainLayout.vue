@@ -21,13 +21,49 @@
             </div>
             <div class="labelDiv">หนังสือ</div>
           </div>
+          <hr style="width: 270px" />
           <!-- menu category -->
           <div class="row bookLink q-ma-md q-pa-sm">
             <div class="leftSpace"></div>
             <div class="iconDiv">
-              <img src="../../public/image/book.svg" alt="" />
+              <img src="../../public/image/category.svg" alt="" />
             </div>
             <div class="labelDiv">หมวดหมู่</div>
+          </div>
+          <hr style="width: 270px" />
+          <!-- menu ranking -->
+          <div class="row bookLink q-ma-md q-pa-sm">
+            <div class="leftSpace"></div>
+            <div class="iconDiv">
+              <img src="../../public/image/rank.svg" alt="" />
+            </div>
+            <div class="labelDiv">อันดับ</div>
+          </div>
+          <hr style="width: 270px" />
+          <!-- menu advertise -->
+          <div class="row bookLink q-ma-md q-pa-sm">
+            <div class="leftSpace"></div>
+            <div class="iconDiv">
+              <img src="../../public/image/ads.svg" alt="" />
+            </div>
+            <div class="labelDiv">โฆษณา</div>
+          </div>
+          <hr style="width: 270px" />
+          <!-- menu administrator -->
+          <div class="row bookLink q-ma-md q-pa-sm">
+            <div class="leftSpace"></div>
+            <div class="iconDiv">
+              <img src="../../public/image/user.svg" alt="" />
+            </div>
+            <div class="labelDiv">ผู้ดูแลระบบ</div>
+          </div>
+          <!-- menu sign out -->
+          <div class="row bookLink q-ma-md q-pa-sm">
+            <div class="leftSpace"></div>
+            <div class="iconDiv q-pt-sm">
+              <img src="../../public/image/signout.svg" alt="" />
+            </div>
+            <div class="labelDiv">ออกจากระบบ</div>
           </div>
         </div>
 
