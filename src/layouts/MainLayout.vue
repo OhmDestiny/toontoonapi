@@ -60,17 +60,19 @@
               <img src="../../public/image/user.svg" alt="" />
             </div>
             <div class="middleSpace"></div>
-            <div class="labelDiv">ผู้ดูแลระบบ</div>
+            <div class="labelDiv">ผู้ใช้งาน</div>
           </div>
           <!-- menu sign out -->
-          <hr style="width: 270px" />
-          <div class="row bookLink q-ma-md q-pa-sm absolute-bottom">
-            <div class="leftSpace"></div>
-            <div class="iconDiv q-pt-sm">
-              <img src="../../public/image/signout.svg" alt="" />
+          <div class="setBottom">
+            <hr style="width: 270px" />
+            <div class="row bookLink q-ma-md q-pa-sm">
+              <div class="leftSpace"></div>
+              <div class="iconDiv q-pt-sm">
+                <img src="../../public/image/signout.svg" alt="" />
+              </div>
+              <div class="middleSpace"></div>
+              <div class="labelDiv">ออกจากระบบ</div>
             </div>
-            <div class="middleSpace"></div>
-            <div class="labelDiv">ออกจากระบบ</div>
           </div>
         </div>
         <div class="col">
@@ -94,6 +96,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.setBottom {
+  position: absolute;
+  bottom: 0px;
+  padding-left: 10px;
+}
 .leftdrawer {
   width: 300px;
   height: 100vh;
