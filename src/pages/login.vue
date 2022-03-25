@@ -58,6 +58,7 @@
                   ตกลง
                 </div>
               </q-card-actions>
+              <div style="height: 20px"></div>
             </q-card>
           </q-dialog>
         </div>
@@ -91,6 +92,7 @@ export default {
       let res = await axios.post(url, JSON.stringify(this.input));
       if (res.data == "not pass") {
         this.showDialog();
+        return;
       } else {
         this.$q.localStorage.set("key", res.data);
         this.$router.push("/welcome");
