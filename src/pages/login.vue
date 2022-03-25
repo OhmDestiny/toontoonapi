@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -41,8 +42,15 @@ export default {
     };
   },
   methods: {
-    loginBtn() {
-      this.$router.push("book");
+    async loginBtn() {
+      let url = this.serverpath + "login.php";
+      let res = await axios.post(url, JSON.stringify(this.input));
+      if (res.data == "not pass") {
+        console.log("not pass");
+      } else {
+        this.$q.localStorage.set("key", res.data);
+        this.$router.push("/welcome");
+      }
     },
   },
 };
