@@ -1,8 +1,14 @@
 <template>
   <div class="mainPadding" style="width: 100%; margin: auto">
     <div>
-      <div align="right" style="width: 100%">
-        <q-btn label="เพิ่มผู้ใช้งาน" @click="addNewUser()" />
+      <div align="right" style="100%">
+        <div
+          @click="addNewUser()"
+          class="adNewUser row items-center justify-evenly"
+        >
+          <q-icon size="21px" name="fa-solid fa-plus" />
+          <div class="font16">เพิ่มผู้ใช้งาน</div>
+        </div>
       </div>
       <!-- table header -->
       <div class="q-pt-md row">
@@ -17,6 +23,17 @@
         <div class="colTable">แก้ไข</div>
       </div>
       <hr />
+      <div class="q-pt-md row" v-for="(item, index) in userData" :key="index">
+        <div class="colTable">{{ index + 1 }}</div>
+        <div class="colTable">{{ item.username }}</div>
+        <div class="colTable">{{ item.book }}</div>
+        <div class="colTable">{{ item.category }}</div>
+        <div class="colTable">{{ item.rank }}</div>
+        <div class="colTable">{{ item.ads }}</div>
+        <div class="colTable">{{ item.admin }}</div>
+        <div class="colTable">ลบ</div>
+        <div class="colTable">แก้ไข</div>
+      </div>
     </div>
   </div>
 </template>
@@ -53,6 +70,9 @@ export default {
       let url = this.serverpath + "userlist.php";
       let res = await axios.get(url);
     },
+    addNewUser() {
+      console.log("hello");
+    },
   },
   mounted() {
     this.loadUser();
@@ -64,5 +84,13 @@ export default {
 .colTable {
   width: 11.1%;
   text-align: center;
+}
+.adNewUser {
+  width: 135px;
+  height: 40px;
+  line-height: 40px;
+  border: 1px solid #474747;
+  color: #474747;
+  cursor: pointer;
 }
 </style>
