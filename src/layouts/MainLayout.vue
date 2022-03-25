@@ -43,6 +43,7 @@ export default {
   width: 300px;
   height: 100vh;
   background-color: white;
+  cursor: pointer;
 }
 .fontUserName {
   font-size: 22px;
