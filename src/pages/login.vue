@@ -51,7 +51,7 @@
               </q-card-section>
               <q-card-actions class="font18" align="center">
                 <div
-                  @click="loginAlertDia = false"
+                  @click="closeDialog()"
                   class="submitInLoginDiaBtn text-white"
                   align="center"
                 >
@@ -63,6 +63,7 @@
         </div>
       </div>
     </div>
+    <div class="fullscreen backdrop" v-if="showBackDrop"></div>
   </div>
 </template>
 
@@ -77,22 +78,31 @@ export default {
       },
       loginAlertDia: false,
       isPwd: true,
+      showBackDrop: false,
     };
   },
   methods: {
     async loginBtn() {
       if (this.input.username.length == 0 || this.input.password.length == 0) {
-        this.loginAlertDia = true;
+        this.showDialog();
         return;
       }
       let url = this.serverpath + "login.php";
       let res = await axios.post(url, JSON.stringify(this.input));
       if (res.data == "not pass") {
-        console.log("not pass");
+        this.showDialog();
       } else {
         this.$q.localStorage.set("key", res.data);
         this.$router.push("/welcome");
       }
+    },
+    showDialog() {
+      this.loginAlertDia = true;
+      this.showBackDrop = true;
+    },
+    closeDialog() {
+      this.loginAlertDia = false;
+      this.showBackDrop = false;
     },
   },
 };
@@ -116,5 +126,8 @@ export default {
   border-radius: 5px;
   background-color: #2d6be4;
   cursor: pointer;
+}
+.backdrop {
+  background-color: rgba($color: #535353, $alpha: 0.8);
 }
 </style>
