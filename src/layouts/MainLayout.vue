@@ -66,10 +66,11 @@
             <div class="labelDiv">ออกจากระบบ</div>
           </div>
         </div>
-
-        <q-page-container>
-          <router-view />
-        </q-page-container>
+        <div class="col">
+          <q-page-container>
+            <router-view />
+          </q-page-container>
+        </div>
       </div>
     </div>
   </q-layout>
