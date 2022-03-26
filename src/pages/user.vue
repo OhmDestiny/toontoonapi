@@ -159,6 +159,9 @@ export default {
     closeAddNewUserDia() {
       this.addNewUserDia = false;
       this.showBackDrop = false;
+      this.addNewUserDiaInput.username = "";
+      this.addNewUserDiaInput.password = "";
+      this.userAccess = [];
     },
     addNewUserBtn() {
       this.showAddNewUserDia();
