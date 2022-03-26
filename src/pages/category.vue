@@ -20,12 +20,25 @@
     <!-- category box -->
     <div class="categoryBG">
       <div class="row headBarcategory items-center">
-        <div class="col-2 q-pl-xl font18">ลำดับ</div>
+        <div class="col-2 font18" align="center">ลำดับ</div>
         <div class="col-6 q-pl-xl font18">หมวดหมู่</div>
         <div class="col-2 font18" align="center">ลบออก</div>
         <div class="col font18" align="center">แก้ไข</div>
       </div>
       <hr />
+      <!-- category column -->
+      <div v-for="(item, index) in category" :key="index">
+        <div class="row headBarcategory items-center">
+          <div class="col-2 font18" align="center">{{ index + 1 }}</div>
+          <div class="col-6 q-pl-xl font18">{{ item.name }}</div>
+          <div class="iconDiv col-2" align="center" @click="clickDel">
+            <img src="../../public/image/trash_symbol.svg" alt="" />
+          </div>
+          <div class="iconDiv col" align="center" @click="clickEdit">
+            <img src="../../public/image/edit_symbol.svg" alt="" />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -38,6 +51,8 @@ export default {
         { id: 1, name: "โรแมนติก" },
         { id: 2, name: "แฟนตาซี" },
         { id: 5, name: "แอคชั่น" },
+        { id: 3, name: "พลังวิเศษ" },
+        { id: 7, name: "กีฬา" },
       ],
     };
   },
@@ -46,6 +61,8 @@ export default {
       this.category.sort((a, b) => (a.name > b.name ? 1 : -1));
       console.log(this.category);
     },
+    clickDel() {},
+    clickEdit() {},
   },
   mounted() {
     this.loadData();
@@ -84,5 +101,8 @@ export default {
 }
 .rightSpace {
   width: 5px;
+}
+.iconDiv {
+  cursor: pointer;
 }
 </style>
