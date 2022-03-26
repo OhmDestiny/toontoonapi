@@ -41,11 +41,15 @@
           <div
             class="iconDiv col-2"
             align="center"
-            @click="delFormBtn(item.catid)"
+            @click="delFormBtn(item.catid, item.name)"
           >
             <img src="../../public/image/trash_symbol.svg" alt="" />
           </div>
-          <div class="iconDiv col" align="center" @click="clickEdit">
+          <div
+            class="iconDiv col"
+            align="center"
+            @click="editFormBtn(item.catid, item.name)"
+          >
             <img src="../../public/image/edit_symbol.svg" alt="" />
           </div>
         </div>
@@ -78,24 +82,53 @@
       </q-card>
     </q-dialog>
     <q-dialog v-model="delDialog" persistent>
-      <q-card class="mainDialog" style="height: 200px">
+      <q-card style="height: 180px; width: 500px">
         <div align="center" class="q-pa-sm">ลบหมวดหมู่</div>
         <hr />
-        <div class="q-px-md">คุณต้องการจะลบหมวดหมู่ :</div>
+        <div class="q-px-md">
+          คุณต้องการจะลบหมวดหมู่ <i>{{ deleteItem.name }}</i> ?
+        </div>
         <div class="row justify-center q-pt-md">
           <div class="q-pr-md">
             <q-btn
               class="shortInactiveBtn"
               label="ยกเลิก"
               outline
-              @click="cancelDelBtn()"
+              @click="deleteCancelBtn()"
+            />
+          </div>
+          <div class="q-pl-md">
+            <q-btn class="shortActiveBtn" label="ลบ" @click="deleteRunBtn()" />
+          </div>
+        </div>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="editDialog" persistent>
+      <q-card class="mainDialog" style="height: 200px">
+        <div align="center" class="q-pa-sm">แก้ไขหมวดหมู่</div>
+        <hr />
+        <div class="row">
+          <div class="col-3 labelTxt" align="center">ชื่อหมวดหมู่</div>
+          <div class="col-8">
+            <q-input v-model="editItem.name" outlined dense />
+          </div>
+          <div class="col-1"></div>
+        </div>
+        <div class="row justify-center q-pt-md">
+          <div class="q-pr-md">
+            <q-btn
+              class="shortInactiveBtn"
+              label="ยกเลิก"
+              outline
+              @click="cancelEditBtn()"
             />
           </div>
           <div class="q-pl-md">
             <q-btn
               class="shortActiveBtn"
               label="บันทึก"
-              @click="deleteRunBtn()"
+              @click="saveEditBtn()"
             />
           </div>
         </div>
@@ -113,7 +146,15 @@ export default {
       addNewDialog: false,
       categoryName: "",
       delDialog: false,
-      deleteId: 0,
+      deleteItem: {
+        id: "",
+        name: "",
+      },
+      editDialog: false,
+      editItem: {
+        id: "",
+        name: "",
+      },
     };
   },
   methods: {
@@ -127,6 +168,7 @@ export default {
         this.$router.push("welcome");
       } else if (res.data == "go to login") {
         this.$q.localStorage.clear();
+        this.$router.push("/");
       } else {
         this.category = res.data;
         this.category.sort((a, b) => (a.name > b.name ? 1 : -1));
@@ -139,20 +181,76 @@ export default {
       this.addNewDialog = false;
     },
     async saveBtn() {
-      let url = this.serverpath + "addcategorylist.php";
+      let url = this.serverpath + "addcategory.php";
+      let key = this.$q.localStorage.getItem("key");
       let dataSend = {
         category: this.categoryName,
+        key: key,
       };
       let res = await axios.post(url, JSON.stringify(dataSend));
-      this.loadData();
-      this.addNewDialog = false;
+      if (res.data == "go to welcome") {
+        this.$router.push("welcome");
+      } else if (res.data == "go to login") {
+        this.$q.localStorage.clear();
+        this.$router.push("/");
+      } else {
+        this.loadData();
+        this.addNewDialog = false;
+      }
     },
-    delFormBtn(id) {
-      this.deleteId = id;
+    delFormBtn(id, name) {
+      this.deleteItem.id = id;
+      this.deleteItem.name = name;
       this.delDialog = true;
     },
-    clickDel() {},
-    clickEdit() {},
+    async deleteRunBtn() {
+      let key = this.$q.localStorage.getItem("key");
+      let dataSend = {
+        id: this.deleteItem.id,
+        key: key,
+      };
+      let url = this.serverpath + "delcategory.php";
+      let res = await axios.post(url, JSON.stringify(dataSend));
+      if (res.data == "go to welcome") {
+        this.$router.push("welcome");
+      } else if (res.data == "go to login") {
+        this.$q.localStorage.clear();
+        this.$router.push("/");
+      } else {
+        this.loadData();
+        this.delDialog = false;
+      }
+    },
+    deleteCancelBtn() {
+      this.delDialog = false;
+    },
+    editFormBtn(id, name) {
+      this.editItem.name = name;
+      this.editItem.id = id;
+      this.editDialog = true;
+    },
+    cancelEditBtn() {
+      this.editDialog = false;
+    },
+    async saveEditBtn() {
+      let key = this.$q.localStorage.getItem("key");
+      let dataSend = {
+        id: this.editItem.id,
+        name: this.editItem.name,
+        key: key,
+      };
+      let url = this.serverpath + "editcategory.php";
+      let res = await axios.post(url, JSON.stringify(dataSend));
+      if (res.data == "go to welcome") {
+        this.$router.push("welcome");
+      } else if (res.data == "go to login") {
+        this.$q.localStorage.clear();
+        this.$router.push("/");
+      } else {
+        this.loadData();
+        this.editDialog = false;
+      }
+    },
   },
   mounted() {
     this.loadData();
