@@ -13,7 +13,6 @@
           <div class="font16">เพิ่มผู้ใช้งาน</div>
         </div>
         <!-- ad new user dialog -->
-
         <q-dialog v-model="addNewUserDia" persistent>
           <q-card style="width: 700px; max-width: 80vw">
             <q-card-section>
@@ -30,7 +29,7 @@
                   class="col"
                   style="width: 430px"
                   outlined
-                  v-model="addNewUserDiaInput.username"
+                  v-model="input.username"
                   dense
                 />
               </div>
@@ -41,7 +40,7 @@
                   class="col"
                   style="width: 430px"
                   outlined
-                  v-model="addNewUserDiaInput.password"
+                  v-model="input.password"
                   dense
                 />
               </div>
@@ -119,19 +118,8 @@
         <div class="colTable">ลบ</div>
         <div class="colTable">แก้ไข</div>
       </div>
+      <div class="fullscreen backdrop" v-if="showBackDrop"></div>
     </div>
-    <q-dialog v-model="addNewDialog" persistent>
-      <q-card class="mainDialog">
-        <div align="center" class="q-pa-sm">เพิ่มผู้ใช้งาน</div>
-        <hr />
-        <div class="q-pa-md">
-          <div class="row">
-            <div class="col-2">ชื่อผู้ใช้งาน</div>
-            <div class="col-10"><q-input v-model="input.username" /></div>
-          </div>
-        </div>
-      </q-card>
-    </q-dialog>
   </div>
 </template>
 
@@ -143,11 +131,20 @@ export default {
   data() {
     return {
       userData: [],
-      addNewDialog: true,
       input: {
         username: "",
         password: "",
       },
+      addNewUserDia: false,
+      showBackDrop: false,
+      userAccess: [],
+      userAccessCheckList: [
+        { label: "หนังสือ", value: "book", color: "blue" },
+        { label: "หมวดหมู่", value: "category", color: "blue" },
+        { label: "อันดับ", value: "rank", color: "blue" },
+        { label: "โฆกษณา", value: "ads", color: "blue" },
+        { label: "ผู้ดูแลระบบ", value: "admin", color: "blue" },
+      ],
     };
   },
   methods: {
@@ -165,15 +162,17 @@ export default {
         this.userData = res.data;
       }
     },
-    addNewUser() {
-      this.addNewDialog = true;
-    },
+
     closeAddNewUserDia() {
       this.addNewUserDia = false;
       this.showBackDrop = false;
-      this.addNewUserDiaInput.username = "";
-      this.addNewUserDiaInput.password = "";
+      this.input.username = "";
+      this.input.password = "";
       this.userAccess = [];
+    },
+    showAddNewUserDia() {
+      this.addNewUserDia = true;
+      this.showBackDrop = true;
     },
     addNewUserBtn() {
       this.showAddNewUserDia();
@@ -205,5 +204,25 @@ export default {
 .stripMain {
   vertical-align: middle;
   line-height: 40px;
+}
+.submitAdNewUserDiaBtn {
+  width: 120px;
+  height: 40px;
+  line-height: 40px;
+  color: white;
+  background-color: #2d6be4;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.cancelAdNewUserDiaBtn {
+  width: 120px;
+  height: 40px;
+  line-height: 40px;
+  border: 1px solid #2d6be4;
+  color: #2d6be4;
+  cursor: pointer;
+}
+.backdrop {
+  background-color: rgba($color: #535353, $alpha: 0.8);
 }
 </style>
