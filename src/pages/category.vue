@@ -38,7 +38,11 @@
           <div class="col-1 font18" align="center">{{ index + 1 }}</div>
           <div class="col-5 q-pl-xl font18">{{ item.name }}</div>
           <div class="col-2" align="center">{{ item.online }}</div>
-          <div class="iconDiv col-2" align="center" @click="clickDel">
+          <div
+            class="iconDiv col-2"
+            align="center"
+            @click="delFormBtn(item.catid)"
+          >
             <img src="../../public/image/trash_symbol.svg" alt="" />
           </div>
           <div class="iconDiv col" align="center" @click="clickEdit">
@@ -73,6 +77,30 @@
         </div>
       </q-card>
     </q-dialog>
+    <q-dialog v-model="delDialog" persistent>
+      <q-card class="mainDialog" style="height: 200px">
+        <div align="center" class="q-pa-sm">ลบหมวดหมู่</div>
+        <hr />
+        <div class="q-px-md">คุณต้องการจะลบหมวดหมู่ :</div>
+        <div class="row justify-center q-pt-md">
+          <div class="q-pr-md">
+            <q-btn
+              class="shortInactiveBtn"
+              label="ยกเลิก"
+              outline
+              @click="cancelDelBtn()"
+            />
+          </div>
+          <div class="q-pl-md">
+            <q-btn
+              class="shortActiveBtn"
+              label="บันทึก"
+              @click="deleteRunBtn()"
+            />
+          </div>
+        </div>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -84,6 +112,8 @@ export default {
       category: [],
       addNewDialog: false,
       categoryName: "",
+      delDialog: false,
+      deleteId: 0,
     };
   },
   methods: {
@@ -116,6 +146,10 @@ export default {
       let res = await axios.post(url, JSON.stringify(dataSend));
       this.loadData();
       this.addNewDialog = false;
+    },
+    delFormBtn(id) {
+      this.deleteId = id;
+      this.delDialog = true;
     },
     clickDel() {},
     clickEdit() {},
