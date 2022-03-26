@@ -34,4 +34,24 @@ Vue.mixin({
       serverpath: "http://localhost/toontoonapi/",
     };
   },
+  methods: {
+    greenNotify(text) {
+      this.$q.notify({
+        message: text,
+
+        color: "positive",
+        position: "top",
+        icon: "fas fa-check-circle",
+      });
+    },
+    redNotify(text) {
+      this.$q.notify({
+        message: text,
+
+        color: "negative",
+        position: "top",
+        icon: "fas fa-times-circle",
+      });
+    },
+  },
 });

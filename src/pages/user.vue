@@ -75,7 +75,49 @@
                 <div class="submitAdNewUserDiaBtn" align="center">ตกลง</div>
               </div>
             </q-card-actions>
-            <div style="height: 40px"></div>
+            <br />
+          </q-card>
+        </q-dialog>
+
+        <!-- alert delete dialog  -->
+        <q-dialog v-model="delUserDia" persistent>
+          <q-card>
+            <q-card-section>
+              <div class="items-center">
+                <div class="row">
+                  <div class="col"></div>
+                  <img src="../../public/image/alertBinIcon.svg" alt="" />
+                  <div style="width: 15px"></div>
+                  <div class="font18">ลบผู้ใช้งาน</div>
+                  <div class="col"></div>
+                </div>
+              </div>
+
+              <hr style="width: 400px" />
+              <div align="center">
+                <div>คุณต้องการลบผู้ใช้งาน: <span>{{}}</span></div>
+              </div>
+            </q-card-section>
+            <q-card-actions align="center">
+              <div class="row">
+                <div
+                  class="cancelAdNewUserDiaBtn"
+                  @click="closeDelUserDia()"
+                  align="center"
+                >
+                  ยกเลิก
+                </div>
+                <div style="width: 20px"></div>
+                <div
+                  @click="delUserBtn()"
+                  class="submitAdNewUserDiaBtn"
+                  align="center"
+                >
+                  ลบ
+                </div>
+              </div>
+            </q-card-actions>
+            <br />
           </q-card>
         </q-dialog>
       </div>
@@ -115,8 +157,12 @@
         <div class="colTable">
           <check-pic :checkValue="item.admin"></check-pic>
         </div>
-        <div class="colTable">ลบ</div>
-        <div class="colTable">แก้ไข</div>
+        <div @click="showDeluserDia()" class="colTable cursor-pointer">
+          <img width="20px" src="../../public/image/delete.svg" alt="" />
+        </div>
+        <div class="colTable cursor-pointer">
+          <img width="20px" src="../../public/image/edit.svg" alt="" />
+        </div>
       </div>
       <div class="fullscreen backdrop" v-if="showBackDrop"></div>
     </div>
@@ -137,6 +183,7 @@ export default {
       },
       addNewUserDia: false,
       showBackDrop: false,
+      delUserDia: false,
       userAccess: [],
       userAccessCheckList: [
         { label: "หนังสือ", value: "book", color: "blue" },
@@ -149,8 +196,8 @@ export default {
   },
   methods: {
     async loadUser() {
-      let key = this.$q.localStorage.getItem("key");
-      let dataSend = { key: key };
+      let getkey = this.$q.localStorage.getItem("key");
+      let dataSend = { key: getkey };
 
       let url = this.serverpath + "userlist.php";
       let res = await axios.post(url, JSON.stringify(dataSend));
@@ -178,9 +225,23 @@ export default {
       this.showAddNewUserDia();
       // console.log(this.showAddNewUserDia);
     },
+
+    // del user
+    showDeluserDia() {
+      this.delUserDia = true;
+      this.showBackDrop = true;
+    },
+    closeDelUserDia() {
+      this.delUserDia = false;
+      this.showBackDrop = false;
+    },
+    delUserBtn() {
+      this.greenNotify("ลบชื่อผู้ใช้งานสำเร็จ");
+    },
   },
   mounted() {
     this.loadUser();
+    console.log(this.userData);
   },
 };
 </script>
@@ -220,6 +281,15 @@ export default {
   line-height: 40px;
   border: 1px solid #2d6be4;
   color: #2d6be4;
+  cursor: pointer;
+}
+.delUserDiaBtn {
+  width: 120px;
+  height: 40px;
+  line-height: 40px;
+  color: white;
+  background-color: #2d6be4;
+  border-radius: 3px;
   cursor: pointer;
 }
 .backdrop {
