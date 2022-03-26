@@ -29,7 +29,7 @@
           </div>
           <hr style="width: 270px" />
           <!-- menu category -->
-          <div class="row bookLink q-ma-md q-pa-sm">
+          <div class="row bookLink q-ma-md q-pa-sm" @click="menuCategory()">
             <div class="leftSpace"></div>
             <div class="iconDiv">
               <img src="../../public/image/category.svg" alt="" />
@@ -101,6 +101,10 @@ export default {
   methods: {
     menuUser() {
       this.$router.push("user");
+    },
+    menuCategory() {
+      console.log("test");
+      this.$router.push("category");
     },
   },
 };
