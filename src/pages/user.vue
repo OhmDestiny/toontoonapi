@@ -6,12 +6,79 @@
     <div>
       <div align="right" style="100%">
         <div
-          @click="addNewUser()"
+          @click="addNewUserBtn()"
           class="adNewUser row items-center justify-evenly"
         >
           <q-icon size="21px" name="fa-solid fa-plus" />
           <div class="font16">เพิ่มผู้ใช้งาน</div>
         </div>
+        <!-- ad new user dialog -->
+
+        <q-dialog v-model="addNewUserDia" persistent>
+          <q-card style="width: 700px; max-width: 80vw">
+            <q-card-section>
+              <div class="font22" align="center">เพิ่มผู้ใช้งาน</div>
+              <div align="center">
+                <hr style="width: " />
+              </div>
+            </q-card-section>
+            <q-card-section>
+              <div class="row items-center">
+                <div class="font18 col-2" align="center">ชื่อผู้ใช้งาน</div>
+                <div class="col-1"></div>
+                <q-input
+                  class="col"
+                  style="width: 430px"
+                  outlined
+                  v-model="addNewUserDiaInput.username"
+                  dense
+                />
+              </div>
+              <div class="row items-center q-pt-lg">
+                <div class="font18 col-2" align="center">รหัสผ่าน</div>
+                <div class="col-1"></div>
+                <q-input
+                  class="col"
+                  style="width: 430px"
+                  outlined
+                  v-model="addNewUserDiaInput.password"
+                  dense
+                />
+              </div>
+              <div class="row">
+                <div class="col-3"></div>
+                <div class="font14" style="color: #646464">
+                  ต้องมีอักษรอย่างน้อย5ตัว
+                </div>
+              </div>
+              <!-- radio -->
+              <div class="row q-pt-md">
+                <div class="font18 col-2" align="center">การเข้าถึง</div>
+                <div class="" style="width: 45px"></div>
+                <q-option-group
+                  class="font16"
+                  :options="userAccessCheckList"
+                  type="checkbox"
+                  v-model="userAccess"
+                />
+              </div>
+            </q-card-section>
+            <q-card-actions align="center">
+              <div class="row">
+                <div
+                  class="cancelAdNewUserDiaBtn"
+                  @click="closeAddNewUserDia()"
+                  align="center"
+                >
+                  ยกเลิก
+                </div>
+                <div style="width: 20px"></div>
+                <div class="submitAdNewUserDiaBtn" align="center">ตกลง</div>
+              </div>
+            </q-card-actions>
+            <div style="height: 40px"></div>
+          </q-card>
+        </q-dialog>
       </div>
       <!-- table header -->
       <div class="q-pt-md row">
@@ -100,6 +167,17 @@ export default {
     },
     addNewUser() {
       this.addNewDialog = true;
+    },
+    closeAddNewUserDia() {
+      this.addNewUserDia = false;
+      this.showBackDrop = false;
+      this.addNewUserDiaInput.username = "";
+      this.addNewUserDiaInput.password = "";
+      this.userAccess = [];
+    },
+    addNewUserBtn() {
+      this.showAddNewUserDia();
+      // console.log(this.showAddNewUserDia);
     },
   },
   mounted() {
