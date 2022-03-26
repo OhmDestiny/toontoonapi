@@ -95,7 +95,9 @@
 
               <hr style="width: 400px" />
               <div align="center">
-                <div>คุณต้องการลบผู้ใช้งาน: <span>{{}}</span></div>
+                <div>
+                  คุณต้องการลบผู้ใช้งาน: <span>{{ delItem.name }}</span>
+                </div>
               </div>
             </q-card-section>
             <q-card-actions align="center">
@@ -157,7 +159,10 @@
         <div class="colTable">
           <check-pic :checkValue="item.admin"></check-pic>
         </div>
-        <div @click="showDeluserDia()" class="colTable cursor-pointer">
+        <div
+          @click="showDeluserDia(item.userid, item.username)"
+          class="colTable cursor-pointer"
+        >
           <img width="20px" src="../../public/image/delete.svg" alt="" />
         </div>
         <div class="colTable cursor-pointer">
@@ -184,6 +189,10 @@ export default {
       addNewUserDia: false,
       showBackDrop: false,
       delUserDia: false,
+      delItem: {
+        id: "",
+        name: "",
+      },
       userAccess: [],
       userAccessCheckList: [
         { label: "หนังสือ", value: "book", color: "blue" },
@@ -227,7 +236,9 @@ export default {
     },
 
     // del user
-    showDeluserDia() {
+    showDeluserDia(id, name) {
+      this.delItem.id = id;
+      this.delItem.name = name;
       this.delUserDia = true;
       this.showBackDrop = true;
     },
