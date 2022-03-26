@@ -39,7 +39,7 @@
             <div class="iconDiv">
               <img src="../../public/image/rank.svg" alt="" />
             </div>
-            <div class="middleSpace"></div>
+            <div class="FixmiddleSpace"></div>
             <div class="labelDiv">อันดับ</div>
           </div>
           <hr style="width: 270px" />
@@ -49,7 +49,7 @@
             <div class="iconDiv q-pt-sm">
               <img src="../../public/image/ads.svg" alt="" />
             </div>
-            <div class="FixmiddleSpace"></div>
+            <div class="FixmiddleSpace2"></div>
             <div class="labelDiv">โฆษณา</div>
           </div>
           <hr style="width: 270px" />
@@ -59,7 +59,7 @@
             <div class="iconDiv">
               <img src="../../public/image/user.svg" alt="" />
             </div>
-            <div class="middleSpace"></div>
+            <div class="FixmiddleSpace"></div>
             <div class="labelDiv">ผู้ใช้งาน</div>
           </div>
           <!-- menu sign out -->
@@ -125,7 +125,10 @@ export default {
   width: 10px;
 }
 .FixmiddleSpace {
-  width: 17px;
+  width: 15px;
+}
+.FixmiddleSpace2 {
+  width: 20px;
 }
 .leftSpace {
   width: 45px;
