@@ -2,7 +2,12 @@
   <q-layout view="lHh Lpr lFf">
     <div class="fullscreen">
       <div
-        style="max-width: 1600px; margin: auto background-color:#f6f7fb"
+        style="
+          max-width: 1600px;
+          width: 100%;
+          margin: auto;
+          background-color: #f6f7fb;
+        "
         class="shadow-2 row"
       >
         <div class="leftdrawer shadow-3">
@@ -54,7 +59,7 @@
           </div>
           <hr style="width: 270px" />
           <!-- menu administrator -->
-          <div class="row bookLink q-ma-md q-pa-sm">
+          <div class="row bookLink q-ma-md q-pa-sm" @click="menuUser()">
             <div class="leftSpace"></div>
             <div class="iconDiv">
               <img src="../../public/image/user.svg" alt="" />
@@ -92,6 +97,11 @@ export default {
     return {
       leftDrawerOpen: false,
     };
+  },
+  methods: {
+    menuUser() {
+      this.$router.push("user");
+    },
   },
 };
 </script>

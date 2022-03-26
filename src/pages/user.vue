@@ -1,5 +1,8 @@
 <template>
-  <div class="mainPadding" style="width: 100%; margin: auto">
+  <div
+    class="mainPadding"
+    style="width: 100%; max-width: 1600px; margin: auto; height: 100px"
+  >
     <div>
       <div align="right" style="100%">
         <div
@@ -23,55 +26,80 @@
         <div class="colTable">แก้ไข</div>
       </div>
       <hr />
-      <div class="q-pt-md row" v-for="(item, index) in userData" :key="index">
+      <div
+        class="q-pt-md row stripMain"
+        v-for="(item, index) in userData"
+        :key="index"
+        :class="[index % 2 == 1 ? 'stripRow' : '']"
+      >
         <div class="colTable">{{ index + 1 }}</div>
         <div class="colTable">{{ item.username }}</div>
-        <div class="colTable">{{ item.book }}</div>
-        <div class="colTable">{{ item.category }}</div>
-        <div class="colTable">{{ item.rank }}</div>
-        <div class="colTable">{{ item.ads }}</div>
-        <div class="colTable">{{ item.admin }}</div>
+        <div class="colTable">
+          <check-pic :checkValue="item.book"></check-pic>
+        </div>
+        <div class="colTable">
+          <check-pic :checkValue="item.category"></check-pic>
+        </div>
+        <div class="colTable">
+          <check-pic :checkValue="item.rank"></check-pic>
+        </div>
+        <div class="colTable">
+          <check-pic :checkValue="item.ads"></check-pic>
+        </div>
+        <div class="colTable">
+          <check-pic :checkValue="item.admin"></check-pic>
+        </div>
         <div class="colTable">ลบ</div>
         <div class="colTable">แก้ไข</div>
       </div>
     </div>
+    <q-dialog v-model="addNewDialog" persistent>
+      <q-card class="mainDialog">
+        <div align="center" class="q-pa-sm">เพิ่มผู้ใช้งาน</div>
+        <hr />
+        <div class="q-pa-md">
+          <div class="row">
+            <div class="col-2">ชื่อผู้ใช้งาน</div>
+            <div class="col-10"><q-input v-model="input.username" /></div>
+          </div>
+        </div>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import checkPic from "../components/checkinuser";
 export default {
+  components: { checkPic },
   data() {
     return {
-      userData: [
-        {
-          userid: 1,
-          username: "test",
-          book: 1,
-          category: 0,
-          rank: 1,
-          ads: 1,
-          admin: 1,
-        },
-        {
-          userid: 2,
-          username: "test1",
-          book: 1,
-          category: 0,
-          rank: 0,
-          ads: 1,
-          admin: 1,
-        },
-      ],
+      userData: [],
+      addNewDialog: true,
+      input: {
+        username: "",
+        password: "",
+      },
     };
   },
   methods: {
     async loadUser() {
+      let key = this.$q.localStorage.getItem("key");
+      let dataSend = { key: key };
+
       let url = this.serverpath + "userlist.php";
-      let res = await axios.get(url);
+      let res = await axios.post(url, JSON.stringify(dataSend));
+      if (res.data == "go to welcome") {
+        this.$router.push("welcome");
+      } else if (res.data == "go to login") {
+        this.$q.localStorage.clear();
+      } else {
+        this.userData = res.data;
+      }
     },
     addNewUser() {
-      console.log("hello");
+      this.addNewDialog = true;
     },
   },
   mounted() {
@@ -92,5 +120,12 @@ export default {
   border: 1px solid #474747;
   color: #474747;
   cursor: pointer;
+}
+.stripRow {
+  background-color: rgba($color: #7291ff, $alpha: 0.15);
+}
+.stripMain {
+  vertical-align: middle;
+  line-height: 40px;
 }
 </style>
