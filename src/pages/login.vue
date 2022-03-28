@@ -30,7 +30,7 @@
               /> </template
           ></q-input>
         </div>
-        <div class="q-pt-md" align="center">
+        <div class="q-pt-md" align="center" @keyup.enter="loginBtn">
           <q-btn
             class="shortActiveBtn"
             label="เข้าสู่ระบบ"

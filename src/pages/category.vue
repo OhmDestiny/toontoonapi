@@ -37,7 +37,18 @@
         <div class="row headBarcategory items-center">
           <div class="col-1 font18" align="center">{{ index + 1 }}</div>
           <div class="col-5 q-pl-xl font18">{{ item.name }}</div>
-          <div class="col-2" align="center">{{ item.online }}</div>
+          <div
+            class="col-2 onlineBTN"
+            align="center"
+            @click="changeCategoryData(item.catid, item.online)"
+          >
+            <div class="" v-if="item.online == 1">
+              <img src="../../public/image/online_btn.png" alt="" />
+            </div>
+            <div class="" v-else>
+              <img src="../../public/image/offline_btn.png" alt="" />
+            </div>
+          </div>
           <div
             class="iconDiv col-2"
             align="center"
@@ -85,7 +96,7 @@
       <q-card style="height: 180px; width: 500px">
         <div align="center" class="q-pa-sm">ลบหมวดหมู่</div>
         <hr />
-        <div class="q-px-md">
+        <div class="q-px-md" align="center">
           คุณต้องการจะลบหมวดหมู่ <i>{{ deleteItem.name }}</i> ?
         </div>
         <div class="row justify-center q-pt-md">
@@ -139,6 +150,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
   data() {
     return {
@@ -173,6 +185,18 @@ export default {
         this.category = res.data;
         this.category.sort((a, b) => (a.name > b.name ? 1 : -1));
       }
+    },
+    async changeCategoryData(a, b) {
+      let getkey = this.$q.localStorage.getItem("key");
+      let dataSend = {
+        catid: a,
+        online: b,
+        key: getkey,
+      };
+      console.log(dataSend);
+      let url = this.serverpath + "updatecategorydata.php";
+      let res = await axios.get(url, JSON.stringify(dataSend));
+      console.log(res.data);
     },
     addCategoryBtn() {
       this.addNewDialog = true;
@@ -294,7 +318,9 @@ export default {
 .iconDiv {
   cursor: pointer;
 }
-
+.onlineBTN {
+  cursor: pointer;
+}
 .stripRow {
   background-color: rgba($color: #7291ff, $alpha: 0.15);
 }
