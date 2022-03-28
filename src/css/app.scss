@@ -63,3 +63,10 @@ body {
   min-width: 600px;
   height: 500px;
 }
+.smallDialog {
+  min-width: 400px;
+  height: 180px;
+}
+.bgdrop {
+  background-color: rgba($color: #535353, $alpha: 0.8);
+}

@@ -3,12 +3,32 @@ const routes = [
     path: "/main",
     component: () => import("layouts/MainLayout.vue"),
     children: [
-      { path: "/welcome", component: () => import("pages/welcome.vue") },
-      { path: "/book", component: () => import("pages/book.vue") },
-      { path: "/category", component: () => import("pages/category.vue") },
-      { path: "/rank", component: () => import("pages/rank.vue") },
-      { path: "/ads", component: () => import("pages/ads.vue") },
-      { path: "/user", component: () => import("pages/user.vue") },
+      {
+        path: "/welcome",
+        component: () => import("pages/welcome.vue"),
+        name: "welcome",
+      },
+      {
+        path: "/book",
+        component: () => import("pages/book.vue"),
+        name: "book",
+      },
+      {
+        path: "/category",
+        component: () => import("pages/category.vue"),
+        name: "category",
+      },
+      {
+        path: "/rank",
+        component: () => import("pages/rank.vue"),
+        name: "rank",
+      },
+      { path: "/ads", component: () => import("pages/ads.vue"), name: "ads" },
+      {
+        path: "/user",
+        component: () => import("pages/user.vue"),
+        name: "user",
+      },
     ],
   },
   {
