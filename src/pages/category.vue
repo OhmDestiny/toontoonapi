@@ -186,17 +186,19 @@ export default {
         this.category.sort((a, b) => (a.name > b.name ? 1 : -1));
       }
     },
-    async changeCategoryData(a, b) {
-      let getkey = this.$q.localStorage.getItem("key");
-      let dataSend = {
-        catid: a,
-        online: b,
-        key: getkey,
-      };
-      console.log(dataSend);
+    async changeCategoryData(id, data) {
       let url = this.serverpath + "updatecategorydata.php";
-      let res = await axios.get(url, JSON.stringify(dataSend));
-      console.log(res.data);
+      let key = this.$q.localStorage.getItem("key");
+      let dataSend = {
+        catid: id,
+        online: data,
+        key: key,
+      };
+      let res = await axios.post(url, JSON.stringify(dataSend));
+      if (res.data == "online") {
+        this.$router.go();
+      } else res.data == "offlline";
+      this.$router.go();
     },
     addCategoryBtn() {
       this.addNewDialog = true;
