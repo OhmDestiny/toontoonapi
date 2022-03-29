@@ -13,14 +13,19 @@
       <!-- input -->
       <div class="inputSection">
         <div>
-          <q-input v-model="input.username" outlined label="ชื่อผู้ใช้งาน" />
+          <q-input
+            v-model.trim="input.username"
+            outlined
+            label="ชื่อผู้ใช้งาน"
+          />
         </div>
         <div class="q-pt-md">
           <q-input
-            v-model="input.password"
+            v-model.trim="input.password"
             outlined
             label="รหัสผ่าน"
             :type="isPwd ? 'password' : 'text'"
+            @keyup.enter="loginBtn()"
           >
             <template v-slot:append>
               <q-icon
@@ -30,7 +35,7 @@
               /> </template
           ></q-input>
         </div>
-        <div class="q-pt-md" align="center" @keyup.enter="loginBtn">
+        <div class="q-pt-md" align="center">
           <q-btn
             class="shortActiveBtn"
             label="เข้าสู่ระบบ"

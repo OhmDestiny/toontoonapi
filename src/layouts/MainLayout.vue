@@ -12,7 +12,7 @@
       >
         <div class="leftdrawer shadow-3">
           <!-- user avatar -->
-          <div class="row q-pa-md justify-center">
+          <div class="row q-pa-md justify-center" @click="profielBtn()">
             <div>
               <img src="../../public/image/avatar01.png" width="100px" />
             </div>
@@ -157,8 +157,44 @@
         </div>
       </div>
       <div class="bgdrop fullscreen" v-show="showBgDrop"></div>
-      <!-- alert delete dialog  -->
+      <!-- -logout dialog  -->
       <q-dialog v-model="logoutDialog" persistent>
+        <q-card class="smallDialog">
+          <q-card-section>
+            <div class="items-center">
+              <div class="row">
+                <div class="col"></div>
+                <img src="../../public/image/questionmark.svg" alt="" />
+                <div style="width: 15px"></div>
+                <div class="font18">ออกจากระบบ</div>
+                <div class="col"></div>
+              </div>
+            </div>
+
+            <hr />
+            <div align="center">
+              <div>คุณต้องการออกจากระบบ?</div>
+            </div>
+          </q-card-section>
+          <q-card-actions align="center">
+            <div class="row">
+              <div
+                class="cancelDiaBtn"
+                @click="closeLogoutDialog()"
+                align="center"
+              >
+                ยกเลิก
+              </div>
+              <div style="width: 20px"></div>
+              <div @click="logout()" class="submitDiaBtn" align="center">
+                ออกจากระบบ
+              </div>
+            </div>
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+      <!-- profile dialog -->
+      <q-dialog v-model="profileDialog" persistent>
         <q-card class="smallDialog">
           <q-card-section>
             <div class="items-center">
@@ -210,6 +246,10 @@ export default {
     };
   },
   methods: {
+    profielBtn() {
+      this.showBgDrop = true;
+      this.profileDialog = true;
+    },
     logoutBtn() {
       this.showBgDrop = true;
       this.logoutDialog = true;
@@ -284,7 +324,6 @@ export default {
   width: 300px;
   height: 100vh;
   background-color: white;
-  cursor: pointer;
 }
 .fontUserName {
   font-size: 22px;
