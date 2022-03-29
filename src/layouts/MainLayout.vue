@@ -202,7 +202,7 @@
                 <div class="col"></div>
                 <img src="../../public/image/questionmark.svg" alt="" />
                 <div style="width: 15px"></div>
-                <div class="font18">ออกจากระบบ</div>
+                <div class="font18">ผู้ใช้งาน</div>
                 <div class="col"></div>
               </div>
             </div>
@@ -216,7 +216,7 @@
             <div class="row">
               <div
                 class="cancelDiaBtn"
-                @click="closeLogoutDialog()"
+                @click="closeProfileDialog()"
                 align="center"
               >
                 ยกเลิก
@@ -243,6 +243,7 @@ export default {
       menuData: { book: 0, category: 0, rank: 0, ads: 0, admin: 0 },
       showBgDrop: false,
       logoutDialog: false,
+      profileDialog: false,
     };
   },
   methods: {
@@ -250,6 +251,7 @@ export default {
       this.showBgDrop = true;
       this.profileDialog = true;
     },
+
     logoutBtn() {
       this.showBgDrop = true;
       this.logoutDialog = true;
@@ -285,6 +287,10 @@ export default {
     closeLogoutDialog() {
       this.showBgDrop = false;
       this.logoutDialog = false;
+    },
+    closeProfileDialog() {
+      this.profileDialog = false;
+      this.showBgDrop = false;
     },
     logout() {
       this.$q.localStorage.clear();
