@@ -16,10 +16,17 @@
         <q-dialog v-model="addNewUserDia" persistent>
           <q-card style="width: 700px; max-width: 80vw">
             <q-card-section>
-              <div class="font22" align="center">เพิ่มผู้ใช้งาน</div>
-              <div align="center">
-                <hr style="width: " />
+              <div class="row">
+                <div class="col"></div>
+                <div class="q-pt-md">
+                  <img src="../../public/image/alertAddIcon.svg" alt="" />
+                </div>
+                <div style="width: 15px"></div>
+                <div class="font22 q-pt-md" align="center">เพิ่มผู้ใช้งาน</div>
+                <div align="center"></div>
+                <div class="col"></div>
               </div>
+              <hr style="width: " />
             </q-card-section>
             <q-card-section>
               <div class="row items-center">
@@ -130,7 +137,7 @@
                   <div class="col"></div>
                   <img src="../../public/image/alertBinIcon.svg" alt="" />
                   <div style="width: 15px"></div>
-                  <div class="font18">ลบผู้ใช้งาน</div>
+                  <div class="font22">ลบผู้ใช้งาน</div>
                   <div class="col"></div>
                 </div>
               </div>
@@ -250,10 +257,17 @@
     <q-dialog v-model="showEditUserDia" persistent>
       <q-card style="width: 700px; max-width: 80vw">
         <q-card-section>
-          <div class="font22" align="center">แก้ไขผู้ใช้งาน</div>
-          <div align="center">
-            <hr style="width: " />
+          <div class="row">
+            <div class="col"></div>
+            <div class="q-pt-md">
+              <img src="../../public/image/alertEditPenIcon.svg" alt="" />
+            </div>
+            <div style="width: 15px"></div>
+            <div class="font22 q-pt-md" align="center">แก้ไขผู้ใช้งาน</div>
+            <div align="center"></div>
+            <div class="col"></div>
           </div>
+          <hr style="width: " />
         </q-card-section>
         <q-card-section>
           <div class="row items-center">

@@ -63,15 +63,26 @@
         </div>
       </div>
 
+      <!-- add category alert -->
       <q-dialog v-model="addNewDialog" persistent>
         <q-card class="mainDialog" style="height: 200px">
-          <div align="center" class="q-pa-sm">เพิ่มหมวดหมู่</div>
+          <div class="row">
+            <div class="col"></div>
+            <div class="q-pt-md">
+              <img src="../../public/image/alertAddIcon.svg" alt="" />
+            </div>
+            <div style="width: 15px"></div>
+            <div class="q-pt-md font22" align="center">เพิ่มหมวดหมู่</div>
+            <div class="col"></div>
+          </div>
           <hr />
           <div class="row">
-            <div class="col-3 labelTxt" align="center">ชื่อหมวดหมู่</div>
-            <div class="col-8">
+            <div class="col-3 labelTxt q-pt-xs" align="center">
+              ชื่อหมวดหมู่
+            </div>
+            <div class="col-8 q-pt-xs">
               <q-input
-                v-model="categoryName"
+                v-model.trim="categoryName"
                 outlined
                 dense
                 @keyup.enter="saveBtn()"
@@ -79,57 +90,94 @@
             </div>
             <div class="col-1"></div>
           </div>
-          <div class="row justify-center q-pt-md">
-            <div class="q-pr-md">
-              <q-btn
-                class="shortInactiveBtn"
-                label="ยกเลิก"
-                outline
+          <q-card-actions align="center">
+            <div class="row q-pt-sm">
+              <div
+                class="cancelAdNewUserDiaBtn"
                 @click="cancelBtn()"
-              />
+                align="center"
+              >
+                ยกเลิก
+              </div>
+              <div style="width: 20px"></div>
+              <div
+                class="submitAdNewUserDiaBtn"
+                @click="saveBtn()"
+                align="center"
+              >
+                บันทึก
+              </div>
             </div>
-            <div class="q-pl-md">
-              <q-btn class="shortActiveBtn" label="บันทึก" @click="saveBtn()" />
-            </div>
-          </div>
-        </q-card>
-      </q-dialog>
-      <q-dialog v-model="delDialog" persistent>
-        <q-card style="height: 180px; width: 500px">
-          <div align="center" class="q-pa-sm">ลบหมวดหมู่</div>
-          <hr />
-          <div class="q-px-md" align="center">
-            คุณต้องการจะลบหมวดหมู่ <i>{{ deleteItem.name }}</i> ?
-          </div>
-          <div class="row justify-center q-pt-md">
-            <div class="q-pr-md">
-              <q-btn
-                class="shortInactiveBtn"
-                label="ยกเลิก"
-                outline
-                @click="deleteCancelBtn()"
-              />
-            </div>
-            <div class="q-pl-md">
-              <q-btn
-                class="shortActiveBtn"
-                label="ลบ"
-                @click="deleteRunBtn()"
-              />
-            </div>
-          </div>
+          </q-card-actions>
         </q-card>
       </q-dialog>
 
+      <!-- delete category alert -->
+      <q-dialog v-model="delDialog" persistent>
+        <q-card>
+          <q-card-section>
+            <div class="items-center">
+              <div class="row">
+                <div class="col"></div>
+                <img src="../../public/image/alertBinIcon.svg" alt="" />
+                <div style="width: 15px"></div>
+                <div class="font22">ลบหมวดหมู่</div>
+                <div class="col"></div>
+              </div>
+            </div>
+            <hr style="width: 400px" />
+            <div align="center">
+              <div class="font16">
+                คุณต้องการลบผู้ใช้งาน:
+                <i>{{ deleteItem.name }}</i
+                >?
+              </div>
+            </div>
+          </q-card-section>
+          <q-card-actions align="center">
+            <div class="row">
+              <div
+                class="cancelAdNewUserDiaBtn"
+                @click="deleteCancelBtn()"
+                align="center"
+              >
+                ยกเลิก
+              </div>
+              <div style="width: 20px"></div>
+              <div
+                class="submitAdNewUserDiaBtn"
+                @click="deleteRunBtn()"
+                align="center"
+              >
+                ลบ
+              </div>
+            </div>
+          </q-card-actions>
+          <br />
+        </q-card>
+      </q-dialog>
+
+      <!-- edit category alert -->
       <q-dialog v-model="editDialog" persistent>
         <q-card class="mainDialog" style="height: 200px">
-          <div align="center" class="q-pa-sm">แก้ไขหมวดหมู่</div>
+          <div class="row">
+            <div class="col"></div>
+            <div class="q-pt-md">
+              <img src="../../public/image/alertEditPenIcon.svg" alt="" />
+            </div>
+            <div style="width: 15px"></div>
+            <div class="q-pt-md font22" align="center">แก้ไขหมวดหมู่</div>
+
+            <div class="col"></div>
+          </div>
           <hr />
           <div class="row">
-            <div class="col-3 labelTxt" align="center">ชื่อหมวดหมู่</div>
-            <div class="col-8">
+            <div class="col-3 labelTxt q-pt-xs" align="center">
+              ชื่อหมวดหมู่
+            </div>
+            <div class="col-8 q-pt-sm">
               <q-input
-                v-model="editItem.name"
+                v-model.trim="editItem.name"
                 outlined
                 dense
                 @keyup.enter="saveEditBtn()"
@@ -137,23 +185,25 @@
             </div>
             <div class="col-1"></div>
           </div>
-          <div class="row justify-center q-pt-md">
-            <div class="q-pr-md">
-              <q-btn
-                class="shortInactiveBtn"
-                label="ยกเลิก"
-                outline
+          <q-card-actions align="center">
+            <div class="row q-pt-sm">
+              <div
+                class="cancelAdNewUserDiaBtn"
                 @click="cancelEditBtn()"
-              />
-            </div>
-            <div class="q-pl-md">
-              <q-btn
-                class="shortActiveBtn"
-                label="บันทึก"
+                align="center"
+              >
+                ยกเลิก
+              </div>
+              <div style="width: 20px"></div>
+              <div
+                class="submitAdNewUserDiaBtn"
                 @click="saveEditBtn()"
-              />
+                align="center"
+              >
+                บันทึก
+              </div>
             </div>
-          </div>
+          </q-card-actions>
         </q-card>
       </q-dialog>
       <div class="fullscreen backdrop" v-if="showBackdrop"></div>
@@ -167,6 +217,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      showBackDrop: false,
       category: [],
       addNewDialog: false,
       categoryName: "",
@@ -235,6 +286,7 @@ export default {
         key: key,
       };
       let res = await axios.post(url, JSON.stringify(dataSend));
+      this.showBackdrop = false;
       if (res.data == "go to welcome") {
         this.$router.push("welcome");
       } else if (res.data == "go to login") {
@@ -243,6 +295,7 @@ export default {
       } else {
         this.loadData();
         this.addNewDialog = false;
+        this.categoryName = "";
         this.greenNotify("เพิ่มหมวดหมู่");
       }
     },
@@ -250,6 +303,7 @@ export default {
       this.deleteItem.id = id;
       this.deleteItem.name = name;
       this.delDialog = true;
+      this.showBackdrop = true;
     },
     async deleteRunBtn() {
       let key = this.$q.localStorage.getItem("key");
@@ -259,6 +313,7 @@ export default {
       };
       let url = this.serverpath + "delcategory.php";
       let res = await axios.post(url, JSON.stringify(dataSend));
+      this.showBackdrop = false;
       if (res.data == "go to welcome") {
         this.$router.push("welcome");
       } else if (res.data == "go to login") {
@@ -272,14 +327,17 @@ export default {
     },
     deleteCancelBtn() {
       this.delDialog = false;
+      this.showBackdrop = false;
     },
     editFormBtn(id, name) {
       this.editItem.name = name;
       this.editItem.id = id;
       this.editDialog = true;
+      this.showBackdrop = true;
     },
     cancelEditBtn() {
       this.editDialog = false;
+      this.showBackdrop = false;
     },
     async saveEditBtn() {
       let key = this.$q.localStorage.getItem("key");
@@ -290,6 +348,7 @@ export default {
       };
       let url = this.serverpath + "editcategory.php";
       let res = await axios.post(url, JSON.stringify(dataSend));
+      this.showBackdrop = false;
       if (res.data == "go to welcome") {
         this.$router.push("welcome");
       } else if (res.data == "go to login") {
@@ -357,6 +416,9 @@ export default {
 .stripRow {
   background-color: rgba($color: #7291ff, $alpha: 0.15);
 }
+.backdrop {
+  background-color: rgba($color: #535353, $alpha: 0.8);
+}
 .stripMain {
   vertical-align: middle;
   line-height: 40px;
@@ -364,6 +426,7 @@ export default {
 
 .labelTxt {
   line-height: 45px;
+  font-size: 16px;
 }
 .backdrop {
   background-color: rgba($color: #535353, $alpha: 0.8);
