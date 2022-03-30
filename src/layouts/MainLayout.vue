@@ -5,6 +5,7 @@
         style="
           max-width: 1600px;
           width: 100%;
+          height: 100vh;
           margin: auto;
           background-color: #f6f7fb;
         "
@@ -16,12 +17,12 @@
             <div>
               <img src="../../public/image/avatar01.png" width="100px" />
             </div>
-            <div class="fontUserName">Aunny</div>
+            <div class="fontUserName"><u>Aunny</u></div>
           </div>
           <!-- menu book -->
           <div v-if="menuData.book == 1">
             <div
-              class="row bookLink q-ma-md q-pa-sm"
+              class="row bookLink q-ma-md q-pa-sm cursor-pointer"
               @click="menuBook()"
               v-if="$route.name != 'book'"
             >
@@ -32,6 +33,7 @@
               <div class="middleSpace"></div>
               <div class="labelDiv">หนังสือ</div>
             </div>
+
             <div class="row bookLink q-ma-md q-pa-sm" v-else>
               <div class="leftSpace"></div>
               <div class="iconDiv">
@@ -42,10 +44,11 @@
             </div>
             <hr style="width: 270px" />
           </div>
+
           <!-- menu category -->
           <div v-if="menuData.category == 1">
             <div
-              class="row bookLink q-ma-md q-pa-sm"
+              class="row bookLink q-ma-md q-pa-sm cursor-pointer"
               @click="menuCategory()"
               v-if="$route.name != 'category'"
             >
@@ -69,7 +72,7 @@
           <!-- menu ranking -->
           <div v-if="menuData.rank == 1">
             <div
-              class="row bookLink q-ma-md q-pa-sm"
+              class="row bookLink q-ma-md q-pa-sm cursor-pointer"
               @click="menuRank()"
               v-if="$route.name != 'rank'"
             >
@@ -93,7 +96,7 @@
           <!-- menu advertise -->
           <div v-if="menuData.ads == 1">
             <div
-              class="row bookLink q-ma-md q-pa-sm items-center"
+              class="row bookLink q-ma-md q-pa-sm items-center cursor-pointer"
               @click="menuAds()"
               v-if="$route.name != 'ads'"
             >
@@ -117,7 +120,7 @@
           <!-- menu administrator -->
           <div v-if="menuData.admin == 1">
             <div
-              class="row bookLink q-ma-md q-pa-sm"
+              class="row bookLink q-ma-md q-pa-sm cursor-pointer"
               @click="menuUser()"
               v-if="$route.name != 'user'"
             >
@@ -140,7 +143,10 @@
           <!-- menu sign out -->
           <div class="setBottom">
             <hr style="width: 270px" />
-            <div class="row bookLink q-ma-md q-pa-sm" @click="logoutBtn()">
+            <div
+              class="row bookLink q-ma-md q-pa-sm cursor-pointer"
+              @click="logoutBtn()"
+            >
               <div class="leftSpace"></div>
               <div class="iconDiv q-pt-sm">
                 <img src="../../public/image/signout.svg" alt="" />
@@ -150,7 +156,7 @@
             </div>
           </div>
         </div>
-        <div class="col">
+        <div class="col" style="height: 100vh">
           <q-page-container>
             <router-view />
           </q-page-container>
