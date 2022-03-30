@@ -156,6 +156,7 @@
           </div>
         </q-card>
       </q-dialog>
+      <div class="fullscreen backdrop" v-if="showBackdrop"></div>
     </div>
   </div>
 </template>
@@ -170,6 +171,7 @@ export default {
       addNewDialog: false,
       categoryName: "",
       delDialog: false,
+      showBackdrop: false,
       deleteItem: {
         id: "",
         name: "",
@@ -219,9 +221,11 @@ export default {
     },
     addCategoryBtn() {
       this.addNewDialog = true;
+      this.showBackdrop = true;
     },
     cancelBtn() {
       this.addNewDialog = false;
+      this.showBackdrop = false;
     },
     async saveBtn() {
       let url = this.serverpath + "addcategory.php";
@@ -360,5 +364,8 @@ export default {
 
 .labelTxt {
   line-height: 45px;
+}
+.backdrop {
+  background-color: rgba($color: #535353, $alpha: 0.8);
 }
 </style>
