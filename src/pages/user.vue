@@ -93,7 +93,7 @@
                   </div>
                   <div class="font16px">
                     <q-checkbox v-model="userAccess.admin" />
-                    ผู้ดูแลระบบ
+                    ผู้ใช้งาน
                   </div>
                 </div>
               </div>
@@ -291,23 +291,38 @@
             <div class="" style="width: 45px"></div>
             <div>
               <div class="font16px">
-                <q-checkbox color="red" v-model="editItem.book" />
+                <q-checkbox
+                  :disable="editItem.name == 'admin'"
+                  v-model="editItem.book"
+                />
                 หนังสือ
               </div>
               <div class="font16px">
-                <q-checkbox v-model="editItem.category" />
+                <q-checkbox
+                  :disable="editItem.name == 'admin'"
+                  v-model="editItem.category"
+                />
                 หมวดหมู่
               </div>
               <div class="font16px">
-                <q-checkbox v-model="editItem.rank" />
+                <q-checkbox
+                  :disable="editItem.name == 'admin'"
+                  v-model="editItem.rank"
+                />
                 อันดับ
               </div>
               <div class="font16px">
-                <q-checkbox v-model="editItem.ads" />
+                <q-checkbox
+                  :disable="editItem.name == 'admin'"
+                  v-model="editItem.ads"
+                />
                 โฆษณา
               </div>
               <div class="font16px">
-                <q-checkbox v-model="editItem.admin" />
+                <q-checkbox
+                  :disable="editItem.name == 'admin'"
+                  v-model="editItem.admin"
+                />
                 ผู้ใช้งาน
               </div>
             </div>
@@ -324,7 +339,7 @@
             </div>
             <div style="width: 20px"></div>
             <div
-              @click="submitUpdateUser()"
+              @click="submitEditUserBtn()"
               class="submitAdNewUserDiaBtn"
               align="center"
             >
@@ -449,6 +464,10 @@ export default {
         this.showProbDia();
         this.problemText = "คุณต้องเลือกการเข้าถึงอย่างน้อย 1 ตัวเลือก";
         return;
+      } else if (this.input.username.toLowerCase() == "admin") {
+        this.showProbDia();
+        this.problemText = "ไม่สามารถใช้ชื่อผู้ใช้งานนี้ได้";
+        return;
       }
 
       // console.log(this.userAccess);
@@ -480,8 +499,15 @@ export default {
     showDeluserDia(id, name) {
       this.delItem.id = id;
       this.delItem.name = name;
-      this.delUserDia = true;
-      this.showBackDrop = true;
+
+      if (this.delItem.name == "admin") {
+        this.showProbDia();
+        this.problemText = "ไม่สามารถลบผู้ใช้งานนี้ได้";
+        return;
+      } else {
+        this.delUserDia = true;
+        this.showBackDrop = true;
+      }
     },
     async confirmDelUserBtn() {
       let key = this.$q.localStorage.getItem("key");
@@ -489,10 +515,10 @@ export default {
         key: key,
         id: this.delItem.id,
       };
-      console.log(dataSend);
+      // console.log(dataSend);
       let url = this.serverpath + "deladmin.php";
       let res = await axios.post(url, JSON.stringify(dataSend));
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data == "go to welcome") {
         this.$router.push("welcome");
       } else if (res.data == "go to login") {
@@ -509,7 +535,7 @@ export default {
     //edit user
     editUserBtn(item) {
       this.editItem = item;
-      this.editItem.id = item.id;
+      this.editItem.id = item.userid;
       this.editItem.name = item.username;
       this.editItem.password = item.password;
       this.editItem.book = item.book == 1 ? true : false;
@@ -519,7 +545,49 @@ export default {
       this.editItem.admin = item.admin == 1 ? true : false;
       this.showEditUserDia = true;
       this.showBackDrop = true;
-      console.log(this.editItem);
+      // console.log(this.editItem);
+    },
+
+    async submitEditUserBtn() {
+      if (
+        !(
+          this.editItem.book ||
+          this.editItem.category ||
+          this.editItem.rank ||
+          this.editItem.ads ||
+          this.editItem.admin
+        )
+      ) {
+        this.showProbDia();
+        this.problemText = "คุณต้องเลือกการเข้าถึงอย่างน้อย 1 ตัวเลือก";
+        return;
+      }
+      let key = this.$q.localStorage.getItem("key");
+      let dataSend = {
+        key: key,
+        password: this.editItem.password,
+        book: this.editItem.book ? 1 : 0,
+        category: this.editItem.category ? 1 : 0,
+        rank: this.editItem.rank ? 1 : 0,
+        ads: this.editItem.ads ? 1 : 0,
+        admin: this.editItem.admin ? 1 : 0,
+        id: this.editItem.id,
+      };
+      // console.log(dataSend);
+      let url = this.serverpath + "updateuser.php";
+      let res = await axios.post(url, JSON.stringify(dataSend));
+      if (res.data == "go to welcome") {
+        this.$router.push("welcome");
+      } else if (res.data == "go to login") {
+        this.$q.localStorage.clear();
+        this.$router.push("/");
+      } else if (res.data == "update complete") {
+        this.greenNotify("แก้ไขผู้ใช้งานสำเร็จ");
+        this.loadUser();
+        this.showEditUserDia = false;
+        this.showBackDrop = false;
+      }
+      // console.log(res.data);
     },
 
     cancelEditUserBtn() {
