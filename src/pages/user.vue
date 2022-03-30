@@ -168,7 +168,7 @@
         </q-dialog>
       </div>
       <!-- table header -->
-      <div class="q-pt-md row">
+      <div class="q-pt-xl row">
         <div class="colTable">ลำดับ</div>
         <div class="colTable">ชื่อผู้ใช้งาน</div>
         <div class="colTable">หนังสือ</div>

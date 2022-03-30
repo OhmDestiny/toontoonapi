@@ -11,7 +11,7 @@
           class="adNewCategory row items-center justify-evenly"
         >
           <q-icon size="21px" name="fa-solid fa-plus" />
-          <div class="font16">เพิ่มผู้ใช้งาน</div>
+          <div class="font16">เพิ่มหมวดหมู่</div>
         </div>
       </div>
       <div class="heightSpace"></div>
