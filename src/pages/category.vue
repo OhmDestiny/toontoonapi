@@ -73,7 +73,12 @@
         <div class="row">
           <div class="col-3 labelTxt" align="center">ชื่อหมวดหมู่</div>
           <div class="col-8">
-            <q-input v-model="categoryName" outlined dense />
+            <q-input
+              v-model="categoryName"
+              outlined
+              dense
+              @keyup.enter="saveBtn()"
+            />
           </div>
           <div class="col-1"></div>
         </div>
@@ -122,7 +127,12 @@
         <div class="row">
           <div class="col-3 labelTxt" align="center">ชื่อหมวดหมู่</div>
           <div class="col-8">
-            <q-input v-model="editItem.name" outlined dense />
+            <q-input
+              v-model="editItem.name"
+              outlined
+              dense
+              @keyup.enter="saveEditBtn()"
+            />
           </div>
           <div class="col-1"></div>
         </div>
@@ -195,10 +205,15 @@ export default {
         key: key,
       };
       let res = await axios.post(url, JSON.stringify(dataSend));
-      if (res.data == "online") {
-        this.$router.go();
+      if (res.data == "go to welcom") {
+        this.$router.push("welcome");
+      } else if (res.data == "go to login") {
+        this.$q.localStorage.clear();
+        this.$router.push("/");
+      } else if (res.data == "online") {
+        this.loadData();
       } else res.data == "offlline";
-      this.$router.go();
+      this.loadData();
     },
     addCategoryBtn() {
       this.addNewDialog = true;
@@ -222,6 +237,7 @@ export default {
       } else {
         this.loadData();
         this.addNewDialog = false;
+        this.greenNotify("เพิ่มหมวดหมู่");
       }
     },
     delFormBtn(id, name) {
@@ -245,6 +261,7 @@ export default {
       } else {
         this.loadData();
         this.delDialog = false;
+        this.greenNotify("ลบหมวดหมู่สำเร็จ");
       }
     },
     deleteCancelBtn() {
@@ -275,6 +292,7 @@ export default {
       } else {
         this.loadData();
         this.editDialog = false;
+        this.greenNotify("แก้ไขหมวดหมู่สำเร็จ");
       }
     },
   },

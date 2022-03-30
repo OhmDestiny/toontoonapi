@@ -23,26 +23,40 @@
             </q-card-section>
             <q-card-section>
               <div class="row items-center">
-                <div class="font18 col-2" align="center">ชื่อผู้ใช้งาน</div>
+                <div
+                  class="font18 col-2"
+                  style="padding-left: 15px"
+                  align="left"
+                >
+                  ชื่อผู้ใช้งาน
+                </div>
                 <div class="col-1"></div>
                 <q-input
                   class="col"
-                  style="width: 430px"
+                  style="width: 410px:"
                   outlined
                   v-model.trim="input.username"
                   dense
                 />
+                <div style="padding-right: 10px"></div>
               </div>
               <div class="row items-center q-pt-lg">
-                <div class="font18 col-2" align="center">รหัสผ่าน</div>
+                <div
+                  class="font18 col-2"
+                  style="padding-left: 16px"
+                  align="left"
+                >
+                  รหัสผ่าน
+                </div>
                 <div class="col-1"></div>
                 <q-input
                   class="col"
-                  style="width: 430px"
+                  style=""
                   outlined
                   v-model.trim="input.password"
                   dense
                 />
+                <div style="padding-right: 10px"></div>
               </div>
               <div class="row">
                 <div class="col-3"></div>
@@ -52,7 +66,13 @@
               </div>
               <!-- radio -->
               <div class="row q-pt-md">
-                <div class="font18 col-2" align="center">การเข้าถึง</div>
+                <div
+                  class="font18 col-2"
+                  style="padding-left: 15px"
+                  align="left"
+                >
+                  การเข้าถึง
+                </div>
                 <div class="" style="width: 45px"></div>
                 <div>
                   <div class="font16px">
@@ -135,7 +155,7 @@
                 </div>
                 <div style="width: 20px"></div>
                 <div
-                  @click="delUserBtn()"
+                  @click="confirmDelUserBtn()"
                   class="submitAdNewUserDiaBtn"
                   align="center"
                 >
@@ -167,7 +187,10 @@
         :class="[index % 2 == 1 ? 'stripRow' : '']"
       >
         <div class="colTable">{{ index + 1 }}</div>
-        <div class="colTable">{{ item.username }}</div>
+        <div class="colTable row">
+          <div class="col-2"></div>
+          <div class="">{{ item.username }}</div>
+        </div>
         <div class="colTable">
           <check-pic :checkValue="item.book"></check-pic>
         </div>
@@ -189,7 +212,7 @@
         >
           <img width="20px" src="../../public/image/delete.svg" alt="" />
         </div>
-        <div class="colTable cursor-pointer">
+        <div @click="editUserBtn(item)" class="colTable cursor-pointer">
           <img width="20px" src="../../public/image/edit.svg" alt="" />
         </div>
       </div>
@@ -220,6 +243,96 @@
           </div>
           <br />
         </q-card-action>
+      </q-card>
+    </q-dialog>
+
+    <!-- edit user dialog  -->
+    <q-dialog v-model="showEditUserDia" persistent>
+      <q-card style="width: 700px; max-width: 80vw">
+        <q-card-section>
+          <div class="font22" align="center">แก้ไขผู้ใช้งาน</div>
+          <div align="center">
+            <hr style="width: " />
+          </div>
+        </q-card-section>
+        <q-card-section>
+          <div class="row items-center">
+            <div class="font18 col-2" align="center">ชื่อผู้ใช้งาน</div>
+            <div class="col-1"></div>
+            <q-input
+              readonly
+              class="col"
+              style="width: 430px"
+              outlined
+              v-model="editItem.name"
+              dense
+            />
+          </div>
+          <div class="row items-center q-pt-lg">
+            <div class="font18 col-2" align="center">รหัสผ่าน</div>
+            <div class="col-1"></div>
+            <q-input
+              class="col"
+              style="width: 430px"
+              outlined
+              v-model.trim="editItem.password"
+              dense
+            />
+          </div>
+          <div class="row">
+            <div class="col-3"></div>
+            <div class="font14" style="color: #646464">
+              ต้องมีอักษรอย่างน้อย 6 ตัว
+            </div>
+          </div>
+          <!-- radio -->
+          <div class="row q-pt-md">
+            <div class="font18 col-2" align="center">การเข้าถึง</div>
+            <div class="" style="width: 45px"></div>
+            <div>
+              <div class="font16px">
+                <q-checkbox color="red" v-model="editItem.book" />
+                หนังสือ
+              </div>
+              <div class="font16px">
+                <q-checkbox v-model="editItem.category" />
+                หมวดหมู่
+              </div>
+              <div class="font16px">
+                <q-checkbox v-model="editItem.rank" />
+                อันดับ
+              </div>
+              <div class="font16px">
+                <q-checkbox v-model="editItem.ads" />
+                โฆษณา
+              </div>
+              <div class="font16px">
+                <q-checkbox v-model="editItem.admin" />
+                ผู้ใช้งาน
+              </div>
+            </div>
+          </div>
+        </q-card-section>
+        <q-card-actions align="center">
+          <div class="row">
+            <div
+              class="cancelAdNewUserDiaBtn"
+              @click="cancelEditUserBtn()"
+              align="center"
+            >
+              ยกเลิก
+            </div>
+            <div style="width: 20px"></div>
+            <div
+              @click="submitUpdateUser()"
+              class="submitAdNewUserDiaBtn"
+              align="center"
+            >
+              ตกลง
+            </div>
+          </div>
+        </q-card-actions>
+        <br />
       </q-card>
     </q-dialog>
   </div>
@@ -254,6 +367,19 @@ export default {
 
       problemAlertDia: false,
       problemText: "",
+
+      //edit user
+      showEditUserDia: false,
+      editItem: {
+        id: "",
+        name: "",
+        password: "",
+        book: false,
+        category: false,
+        rank: false,
+        ads: false,
+        admin: false,
+      },
     };
   },
   methods: {
@@ -277,7 +403,13 @@ export default {
       this.showBackDrop = false;
       this.input.username = "";
       this.input.password = "";
-      this.userAccess = [];
+      this.userAccess = {
+        book: false,
+        category: false,
+        rank: false,
+        ads: false,
+        admin: false,
+      };
     },
     showAddNewUserDia() {
       this.addNewUserDia = true;
@@ -289,23 +421,15 @@ export default {
     },
 
     // del user
-    showDeluserDia(id, name) {
-      this.delItem.id = id;
-      this.delItem.name = name;
-      this.delUserDia = true;
-      this.showBackDrop = true;
-    },
+
     closeDelUserDia() {
       this.delUserDia = false;
       this.showBackDrop = false;
     },
-    delUserBtn() {
-      this.greenNotify("ลบชื่อผู้ใช้งานสำเร็จ");
-    },
 
     // กดปุุ่ม ตกลงหน้า ad user dialog
     async submitUpdateUser() {
-      if (this.input.username == 0 || this.input.password == 0) {
+      if (this.input.username.length == 0 || this.input.password.length == 0) {
         this.showProbDia();
         this.problemText = "กรุณาระบุผู้ใช้งาน";
         return;
@@ -313,12 +437,21 @@ export default {
         this.showProbDia();
         this.problemText = "กรุณาระบุรหัสผ่านอย่างน้อย 6 ตัว";
         return;
-      } else if (this.userAccess < 1) {
+      } else if (
+        !(
+          this.userAccess.book ||
+          this.userAccess.category ||
+          this.userAccess.rank ||
+          this.userAccess.ads ||
+          this.userAccess.admin
+        )
+      ) {
         this.showProbDia();
         this.problemText = "คุณต้องเลือกการเข้าถึงอย่างน้อย 1 ตัวเลือก";
         return;
       }
-      console.log(this.userAccess);
+
+      // console.log(this.userAccess);
       let key = this.$q.localStorage.getItem("key");
       let dataSend = {
         key: key,
@@ -340,8 +473,58 @@ export default {
       } else {
         this.closeAddNewUserDia();
         this.greenNotify("เพิ่มผู้ใช้งานสำเร็จ");
-        this.mounted();
+        this.loadUser();
       }
+    },
+
+    showDeluserDia(id, name) {
+      this.delItem.id = id;
+      this.delItem.name = name;
+      this.delUserDia = true;
+      this.showBackDrop = true;
+    },
+    async confirmDelUserBtn() {
+      let key = this.$q.localStorage.getItem("key");
+      let dataSend = {
+        key: key,
+        id: this.delItem.id,
+      };
+      console.log(dataSend);
+      let url = this.serverpath + "deladmin.php";
+      let res = await axios.post(url, JSON.stringify(dataSend));
+      console.log(res.data);
+      if (res.data == "go to welcome") {
+        this.$router.push("welcome");
+      } else if (res.data == "go to login") {
+        this.$q.localStorage.clear();
+        this.$router.push("/");
+      } else if (res.data == "finish") {
+        this.greenNotify("ลบชื่อผู้ใช้งานสำเร็จ");
+        this.loadUser();
+        this.delUserDia = false;
+        this.showBackDrop = false;
+      }
+    },
+
+    //edit user
+    editUserBtn(item) {
+      this.editItem = item;
+      this.editItem.id = item.id;
+      this.editItem.name = item.username;
+      this.editItem.password = item.password;
+      this.editItem.book = item.book == 1 ? true : false;
+      this.editItem.category = item.category == 1 ? true : false;
+      this.editItem.rank = item.rank == 1 ? true : false;
+      this.editItem.ads = item.ads == 1 ? true : false;
+      this.editItem.admin = item.admin == 1 ? true : false;
+      this.showEditUserDia = true;
+      this.showBackDrop = true;
+      console.log(this.editItem);
+    },
+
+    cancelEditUserBtn() {
+      this.showEditUserDia = false;
+      this.showBackDrop = false;
     },
 
     showProbDia() {
