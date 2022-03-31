@@ -199,42 +199,131 @@
           </q-card-actions>
         </q-card>
       </q-dialog>
-      <!-- profile dialog -->
+
+      <!-- profile dialog header -->
       <q-dialog v-model="profileDialog" persistent>
-        <q-card class="smallDialog">
+        <q-card class="profileDialog" style="width: 700px; max-width: 80vw">
           <q-card-section>
-            <div class="items-center">
-              <div class="row">
-                <div class="col"></div>
+            <div class="row">
+              <div class="col-1"></div>
+              <div class="col row justify-center">
                 <img
                   class=""
-                  src="../../public/image/questionmark.svg"
-                  alt=""
+                  src="../../public/image/avatar/9.png"
+                  alt="ยีราฟ"
+                  width="60px"
                 />
-                <div style="width: 15px"></div>
-                <div class="font18">ผู้ใช้งาน</div>
-                <div class="col"></div>
+                <div class="font22 q-pt-md q-pl-md">AunNy</div>
+              </div>
+              <div class="col-1"></div>
+              <div class="cursor-pointer q-pt-md" @click="closeProfileDialog()">
+                <img src="../../public/image/close-x.svg" alt="" />
               </div>
             </div>
 
             <hr />
-            <div align="center">
-              <div>คุณต้องการออกจากระบบ?</div>
+            <!-- profile avatar change -->
+            <div align="left">
+              <div class="row">
+                <div class="" style="width: 49%">
+                  <div class="font22 q-pl-md">รูปโปรไฟล์</div>
+                  <div class="avatarSpace"></div>
+                  <div class="row q-pl-md">
+                    <img
+                      class=""
+                      src="../../public/image/avatar/9.png"
+                      alt="ยีราฟ"
+                      width="80px "
+                      height="80 px"
+                    />
+                    <div class="q-pl-md">
+                      <img
+                        class=""
+                        src="../../public/image/avatar/1.png"
+                        alt="กระรอก"
+                        width="80px"
+                      />
+                    </div>
+                    <div class="q-pl-md">
+                      <img
+                        class=""
+                        src="../../public/image/avatar/5.png"
+                        alt="แพะ"
+                        width="80px"
+                      />
+                    </div>
+                  </div>
+                  <div class="avatarSpace"></div>
+                  <div class="row q-pl-md">
+                    <img
+                      class=""
+                      src="../../public/image/avatar/2.png"
+                      alt="แกะ"
+                      width="80px"
+                      height="80px"
+                    />
+                    <div class="q-pl-md">
+                      <img
+                        class=""
+                        src="../../public/image/avatar/4.png"
+                        alt="ม้าลาย"
+                        width="80px"
+                      />
+                    </div>
+                    <div class="q-pl-md">
+                      <img
+                        class=""
+                        src="../../public/image/avatar/3.png"
+                        alt="อัลปาก้า"
+                        width="80px"
+                      />
+                    </div>
+                  </div>
+                  <div class="avatarSpace"></div>
+                  <div class="row q-pl-md">
+                    <img
+                      class=""
+                      src="../../public/image/avatar/8.png"
+                      alt="กิ้งก่า"
+                      width="80px"
+                      height="80px"
+                    />
+                    <div class="q-pl-md">
+                      <img
+                        class=""
+                        src="../../public/image/avatar/7.png"
+                        alt="ไก่"
+                        width="80px"
+                      />
+                    </div>
+                    <div class="q-pl-md">
+                      <img
+                        class=""
+                        src="../../public/image/avatar/6.png"
+                        alt="ฮิปโป"
+                        width="80px"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div style="width: 2%" align="center">
+                  <div class="heightSeparator"></div>
+                </div>
+                <div class="" style="width: 49%">
+                  <div class="font22 q-pl-md">แก้ไขรหัสผ่าน</div>
+                  <div class="row">
+                    <div class="row col q-pt-md">รหัสผ่านเดิม</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </q-card-section>
           <q-card-actions align="center">
             <div class="row">
-              <div
-                class="cancelDiaBtn"
-                @click="closeProfileDialog()"
-                align="center"
-              >
-                ยกเลิก
-              </div>
-              <div style="width: 20px"></div>
+              <!-- <div style="width: 20px"></div>
               <div @click="logout()" class="submitDiaBtn" align="center">
                 ออกจากระบบ
-              </div>
+              </div> -->
             </div>
           </q-card-actions>
         </q-card>
@@ -253,7 +342,7 @@ export default {
       menuData: { book: 0, category: 0, rank: 0, ads: 0, admin: 0 },
       showBgDrop: false,
       logoutDialog: false,
-      profileDialog: false,
+      profileDialog: true,
     };
   },
   methods: {
@@ -331,6 +420,10 @@ export default {
   color: #2d6be4;
   cursor: pointer;
 }
+.profileAvatarBox {
+  width: 330px;
+  height: 300px;
+}
 .setBottom {
   position: absolute;
   bottom: 0px;
@@ -345,6 +438,9 @@ export default {
   font-size: 22px;
   line-height: 100px;
   padding-left: 15px;
+}
+.profileDialog {
+  border-radius: 30px;
 }
 .bookLink:hover {
   background-color: #e5eeff;
@@ -376,5 +472,13 @@ export default {
 }
 .FixleftSpace2 {
   width: 38px;
+}
+.avatarSpace {
+  height: 5px;
+}
+.heightSeparator {
+  height: 324px;
+  border: 1px solid #9a9a9a;
+  width: 1px;
 }
 </style>
