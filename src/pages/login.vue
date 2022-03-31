@@ -37,7 +37,7 @@
         </div>
         <div class="q-pt-md" align="center">
           <q-btn
-            class="shortActiveBtn"
+            class="submitAdNewUserDiaBtn"
             label="เข้าสู่ระบบ"
             @click="loginBtn()"
           />
@@ -133,6 +133,10 @@ export default {
   border-radius: 5px;
   background-color: #2d6be4;
   cursor: pointer;
+}
+.logInBtn {
+  width: 120px;
+  height: 45px;
 }
 .backdrop {
   background-color: rgba($color: #535353, $alpha: 0.8);
