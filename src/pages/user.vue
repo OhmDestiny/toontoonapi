@@ -19,7 +19,7 @@
               <div class="row">
                 <div class="col"></div>
                 <div class="q-pt-md">
-                  <img src="../../public/image/alertAddIcon.svg" alt="" />
+                  <img src="../../public/image/alertAddicon.svg" alt="" />
                 </div>
                 <div style="width: 15px"></div>
                 <div class="font22 q-pt-md" align="center">เพิ่มผู้ใช้งาน</div>
@@ -213,11 +213,21 @@
         <div class="colTable">
           <check-pic :checkValue="item.admin"></check-pic>
         </div>
-        <div
-          @click="showDeluserDia(item.userid, item.username)"
-          class="colTable cursor-pointer"
-        >
-          <img width="20px" src="../../public/image/delete.svg" alt="" />
+        <div class="colTable">
+          <img
+            class="cursor-pointer"
+            @click="showDeluserDia(item.userid, item.username)"
+            width="20px"
+            src="../../public/image/delete.svg"
+            alt=""
+            v-if="item.username != 'admin'"
+          />
+          <img
+            width="20px"
+            src="../../public/image/disableDelete.svg"
+            alt=""
+            v-if="item.username == 'admin'"
+          />
         </div>
         <div @click="editUserBtn(item)" class="colTable cursor-pointer">
           <img width="20px" src="../../public/image/edit.svg" alt="" />
@@ -271,7 +281,9 @@
         </q-card-section>
         <q-card-section>
           <div class="row items-center">
-            <div class="font18 col-2" align="center">ชื่อผู้ใช้งาน</div>
+            <div class="font18 col-2" style="padding-left: 15px" align="left">
+              ชื่อผู้ใช้งาน
+            </div>
             <div class="col-1"></div>
             <q-input
               readonly
@@ -281,9 +293,12 @@
               v-model="editItem.name"
               dense
             />
+            <div style="padding-right: 10px"></div>
           </div>
           <div class="row items-center q-pt-lg">
-            <div class="font18 col-2" align="center">รหัสผ่าน</div>
+            <div class="font18 col-2" style="padding-left: 15px" align="left">
+              รหัสผ่าน
+            </div>
             <div class="col-1"></div>
             <q-input
               class="col"
@@ -292,6 +307,7 @@
               v-model.trim="editItem.password"
               dense
             />
+            <div style="padding-right: 10px"></div>
           </div>
           <div class="row">
             <div class="col-3"></div>
@@ -301,7 +317,9 @@
           </div>
           <!-- radio -->
           <div class="row q-pt-md">
-            <div class="font18 col-2" align="center">การเข้าถึง</div>
+            <div class="font18 col-2" style="padding-left: 15px" align="left">
+              การเข้าถึง
+            </div>
             <div class="" style="width: 45px"></div>
             <div>
               <div class="font16px">
@@ -358,6 +376,52 @@
               align="center"
             >
               ตกลง
+            </div>
+          </div>
+        </q-card-actions>
+        <br />
+      </q-card>
+    </q-dialog>
+
+    <!-- alert delete dialog  -->
+    <q-dialog v-model="delUserDia" persistent>
+      <q-card>
+        <q-card-section>
+          <div class="items-center">
+            <div class="row">
+              <div class="col"></div>
+              <img src="../../public/image/alertBinIcon.svg" alt="" />
+              <div style="width: 15px"></div>
+              <div class="font18">ลบผู้ใช้งาน</div>
+              <div class="col"></div>
+            </div>
+          </div>
+
+          <hr style="width: 400px" />
+          <div align="center">
+            <div>
+              คุณต้องการลบผู้ใช้งาน:
+              <i>{{ delItem.name }}</i
+              >?
+            </div>
+          </div>
+        </q-card-section>
+        <q-card-actions align="center">
+          <div class="row">
+            <div
+              class="cancelAdNewUserDiaBtn"
+              @click="closeDelUserDia()"
+              align="center"
+            >
+              ยกเลิก
+            </div>
+            <div style="width: 20px"></div>
+            <div
+              @click="confirmDelUserBtn()"
+              class="submitAdNewUserDiaBtn"
+              align="center"
+            >
+              ลบ
             </div>
           </div>
         </q-card-actions>
@@ -426,10 +490,8 @@ export default {
         this.userData = res.data;
       }
     },
-
-    closeAddNewUserDia() {
-      this.addNewUserDia = false;
-      this.showBackDrop = false;
+    // เพื่มผู้ใช้งาน
+    addNewUserBtn() {
       this.input.username = "";
       this.input.password = "";
       this.userAccess = {
@@ -439,32 +501,15 @@ export default {
         ads: false,
         admin: false,
       };
-    },
-    showAddNewUserDia() {
       this.addNewUserDia = true;
       this.showBackDrop = true;
     },
-    addNewUserBtn() {
-      this.showAddNewUserDia();
-      // console.log(this.showAddNewUserDia);
-    },
-
-    // del user
-
-    closeDelUserDia() {
-      this.delUserDia = false;
-      this.showBackDrop = false;
-    },
-
-    // กดปุุ่ม ตกลงหน้า ad user dialog
     async submitUpdateUser() {
       if (this.input.username.length == 0 || this.input.password.length == 0) {
-        this.showProbDia();
-        this.problemText = "กรุณาระบุผู้ใช้งาน";
+        this.showProbDia("กรุณาระบุผู้ใช้งาน");
         return;
       } else if (this.input.password.length < 6) {
-        this.showProbDia();
-        this.problemText = "กรุณาระบุรหัสผ่านอย่างน้อย 6 ตัว";
+        this.showProbDia("กรุณาระบุรหัสผ่านอย่างน้อย 6 ตัว");
         return;
       } else if (
         !(
@@ -475,12 +520,10 @@ export default {
           this.userAccess.admin
         )
       ) {
-        this.showProbDia();
-        this.problemText = "คุณต้องเลือกการเข้าถึงอย่างน้อย 1 ตัวเลือก";
+        this.showProbDia("คุณต้องเลือกการเข้าถึงอย่างน้อย 1 ตัวเลือก");
         return;
       } else if (this.input.username.toLowerCase() == "admin") {
-        this.showProbDia();
-        this.problemText = "ไม่สามารถใช้ชื่อผู้ใช้งานนี้ได้";
+        this.showProbDia("ไม่สามารถใช้ชื่อผู้ใช้งานนี้ได้");
         return;
       }
 
@@ -509,14 +552,25 @@ export default {
         this.loadUser();
       }
     },
+    closeAddNewUserDia() {
+      this.addNewUserDia = false;
+      this.showBackDrop = false;
+    },
+
+    // del user
+
+    closeDelUserDia() {
+      this.delUserDia = false;
+      this.showBackDrop = false;
+    },
 
     showDeluserDia(id, name) {
       this.delItem.id = id;
       this.delItem.name = name;
 
       if (this.delItem.name == "admin") {
-        this.showProbDia();
-        this.problemText = "ไม่สามารถลบผู้ใช้งานนี้ได้";
+        this.showProbDia("ไม่สามารถลบผู้ใช้งานนี้ได้");
+
         return;
       } else {
         this.delUserDia = true;
@@ -563,7 +617,10 @@ export default {
     },
 
     async submitEditUserBtn() {
-      if (
+      if (this.editItem.password.length < 6) {
+        this.showProbDia("กรุณาระบุรหัสผ่านอย่างน้อย 6 ตัว");
+        return;
+      } else if (
         !(
           this.editItem.book ||
           this.editItem.category ||
@@ -572,8 +629,7 @@ export default {
           this.editItem.admin
         )
       ) {
-        this.showProbDia();
-        this.problemText = "คุณต้องเลือกการเข้าถึงอย่างน้อย 1 ตัวเลือก";
+        this.showProbDia("คุณต้องเลือกการเข้าถึงอย่างน้อย 1 ตัวเลือก");
         return;
       }
       let key = this.$q.localStorage.getItem("key");
@@ -609,7 +665,8 @@ export default {
       this.showBackDrop = false;
     },
 
-    showProbDia() {
+    showProbDia(text) {
+      this.problemText = text;
       this.problemAlertDia = true;
     },
 
