@@ -1,17 +1,18 @@
 <template>
-  <div>
-    <div class="box absolute-center">book</div>
+  <div
+    class="mainPadding"
+    style="width: 100%; max-width: 1600px; margin: auto; height: 100px"
+  >
+    <div><top-bar></top-bar></div>
   </div>
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+import topBar from "../components/topmenu_in_book.vue";
+export default {
+  components: { topBar },
+};
 </script>
 
-<style lang="scss" scoped>
-.box {
-  height: 200px;
-  width: 460px;
-  background-color: red;
-}
-</style>
+<style lang="scss" scoped></style>
