@@ -19,7 +19,7 @@
               <div class="row">
                 <div class="col"></div>
                 <div class="q-pt-md">
-                  <img src="../../public/image/alertAddicon.svg" alt="" />
+                  <img src="../../public/image/alertAdd.svg" alt="" />
                 </div>
                 <div style="width: 15px"></div>
                 <div class="font22 q-pt-md" align="center">เพิ่มผู้ใช้งาน</div>

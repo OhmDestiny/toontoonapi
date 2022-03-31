@@ -206,7 +206,11 @@
             <div class="items-center">
               <div class="row">
                 <div class="col"></div>
-                <img src="../../public/image/questionmark.svg" alt="" />
+                <img
+                  class=""
+                  src="../../public/image/questionmark.svg"
+                  alt=""
+                />
                 <div style="width: 15px"></div>
                 <div class="font18">ผู้ใช้งาน</div>
                 <div class="col"></div>
