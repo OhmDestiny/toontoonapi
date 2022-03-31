@@ -3,12 +3,7 @@
     <div class="loginBox shadow-2 absolute-center">
       <!-- avatar -->
       <div align="center" class="q-pt-md">
-        <img
-          src="../../public/image/avatar01.png"
-          alt=""
-          width="160px"
-          height="160px"
-        />
+        <img :src="imageFile" width="174px" />
       </div>
       <!-- input -->
       <div class="inputSection">
@@ -35,7 +30,7 @@
               /> </template
           ></q-input>
         </div>
-        <div class="q-pt-md" align="center">
+        <div class="q-pt-xl" align="center">
           <q-btn
             class="submitAdNewUserDiaBtn"
             label="เข้าสู่ระบบ"
@@ -85,9 +80,15 @@ export default {
       loginAlertDia: false,
       isPwd: true,
       showBackDrop: false,
+      avatarchange: 0,
+      imageFile: "",
     };
   },
   methods: {
+    randomAvatarProfile() {
+      this.avatarchange = Math.floor(Math.random() * 9) + 1;
+      this.imageFile = this.serverpath + "avatar/" + this.avatarchange + ".png";
+    },
     async loginBtn() {
       if (this.input.username.length == 0 || this.input.password.length == 0) {
         this.showDialog();
@@ -112,13 +113,17 @@ export default {
       this.showBackDrop = false;
     },
   },
+  mounted() {
+    this.randomAvatarProfile();
+    console.log(this.avatarchange);
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .loginBox {
   width: 600px;
-  height: 400px;
+  height: 464px;
   border-radius: 30px;
   background-color: white;
 }
