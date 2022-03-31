@@ -14,6 +14,11 @@ const routes = [
         name: "book",
       },
       {
+        path: "/addnewcartoon",
+        component: () => import("pages/addnewcartoon.vue"),
+        name: "addnewcartoon",
+      },
+      {
         path: "/category",
         component: () => import("pages/category.vue"),
         name: "category",
