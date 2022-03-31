@@ -37,9 +37,12 @@
             <q-select
               v-model="input.category"
               :options="categoryList"
+              multiple
               map-options
               emit-value
               outlined
+              use-input
+              use-chips
               dense
             />
           </div>
@@ -157,7 +160,7 @@ export default {
     return {
       input: {
         title: "",
-        category: "",
+        category: [],
         synposis: "",
         folder: "",
         coverfile: "",
@@ -176,7 +179,6 @@ export default {
     },
     async saveBtn() {
       //Check input
-      console.log(this.input.coverfile[0].name);
       if (
         this.input.title.length == 0 ||
         this.input.category.length == 0 ||
@@ -190,11 +192,17 @@ export default {
         this.redNotify("กรุณาใส่ข้อมูลให้ครบถ้วน");
         return;
       }
-
+      let categoryData = "";
+      this.input.category.forEach((x) => {
+        categoryData += "[" + x + "],";
+      });
+      categoryData = categoryData.slice(0, -1);
+      let key = this.$q.localStorage.getItem("key");
       //add database
       let dataTemp = {
+        key: key,
         title: this.input.title,
-        category: this.input.category,
+        category: categoryData,
         synposis: this.input.synposis,
         folder: this.input.folder,
         coverfile: this.input.coverfile[0].name,
@@ -204,15 +212,28 @@ export default {
       };
       let url = this.serverpath + "addnewbookinfo.php";
       let res = await axios.post(url, JSON.stringify(dataTemp));
-      let recordId = res.data;
+      let recordId;
+      if (res.data == "go to welcome") {
+        this.$router.push("/welcome");
+      } else if (res.data == "go to login") {
+        this.$q.localStorage.clear();
+        this.$router.push("/");
+      } else {
+        recordId = res.data;
+      }
+
+      //add file
       const formData = new FormData();
       formData.append("id", recordId);
+      formData.append("filecoverfile", this.input.coverfile[0]);
       formData.append("filebgpc", this.input.bg.pc[0]);
       formData.append("filebgtablet", this.input.bg.tablet[0]);
       formData.append("filebgmobile", this.input.bg.mobile[0]);
 
       const headers = { "Content-Type": "multipart/form-data" };
       axios.post(this.serverpath + "getimagefile.php", formData, { headers });
+      this.greenNotify("บันทึกข้อมูลเรียบร้อยแล้ว");
+      this.$router.push("/book");
     },
     async loadCategory() {
       this.categoryList = [];
@@ -227,7 +248,6 @@ export default {
         };
         this.categoryList.push(dataTemp);
       });
-      this.input.category = this.categoryList[0];
     },
   },
   mounted() {
