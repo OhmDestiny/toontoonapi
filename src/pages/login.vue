@@ -115,7 +115,6 @@ export default {
   },
   mounted() {
     this.randomAvatarProfile();
-    console.log(this.avatarchange);
   },
 };
 </script>

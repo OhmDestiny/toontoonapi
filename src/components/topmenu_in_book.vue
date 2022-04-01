@@ -11,6 +11,7 @@
           style="width: 200px"
           outlined
           dense
+          @input="changeCat()"
         />
       </div>
       <div class="col searchTag" v-if="searchTextFinal.length > 0">
@@ -28,10 +29,17 @@
         <div class="icontop" @click="searchBtn()">
           <img src="../../public/image/searchBtn.svg" alt="" />
         </div>
-        <div class="icontop">
+
+        <div class="icontop" v-if="displayMode == 2" @click="changeMode(1)">
           <img src="../../public/image/listview.svg" alt="" />
         </div>
-        <div class="icontop">
+        <div class="icontop" v-if="displayMode == 1">
+          <img src="../../public/image/listviewblue.svg" alt="" />
+        </div>
+        <div class="icontop" v-f="displayMode == 1" @click="changeMode(2)">
+          <img src="../../public/image/thumbnail.svg" alt="" />
+        </div>
+        <div class="icontop" v-f="displayMode == 2">
           <img src="../../public/image/thumbnail.svg" alt="" />
         </div>
         <div class="addbtn" @click="addNewBtn()">
@@ -80,6 +88,7 @@ export default {
       showBackDrop: false,
       searchText: "",
       searchTextFinal: "",
+      displayMode: 1, //1=ist mode , 2=thumb nail mode
     };
   },
   methods: {
@@ -113,9 +122,25 @@ export default {
     searchData() {
       this.searchTextFinal = this.searchText;
       this.closeSearchBox();
+      this.sendDataOut();
     },
     resetSearch() {
       this.searchTextFinal = "";
+    },
+    sendDataOut() {
+      let dataSearchSendOut = {
+        searchText: this.searchTextFinal,
+        searchCat: this.categorySelected,
+        displayMode: this.displayMode,
+      };
+      this.$emit("searchDataOut", dataSearchSendOut);
+    },
+    changeCat() {
+      this.sendDataOut();
+    },
+    changeMode(modeid) {
+      this.displayMode = modeid;
+      this.sendDataOut();
     },
   },
   mounted() {

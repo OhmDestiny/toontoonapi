@@ -3,7 +3,7 @@
     class="mainPadding"
     style="width: 100%; max-width: 1600px; margin: auto; height: 100px"
   >
-    <div><top-bar></top-bar></div>
+    <div><top-bar @searchDataOut="searchDataOut"></top-bar></div>
     <div class="row">
       <div class="col-3 q-pa-md" align="center">
         <book-box></book-box>
@@ -32,6 +32,12 @@ export default {
   components: { topBar, bookBox },
   data() {
     return {};
+  },
+  methods: {
+    searchDataOut(dataOut) {
+      console.log("searchText: " + dataOut.searchText);
+      console.log("searchCat: " + dataOut.searchCat.value);
+    },
   },
 };
 </script>
