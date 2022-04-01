@@ -15,7 +15,7 @@
           <!-- user avatar -->
           <div class="row q-pa-md justify-center" @click="profielBtn()">
             <div>
-              <img src="../../public/image/avatar01.png" width="100px" />
+              <img :src="profilePicFile" width="100px" />
             </div>
             <div class="fontUserName">{{ username }}</div>
           </div>
@@ -207,12 +207,14 @@
             <div class="row">
               <div class="col-1"></div>
               <div class="col row justify-center">
-                <img
-                  class=""
-                  src="../../public/image/avatar/9.png"
-                  alt="ยีราฟ"
-                  width="60px"
-                />
+                <div>
+                  <img
+                    class=""
+                    :src="profilePicFile"
+                    alt="ยีราฟ"
+                    width="60px"
+                  />
+                </div>
                 <div class="font22 q-pt-md q-pl-md">{{ username }}</div>
               </div>
               <div class="col-1"></div>
@@ -229,80 +231,152 @@
                   <div class="font22 q-pl-md">รูปโปรไฟล์</div>
                   <div class="avatarSpace"></div>
                   <div class="row q-pl-md">
-                    <img
-                      class=""
-                      src="../../public/image/avatar/9.png"
-                      alt="ยีราฟ"
-                      width="80px "
-                      height="80 px"
-                    />
-                    <div class="q-pl-md">
+                    <div v-if="profilePicId == '1'">
                       <img
-                        class=""
+                        src="../../public/image/avatar/1x.png"
+                        alt="ยีราฟ"
+                        width="80px "
+                      />
+                    </div>
+                    <div v-else>
+                      <img
                         src="../../public/image/avatar/1.png"
+                        alt="ยีราฟ"
+                        width="80px "
+                        height="80px"
+                      />
+                    </div>
+                    <div class="q-pl-md">
+                      <div v-if="profilePicId == '2'">
+                        <img
+                          src="../../public/image/avatar/2x.png"
+                          alt="กระรอก"
+                          width="80px"
+                        />
+                      </div>
+                      <div v-else>
+                        <img
+                          src="../../public/image/avatar/2.png"
+                          alt="กระรอก"
+                          width="80px"
+                        />
+                      </div>
+                    </div>
+                    <div class="q-pl-md">
+                      <div v-if="profilePicId == '3'">
+                        <img
+                          src="../../public/image/avatar/3x.png"
+                          alt="แพะ"
+                          width="80px"
+                        />
+                      </div>
+                      <div v-else>
+                        <img
+                          src="../../public/image/avatar/3.png"
+                          alt="กระรอก"
+                          width="80px"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="avatarSpace"></div>
+                  <div class="row q-pl-md">
+                    <div v-if="profilePicId == '4'">
+                      <img
+                        src="../../public/image/avatar/4x.png"
+                        alt="แกะ"
+                        width="80px"
+                        height="80px"
+                      />
+                    </div>
+                    <div v-else>
+                      <img
+                        src="../../public/image/avatar/4.png"
                         alt="กระรอก"
                         width="80px"
                       />
                     </div>
                     <div class="q-pl-md">
-                      <img
-                        class=""
-                        src="../../public/image/avatar/5.png"
-                        alt="แพะ"
-                        width="80px"
-                      />
+                      <div v-if="profilePicId == '5'">
+                        <img
+                          src="../../public/image/avatar/5x.png"
+                          alt="ม้าลาย"
+                          width="80px"
+                        />
+                      </div>
+                      <div v-else>
+                        <img
+                          src="../../public/image/avatar/5.png"
+                          alt="กระรอก"
+                          width="80px"
+                        />
+                      </div>
+                    </div>
+                    <div class="q-pl-md">
+                      <div v-if="profilePicId == '6'">
+                        <img
+                          src="../../public/image/avatar/6x.png"
+                          alt="อัลปาก้า"
+                          width="80px"
+                        />
+                      </div>
+                      <div v-else>
+                        <img
+                          src="../../public/image/avatar/6.png"
+                          alt="กระรอก"
+                          width="80px"
+                        />
+                      </div>
                     </div>
                   </div>
                   <div class="avatarSpace"></div>
                   <div class="row q-pl-md">
-                    <img
-                      class=""
-                      src="../../public/image/avatar/2.png"
-                      alt="แกะ"
-                      width="80px"
-                      height="80px"
-                    />
-                    <div class="q-pl-md">
+                    <div v-if="profilePicId == '7'">
                       <img
-                        class=""
-                        src="../../public/image/avatar/4.png"
-                        alt="ม้าลาย"
+                        src="../../public/image/avatar/7x.png"
+                        alt="กิ้งก่า"
                         width="80px"
+                        height="80px"
                       />
                     </div>
-                    <div class="q-pl-md">
+                    <div v-else>
                       <img
-                        class=""
-                        src="../../public/image/avatar/3.png"
-                        alt="อัลปาก้า"
-                        width="80px"
-                      />
-                    </div>
-                  </div>
-                  <div class="avatarSpace"></div>
-                  <div class="row q-pl-md">
-                    <img
-                      class=""
-                      src="../../public/image/avatar/8.png"
-                      alt="กิ้งก่า"
-                      width="80px"
-                      height="80px"
-                    />
-                    <div class="q-pl-md">
-                      <img
-                        class=""
                         src="../../public/image/avatar/7.png"
-                        alt="ไก่"
+                        alt="กระรอก"
                         width="80px"
                       />
                     </div>
                     <div class="q-pl-md">
-                      <img
-                        class=""
-                        src="../../public/image/avatar/6.png"
-                        alt="ฮิปโป"
-                        width="80px"
-                      />
+                      <div v-if="profilePicId == '8'">
+                        <img
+                          src="../../public/image/avatar/8x.png"
+                          alt="ไก่"
+                          width="80px"
+                        />
+                      </div>
+                      <div v-else>
+                        <img
+                          src="../../public/image/avatar/8.png"
+                          alt="กระรอก"
+                          width="80px"
+                        />
+                      </div>
+                    </div>
+                    <div class="q-pl-md">
+                      <div v-if="profilePicId == '9'">
+                        <img
+                          src="../../public/image/avatar/9x.png"
+                          alt="ฮิปโป"
+                          width="80px"
+                        />
+                      </div>
+                      <div v-else>
+                        <img
+                          src="../../public/image/avatar/9.png"
+                          alt="กระรอก"
+                          width="80px"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -415,6 +489,7 @@ export default {
   name: "MainLayout",
   data() {
     return {
+      showpicture: true,
       isPwd: true,
       leftDrawerOpen: false,
       menuData: { book: 0, category: 0, rank: 0, ads: 0, admin: 0 },
@@ -437,6 +512,7 @@ export default {
       let dataSend = {
         key: key,
       };
+
       let url = this.serverpath + "getprofilepic.php";
       let res = await axios.post(url, JSON.stringify(dataSend));
       if (res.data == "go to login") {
@@ -446,7 +522,9 @@ export default {
       }
       this.username = res.data[0].username;
       this.profilePicId = res.data[0].profilepic;
-      this.profilePicFile = "../../public/image/avatar01.png";
+      console.log(res.data);
+      this.profilePicFile =
+        this.serverpath + "avatar/" + this.profilePicId + ".png";
     },
     profielBtn() {
       this.showBgDrop = true;
