@@ -1,29 +1,62 @@
 <template>
   <div
-    class="brx"
     style="width: 100%; max-width: 1600px; margin: auto; height: 100vh"
+    :style="{ 'background-image': 'url(' + this.bgPic + ')' }"
   >
-    <div class="box">
-      <div class="row">
-        <div class="col-4">ยินดีต้อนรับ คุณ Aunny</div>
-        <div class="col-8">กดแทบด้านข้างเพื่อทำรายการ</div>
+    <div class="bigcow"><img src="../../public/image/bigcow.png" alt="" /></div>
+    <div
+      class="pos-baloon"
+      :style="{ 'background-image': 'url(' + this.baloonPic + ')' }"
+    >
+      <div class="textinbaloon">
+        <div class="bigFont" align="center">
+          Welcome Aunny<br />get more some wine.
+        </div>
+        <div align="center">กดแทบด้านซ้ายเพื่อทำรายการ</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      bgPic: "",
+      baloonPic: "",
+    };
+  },
+  methods: {
+    loadData() {
+      this.bgPic = this.serverpath + "image/bgwelcome.jpg";
+      this.baloonPic = this.serverpath + "image/baloon.png";
+      console.log(this.bgPic);
+    },
+  },
+  mounted() {
+    this.loadData();
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-.box {
-  height: 200px;
-  width: 460px;
+.bigcow {
+  position: absolute;
+  bottom: 0px;
+}
+.pos-baloon {
   position: relative;
-  left: calc(50% - 230px);
-  top: calc(50vh - 100px);
-  background-color: white;
-  border-radius: 30px;
+  width: 460px;
+  left: 500px;
+  top: 30px;
+  height: 345px;
+}
+.bigFont {
+  font-weight: 900;
+  font-size: 32px;
+}
+.textinbaloon {
+  padding-top: 90px;
+  font-size: 22px;
 }
 </style>
