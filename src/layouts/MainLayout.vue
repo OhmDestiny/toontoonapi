@@ -17,7 +17,7 @@
             <div>
               <img src="../../public/image/avatar01.png" width="100px" />
             </div>
-            <div class="fontUserName"><u>Aunny</u></div>
+            <div class="fontUserName">{{ username }}</div>
           </div>
           <!-- menu book -->
           <div v-if="menuData.book == 1">
@@ -202,7 +202,7 @@
 
       <!-- profile dialog header -->
       <q-dialog v-model="profileDialog" persistent>
-        <q-card class="profileDialog" style="width: 700px; max-width: 80vw">
+        <q-card class="profileDialog" style="width: 750px; max-width: 80vw">
           <q-card-section>
             <div class="row">
               <div class="col-1"></div>
@@ -213,7 +213,7 @@
                   alt="ยีราฟ"
                   width="60px"
                 />
-                <div class="font22 q-pt-md q-pl-md">AunNy</div>
+                <div class="font22 q-pt-md q-pl-md">{{ username }}</div>
               </div>
               <div class="col-1"></div>
               <div class="cursor-pointer q-pt-md" @click="closeProfileDialog()">
@@ -225,7 +225,7 @@
             <!-- profile avatar change -->
             <div align="left">
               <div class="row">
-                <div class="" style="width: 49%">
+                <div class="" style="width: 41%">
                   <div class="font22 q-pl-md">รูปโปรไฟล์</div>
                   <div class="avatarSpace"></div>
                   <div class="row q-pl-md">
@@ -309,23 +309,100 @@
                 <div style="width: 2%" align="center">
                   <div class="heightSeparator"></div>
                 </div>
-                <div class="" style="width: 49%">
+                <div class="" style="width: 57%">
                   <div class="font22 q-pl-md">แก้ไขรหัสผ่าน</div>
-                  <div class="row">
-                    <div class="row col q-pt-md">รหัสผ่านเดิม</div>
+                  <!-- old password -->
+                  <div class="row q-pt-sm">
+                    <div class="row col q-pt-md justify-center">
+                      <div class="font16 q-pt-sm q-pl-md">รหัสผ่านเดิม</div>
+                      <div class="col"></div>
+                      <div class="">
+                        <q-input
+                          style="width: 230px"
+                          v-model.trim="input.password"
+                          outlined
+                          dense
+                          :type="isPwd ? 'password' : 'text'"
+                        >
+                          <template v-slot:append>
+                            <q-icon
+                              :name="isPwd ? 'visibility_off' : 'visibility'"
+                              class="cursor-pointer"
+                              @click="isPwd = !isPwd"
+                            /> </template
+                        ></q-input>
+                      </div>
+                    </div>
                   </div>
+                  <!-- new password -->
+                  <div class="row q-pt-md">
+                    <div class="row col q-pt-md justify-center">
+                      <div class="font16 q-pt-sm q-pl-md">รหัสผ่านใหม่</div>
+                      <div class="col"></div>
+                      <div class="">
+                        <q-input
+                          style="width: 230px"
+                          v-model.trim="input.newpassword"
+                          outlined
+                          :type="isPwd ? 'password' : 'text'"
+                          dense
+                        >
+                          <template v-slot:append>
+                            <q-icon
+                              :name="isPwd ? 'visibility_off' : 'visibility'"
+                              class="cursor-pointer"
+                              @click="isPwd = !isPwd"
+                            /> </template
+                        ></q-input>
+                        <div class="font12" style="color: #646464">
+                          ต้องมีตัวอักษรอย่างน้อย 6 ตัว
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- confirm new password -->
+                  <div class="row">
+                    <div class="row col q-pt-md justify-center">
+                      <div class="font16 q-pt-sm q-pl-md">
+                        ยืนยันรหัสผ่านใหม่
+                      </div>
+                      <div class="col"></div>
+                      <div class="">
+                        <q-input
+                          style="width: 230px"
+                          v-model.trim="input.confirmnewpassword"
+                          outlined
+                          :type="isPwd ? 'password' : 'text'"
+                          dense
+                          ><template v-slot:append>
+                            <q-icon
+                              :name="isPwd ? 'visibility_off' : 'visibility'"
+                              class="cursor-pointer"
+                              @click="isPwd = !isPwd"
+                            /> </template
+                        ></q-input>
+                        <div class="font12" style="color: #646464">
+                          ต้องมีตัวอักษรอย่างน้อย 6 ตัว
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <q-card-actions align="center">
+                    <div class="row q-pt-sm">
+                      <div style="width: 20px"></div>
+                      <div
+                        @click="profileChange()"
+                        class="submitDiaBtn"
+                        align="center"
+                      >
+                        บันทึก
+                      </div>
+                    </div>
+                  </q-card-actions>
                 </div>
               </div>
             </div>
           </q-card-section>
-          <q-card-actions align="center">
-            <div class="row">
-              <!-- <div style="width: 20px"></div>
-              <div @click="logout()" class="submitDiaBtn" align="center">
-                ออกจากระบบ
-              </div> -->
-            </div>
-          </q-card-actions>
         </q-card>
       </q-dialog>
     </div>
@@ -338,19 +415,65 @@ export default {
   name: "MainLayout",
   data() {
     return {
+      isPwd: true,
       leftDrawerOpen: false,
       menuData: { book: 0, category: 0, rank: 0, ads: 0, admin: 0 },
       showBgDrop: false,
       logoutDialog: false,
-      profileDialog: true,
+      profileDialog: false,
+      input: {
+        password: "",
+        newpassword: "",
+        confirmnewpassword: "",
+      },
+      username: "",
+      profilePicId: "",
+      profilePicFile: "",
     };
   },
   methods: {
+    async loadAvatarPic() {
+      let key = this.$q.localStorage.getItem("key");
+      let dataSend = {
+        key: key,
+      };
+      let url = this.serverpath + "getprofilepic.php";
+      let res = await axios.post(url, JSON.stringify(dataSend));
+      if (res.data == "go to login") {
+        this.$q.localStorage.clear();
+        this.$router.push("/");
+        return;
+      }
+      this.username = res.data[0].username;
+      this.profilePicId = res.data[0].profilepic;
+      this.profilePicFile = "../../public/image/avatar01.png";
+    },
     profielBtn() {
       this.showBgDrop = true;
       this.profileDialog = true;
     },
-
+    async profileChange() {
+      if (
+        this.input.password.length >= 6 ||
+        this.input.newpassword.length >= 6 ||
+        this.input.confirmnewpassword.length >= 6
+      ) {
+        this.redNotify("กรุณากรอกรหัสผ่านให้ถูกต้อง");
+        return;
+      }
+      if (this.input.newpassword != this.input.confirmnewpassword) {
+        this.redNotify("กรุณายืนยันรหัสผ่านใหม่ให้ถูกต้อง");
+      }
+      let url = this.serverpath + "profilepasswordcheck.php";
+      let res = await axios.post(url, JSON.stringify(this.input));
+      console.log(res.data);
+      if (res.data == "no") {
+        this.redNotify("รหัสผ่านไม่ถูกต้องกรุณาลองใหม่อีกครั้ง");
+        return;
+      } else {
+        this.greenNotify("รหัสผ่านไม่ถูกต้องกรุณาลองใหม่อีกครั้ง");
+      }
+    },
     logoutBtn() {
       this.showBgDrop = true;
       this.logoutDialog = true;
@@ -398,6 +521,7 @@ export default {
   },
   mounted() {
     this.loadMenu();
+    this.loadAvatarPic();
   },
 };
 </script>
@@ -419,10 +543,6 @@ export default {
   border: 1px solid #2d6be4;
   color: #2d6be4;
   cursor: pointer;
-}
-.profileAvatarBox {
-  width: 330px;
-  height: 300px;
 }
 .setBottom {
   position: absolute;
@@ -480,5 +600,11 @@ export default {
   height: 324px;
   border: 1px solid #9a9a9a;
   width: 1px;
+}
+.inputTap {
+  width: 230px;
+  height: 35px;
+  border-radius: 5px;
+  border: 1px solid #313131;
 }
 </style>
