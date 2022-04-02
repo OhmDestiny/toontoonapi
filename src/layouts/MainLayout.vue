@@ -13,7 +13,10 @@
       >
         <div class="leftdrawer shadow-3">
           <!-- user avatar -->
-          <div class="row q-pa-md justify-center" @click="profielBtn()">
+          <div
+            class="row q-pa-md justify-center cursor-pointer"
+            @click="profielBtn()"
+          >
             <div>
               <img :src="profilePicFile" width="100px" />
             </div>
@@ -22,7 +25,7 @@
           <!-- menu book -->
           <div v-if="menuData.book == 1">
             <div
-              class="row bookLink q-ma-md q-pa-sm cursor-pointer"
+              class="row bookLink q-pa-sm cursor-pointer"
               @click="menuBook()"
               v-if="$route.name != 'book'"
             >
@@ -30,16 +33,16 @@
               <div class="iconDiv">
                 <img src="../../public/image/book.svg" alt="" />
               </div>
-              <div class="middleSpace"></div>
+
               <div class="labelDiv">หนังสือ</div>
             </div>
 
-            <div class="row bookLink q-ma-md q-pa-sm" v-else>
+            <div class="row bookLink q-pa-sm" v-else>
               <div class="leftSpace"></div>
               <div class="iconDiv">
                 <img src="../../public/image/bookblue.svg" alt="" />
               </div>
-              <div class="middleSpace"></div>
+
               <div class="labelDivBlue">หนังสือ</div>
             </div>
             <hr style="width: 270px" />
@@ -48,7 +51,7 @@
           <!-- menu category -->
           <div v-if="menuData.category == 1">
             <div
-              class="row bookLink q-ma-md q-pa-sm cursor-pointer"
+              class="row bookLink q-pa-sm cursor-pointer"
               @click="menuCategory()"
               v-if="$route.name != 'category'"
             >
@@ -56,15 +59,13 @@
               <div class="iconDiv">
                 <img src="../../public/image/category.svg" alt="" />
               </div>
-              <div class="middleSpace"></div>
               <div class="labelDiv">หมวดหมู่</div>
             </div>
-            <div class="row bookLink q-ma-md q-pa-sm" v-else>
+            <div class="row bookLink q-pa-sm" v-else>
               <div class="leftSpace"></div>
               <div class="iconDiv">
                 <img src="../../public/image/categoryblue.svg" alt="" />
               </div>
-              <div class="middleSpace"></div>
               <div class="labelDivBlue">หมวดหมู่</div>
             </div>
             <hr style="width: 270px" />
@@ -72,23 +73,23 @@
           <!-- menu ranking -->
           <div v-if="menuData.rank == 1">
             <div
-              class="row bookLink q-ma-md q-pa-sm cursor-pointer"
+              class="row bookLink q-pa-sm cursor-pointer"
               @click="menuRank()"
               v-if="$route.name != 'rank'"
             >
-              <div class="FixleftSpace"></div>
+              <div class="leftSpace"></div>
               <div class="iconDiv">
                 <img src="../../public/image/rank.svg" alt="" />
               </div>
-              <div class="FixmiddleSpace"></div>
+
               <div class="labelDiv">อันดับ</div>
             </div>
-            <div class="row bookLink q-ma-md q-pa-sm" v-else>
-              <div class="FixleftSpace"></div>
+            <div class="row bookLink q-pa-sm" v-else>
+              <div class="leftSpace"></div>
               <div class="iconDiv">
                 <img src="../../public/image/rankblue.svg" alt="" />
               </div>
-              <div class="FixmiddleSpace"></div>
+
               <div class="labelDivBlue">อันดับ</div>
             </div>
             <hr style="width: 270px" />
@@ -96,23 +97,22 @@
           <!-- menu advertise -->
           <div v-if="menuData.ads == 1">
             <div
-              class="row bookLink q-ma-md q-pa-sm items-center cursor-pointer"
+              class="row bookLink q-pa-sm cursor-pointer"
               @click="menuAds()"
               v-if="$route.name != 'ads'"
             >
-              <div class="FixleftSpace2"></div>
-              <div class="iconDiv q-pt-sm">
+              <div class="leftSpace"></div>
+              <div class="iconDiv">
                 <img src="../../public/image/ads.svg" alt="" />
               </div>
-              <div class="FixmiddleSpace2"></div>
-              <div class="labelDiv">โฆษณา</div>
+
+              <div class="labelDiv" style="padding-top: 5px">โฆษณา</div>
             </div>
-            <div class="row bookLink q-ma-md q-pa-sm items-center" v-else>
-              <div class="FixleftSpace2"></div>
-              <div class="iconDiv q-pt-sm">
+            <div class="row bookLink q-pa-sm" v-else>
+              <div class="leftSpace"></div>
+              <div class="iconDiv">
                 <img src="../../public/image/adsblue.svg" alt="" />
               </div>
-              <div class="FixmiddleSpace2"></div>
               <div class="labelDivBlue">โฆษณา</div>
             </div>
             <hr style="width: 270px" />
@@ -120,7 +120,7 @@
           <!-- menu administrator -->
           <div v-if="menuData.admin == 1">
             <div
-              class="row bookLink q-ma-md q-pa-sm cursor-pointer"
+              class="row bookLink q-pa-sm cursor-pointer"
               @click="menuUser()"
               v-if="$route.name != 'user'"
             >
@@ -128,15 +128,15 @@
               <div class="iconDiv">
                 <img src="../../public/image/user.svg" alt="" />
               </div>
-              <div class="FixmiddleSpace"></div>
+
               <div class="labelDiv">ผู้ใช้งาน</div>
             </div>
-            <div class="row bookLink q-ma-md q-pa-sm" v-else>
+            <div class="row bookLink q-pa-sm" v-else>
               <div class="leftSpace"></div>
               <div class="iconDiv">
                 <img src="../../public/image/userblue.svg" alt="" />
               </div>
-              <div class="FixmiddleSpace"></div>
+
               <div class="labelDivBlue">ผู้ใช้งาน</div>
             </div>
           </div>
@@ -144,19 +144,19 @@
           <div class="setBottom">
             <hr style="width: 270px" />
             <div
-              class="row bookLink q-ma-md q-pa-sm cursor-pointer"
+              class="row bookLink q-pa-sm cursor-pointer"
               @click="logoutBtn()"
             >
-              <div class="leftSpace"></div>
+              <div style="width: 40px"></div>
               <div class="iconDiv q-pt-sm">
                 <img src="../../public/image/signout.svg" alt="" />
               </div>
-              <div class="middleSpace"></div>
+
               <div class="labelDiv">ออกจากระบบ</div>
             </div>
           </div>
         </div>
-        <div class="col" style="height: 100vh">
+        <div class="col" style="height: 100vh; overflow-y: auto">
           <q-page-container>
             <router-view />
           </q-page-container>
@@ -231,14 +231,14 @@
                   <div class="font22 q-pl-md">รูปโปรไฟล์</div>
                   <div class="avatarSpace"></div>
                   <div class="row q-pl-md">
-                    <div v-if="profilePicId == '1'">
+                    <div v-if="profileSelected[0]">
                       <img
                         src="../../public/image/avatar/1x.png"
                         alt="ยีราฟ"
                         width="80px "
                       />
                     </div>
-                    <div v-else>
+                    <div v-else @click="setAvatar(1)" class="cursor-pointer">
                       <img
                         src="../../public/image/avatar/1.png"
                         alt="ยีราฟ"
@@ -247,14 +247,14 @@
                       />
                     </div>
                     <div class="q-pl-md">
-                      <div v-if="profilePicId == '2'">
+                      <div v-if="profileSelected[1]">
                         <img
                           src="../../public/image/avatar/2x.png"
                           alt="กระรอก"
                           width="80px"
                         />
                       </div>
-                      <div v-else>
+                      <div v-else @click="setAvatar(2)" class="cursor-pointer">
                         <img
                           src="../../public/image/avatar/2.png"
                           alt="กระรอก"
@@ -263,14 +263,14 @@
                       </div>
                     </div>
                     <div class="q-pl-md">
-                      <div v-if="profilePicId == '3'">
+                      <div v-if="profileSelected[2]">
                         <img
                           src="../../public/image/avatar/3x.png"
                           alt="แพะ"
                           width="80px"
                         />
                       </div>
-                      <div v-else>
+                      <div v-else @click="setAvatar(3)" class="cursor-pointer">
                         <img
                           src="../../public/image/avatar/3.png"
                           alt="กระรอก"
@@ -281,7 +281,7 @@
                   </div>
                   <div class="avatarSpace"></div>
                   <div class="row q-pl-md">
-                    <div v-if="profilePicId == '4'">
+                    <div v-if="profileSelected[3]">
                       <img
                         src="../../public/image/avatar/4x.png"
                         alt="แกะ"
@@ -289,7 +289,7 @@
                         height="80px"
                       />
                     </div>
-                    <div v-else>
+                    <div v-else @click="setAvatar(4)" class="cursor-pointer">
                       <img
                         src="../../public/image/avatar/4.png"
                         alt="กระรอก"
@@ -297,14 +297,14 @@
                       />
                     </div>
                     <div class="q-pl-md">
-                      <div v-if="profilePicId == '5'">
+                      <div v-if="profileSelected[4]">
                         <img
                           src="../../public/image/avatar/5x.png"
                           alt="ม้าลาย"
                           width="80px"
                         />
                       </div>
-                      <div v-else>
+                      <div v-else @click="setAvatar(5)" class="cursor-pointer">
                         <img
                           src="../../public/image/avatar/5.png"
                           alt="กระรอก"
@@ -313,14 +313,14 @@
                       </div>
                     </div>
                     <div class="q-pl-md">
-                      <div v-if="profilePicId == '6'">
+                      <div v-if="profileSelected[5]">
                         <img
                           src="../../public/image/avatar/6x.png"
                           alt="อัลปาก้า"
                           width="80px"
                         />
                       </div>
-                      <div v-else>
+                      <div v-else @click="setAvatar(6)" class="cursor-pointer">
                         <img
                           src="../../public/image/avatar/6.png"
                           alt="กระรอก"
@@ -331,7 +331,7 @@
                   </div>
                   <div class="avatarSpace"></div>
                   <div class="row q-pl-md">
-                    <div v-if="profilePicId == '7'">
+                    <div v-if="profileSelected[6]">
                       <img
                         src="../../public/image/avatar/7x.png"
                         alt="กิ้งก่า"
@@ -339,7 +339,7 @@
                         height="80px"
                       />
                     </div>
-                    <div v-else>
+                    <div v-else @click="setAvatar(7)" class="cursor-pointer">
                       <img
                         src="../../public/image/avatar/7.png"
                         alt="กระรอก"
@@ -347,14 +347,14 @@
                       />
                     </div>
                     <div class="q-pl-md">
-                      <div v-if="profilePicId == '8'">
+                      <div v-if="profileSelected[7]">
                         <img
                           src="../../public/image/avatar/8x.png"
                           alt="ไก่"
                           width="80px"
                         />
                       </div>
-                      <div v-else>
+                      <div v-else @click="setAvatar(8)" class="cursor-pointer">
                         <img
                           src="../../public/image/avatar/8.png"
                           alt="กระรอก"
@@ -363,14 +363,14 @@
                       </div>
                     </div>
                     <div class="q-pl-md">
-                      <div v-if="profilePicId == '9'">
+                      <div v-if="profileSelected[8]">
                         <img
                           src="../../public/image/avatar/9x.png"
                           alt="ฮิปโป"
                           width="80px"
                         />
                       </div>
-                      <div v-else>
+                      <div v-else @click="setAvatar(9)" class="cursor-pointer">
                         <img
                           src="../../public/image/avatar/9.png"
                           alt="กระรอก"
@@ -396,13 +396,13 @@
                           v-model.trim="input.password"
                           outlined
                           dense
-                          :type="isPwd ? 'password' : 'text'"
+                          :type="isPwd1 ? 'password' : 'text'"
                         >
                           <template v-slot:append>
                             <q-icon
-                              :name="isPwd ? 'visibility_off' : 'visibility'"
+                              :name="isPwd1 ? 'visibility_off' : 'visibility'"
                               class="cursor-pointer"
-                              @click="isPwd = !isPwd"
+                              @click="isPwd1 = !isPwd1"
                             /> </template
                         ></q-input>
                       </div>
@@ -418,14 +418,14 @@
                           style="width: 230px"
                           v-model.trim="input.newpassword"
                           outlined
-                          :type="isPwd ? 'password' : 'text'"
+                          :type="isPwd2 ? 'password' : 'text'"
                           dense
                         >
                           <template v-slot:append>
                             <q-icon
-                              :name="isPwd ? 'visibility_off' : 'visibility'"
+                              :name="isPwd2 ? 'visibility_off' : 'visibility'"
                               class="cursor-pointer"
-                              @click="isPwd = !isPwd"
+                              @click="isPwd2 = !isPwd2"
                             /> </template
                         ></q-input>
                         <div class="font12" style="color: #646464">
@@ -446,13 +446,13 @@
                           style="width: 230px"
                           v-model.trim="input.confirmnewpassword"
                           outlined
-                          :type="isPwd ? 'password' : 'text'"
+                          :type="isPwd3 ? 'password' : 'text'"
                           dense
                           ><template v-slot:append>
                             <q-icon
-                              :name="isPwd ? 'visibility_off' : 'visibility'"
+                              :name="isPwd3 ? 'visibility_off' : 'visibility'"
                               class="cursor-pointer"
-                              @click="isPwd = !isPwd"
+                              @click="isPwd3 = !isPwd3"
                             /> </template
                         ></q-input>
                         <div class="font12" style="color: #646464">
@@ -465,7 +465,7 @@
                     <div class="row q-pt-sm">
                       <div style="width: 20px"></div>
                       <div
-                        @click="profileChange()"
+                        @click="passwordChangeBth()"
                         class="submitDiaBtn"
                         align="center"
                       >
@@ -490,7 +490,9 @@ export default {
   data() {
     return {
       showpicture: true,
-      isPwd: true,
+      isPwd1: true,
+      isPwd2: true,
+      isPwd3: true,
       leftDrawerOpen: false,
       menuData: { book: 0, category: 0, rank: 0, ads: 0, admin: 0 },
       showBgDrop: false,
@@ -504,10 +506,36 @@ export default {
       username: "",
       profilePicId: "",
       profilePicFile: "",
+      profileSelected: [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ],
     };
   },
   methods: {
+    async setAvatar(avatarid) {
+      this.profileSelected = new Array(9).fill(false);
+      this.profileSelected[avatarid - 1] = true;
+      this.profilePicId = avatarid;
+      this.profilePicFile =
+        this.serverpath + "avatar/" + this.profilePicId + ".png?1";
+      let url = this.serverpath + "updateprofilepic.php";
+      let key = this.$q.localStorage.getItem("key");
+      let dataSend = {
+        key: key,
+        profileid: avatarid,
+      };
+      let res = await axios.post(url, JSON.stringify(dataSend));
+    },
     async loadAvatarPic() {
+      this.profileSelected = new Array(9).fill(false);
       let key = this.$q.localStorage.getItem("key");
       let dataSend = {
         key: key,
@@ -522,35 +550,55 @@ export default {
       }
       this.username = res.data[0].username;
       this.profilePicId = res.data[0].profilepic;
-      console.log(res.data);
+      this.profileSelected[this.profilePicId - 1] = true;
+
       this.profilePicFile =
-        this.serverpath + "avatar/" + this.profilePicId + ".png";
+        this.serverpath + "avatar/" + this.profilePicId + ".png?1";
     },
     profielBtn() {
       this.showBgDrop = true;
       this.profileDialog = true;
+      this.input.password = "";
+      this.input.newpassword = "";
     },
-    async profileChange() {
+    async passwordChangeBth() {
       if (
-        this.input.password.length >= 6 ||
-        this.input.newpassword.length >= 6 ||
-        this.input.confirmnewpassword.length >= 6
+        this.input.password.length < 6 ||
+        this.input.newpassword.length < 6 ||
+        this.input.confirmnewpassword.length < 6
       ) {
         this.redNotify("กรุณากรอกรหัสผ่านให้ถูกต้อง");
         return;
       }
       if (this.input.newpassword != this.input.confirmnewpassword) {
         this.redNotify("กรุณายืนยันรหัสผ่านใหม่ให้ถูกต้อง");
-      }
-      let url = this.serverpath + "profilepasswordcheck.php";
-      let res = await axios.post(url, JSON.stringify(this.input));
-      console.log(res.data);
-      if (res.data == "no") {
-        this.redNotify("รหัสผ่านไม่ถูกต้องกรุณาลองใหม่อีกครั้ง");
         return;
-      } else {
-        this.greenNotify("รหัสผ่านไม่ถูกต้องกรุณาลองใหม่อีกครั้ง");
       }
+      let key = this.$q.localStorage.getItem("key");
+      let dataSend = {
+        key: key,
+        password: this.input.password,
+        newpassword: this.input.newpassword,
+      };
+      let url = this.serverpath + "profilepasswordchange.php";
+      let res = await axios.post(url, JSON.stringify(dataSend));
+      if (res.data == "old password incorrect") {
+        this.redNotify("รหัสผ่านไม่ถูกต้อง");
+        return;
+      } else if (res.data == "go to login") {
+        this.$q.localStorage.clear();
+        this.$router.push("/");
+      } else {
+        this.greenNotify("เปลี่ยนรหัสผ่านสำเร็จ");
+        this.showBgDrop = false;
+        this.profileDialog = false;
+      }
+      // if (res.data == "no") {
+      //   this.redNotify("รหัสผ่านไม่ถูกต้องกรุณาลองใหม่อีกครั้ง");
+      //   return;
+      // } else {
+      //   this.greenNotify("รหัสผ่านไม่ถูกต้องกรุณาลองใหม่อีกครั้ง");
+      // }
     },
     logoutBtn() {
       this.showBgDrop = true;
@@ -648,10 +696,12 @@ export default {
 }
 .labelDiv {
   font-size: 22px;
+  padding-left: 5px;
 }
 .labelDivBlue {
   font-size: 22px;
   color: #2d6be4;
+  padding-left: 5px;
 }
 .middleSpace {
   width: 10px;
@@ -663,10 +713,10 @@ export default {
   width: 20px;
 }
 .leftSpace {
-  width: 45px;
+  width: 65px;
 }
 .FixleftSpace {
-  width: 42px;
+  width: 65px;
 }
 .FixleftSpace2 {
   width: 38px;

@@ -36,11 +36,11 @@
         <div class="icontop" v-if="displayMode == 1">
           <img src="../../public/image/listviewblue.svg" alt="" />
         </div>
-        <div class="icontop" v-f="displayMode == 1" @click="changeMode(2)">
+        <div class="icontop" v-if="displayMode == 1" @click="changeMode(2)">
           <img src="../../public/image/thumbnail.svg" alt="" />
         </div>
-        <div class="icontop" v-f="displayMode == 2">
-          <img src="../../public/image/thumbnail.svg" alt="" />
+        <div class="icontop" v-if="displayMode == 2">
+          <img src="../../public/image/thumbnailblue.svg" alt="" />
         </div>
         <div class="addbtn" @click="addNewBtn()">
           <div class="row" style="padding-top: 5px; padding-left: 5px">

@@ -10,7 +10,7 @@
     >
       <div class="textinbaloon">
         <div class="bigFont" align="center">
-          Welcome Aunny<br />get more some wine.
+          Welcome guys<br />get more some wine.
         </div>
         <div align="center">กดแทบด้านซ้ายเพื่อทำรายการ</div>
       </div>
@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     loadData() {
-      this.bgPic = this.serverpath + "image/bgwelcome.jpg";
+      this.bgPic = this.serverpath + "image/bgwelcome.jpg?1";
       this.baloonPic = this.serverpath + "image/baloon.png";
       console.log(this.bgPic);
     },

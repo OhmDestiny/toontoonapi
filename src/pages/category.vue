@@ -35,16 +35,21 @@
       >
         <div class="colTable font18" align="center">{{ index + 1 }}</div>
         <div class="colTable2 q-pl-xl font18">{{ item.name }}</div>
-        <div
-          class="colTable onlineBTN"
-          align="center"
-          @click="changeCategoryData(item.catid, item.online)"
-        >
-          <div class="" v-if="item.online == 1">
-            <img src="../../public/image/online_btn.svg" alt="" />
+        <div class="colTable" align="center">
+          <div
+            class="onlinebtn"
+            @click="changeCategoryData(item.catid, item.online)"
+            v-if="item.online == 1"
+          >
+            Online
           </div>
-          <div class="" v-else>
-            <img src="../../public/image/offline_btn.svg" alt="" />
+
+          <div
+            class="offlinebtn"
+            @click="changeCategoryData(item.catid, item.online)"
+            v-else
+          >
+            offline
           </div>
         </div>
         <div
@@ -128,7 +133,7 @@
             <hr style="width: 400px" />
             <div align="center">
               <div class="font16">
-                คุณต้องการลบผู้ใช้งาน:
+                คุณต้องการลบหมวดหมู่ :
                 <i>{{ deleteItem.name }}</i
                 >?
               </div>
@@ -296,7 +301,7 @@ export default {
         this.loadData();
         this.addNewDialog = false;
         this.categoryName = "";
-        this.greenNotify("เพิ่มหมวดหมู่");
+        this.greenNotify("เพิ่มหมวดหมู่สำเร็จ");
       }
     },
     delFormBtn(id, name) {
@@ -410,9 +415,7 @@ export default {
 .iconDiv {
   cursor: pointer;
 }
-.onlineBTN {
-  cursor: pointer;
-}
+
 .stripRow {
   background-color: rgba($color: #7291ff, $alpha: 0.15);
 }
@@ -430,5 +433,27 @@ export default {
 }
 .backdrop {
   background-color: rgba($color: #535353, $alpha: 0.8);
+}
+.onlinebtn {
+  font-size: 12px;
+  color: #1f8616;
+  border: 1px solid #1f8616;
+  width: 60px;
+  height: 25px;
+  line-height: 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: auto;
+}
+.offlinebtn {
+  font-size: 12px;
+  color: #ec5454;
+  border: 1px solid #ec5454;
+  width: 60px;
+  height: 25px;
+  line-height: 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: auto;
 }
 </style>

@@ -12,167 +12,6 @@
           <q-icon size="21px" name="fa-solid fa-plus" />
           <div class="font16">เพิ่มผู้ใช้งาน</div>
         </div>
-        <!-- ad new user dialog -->
-        <q-dialog v-model="addNewUserDia" persistent>
-          <q-card style="width: 700px; max-width: 80vw">
-            <q-card-section>
-              <div class="row">
-                <div class="col"></div>
-                <div class="q-pt-md">
-                  <img src="../../public/image/alertAdd.svg" alt="" />
-                </div>
-                <div style="width: 15px"></div>
-                <div class="font22 q-pt-md" align="center">เพิ่มผู้ใช้งาน</div>
-                <div align="center"></div>
-                <div class="col"></div>
-              </div>
-              <hr style="width: " />
-            </q-card-section>
-            <q-card-section>
-              <div class="row items-center">
-                <div
-                  class="font18 col-2"
-                  style="padding-left: 15px"
-                  align="left"
-                >
-                  ชื่อผู้ใช้งาน
-                </div>
-                <div class="col-1"></div>
-                <q-input
-                  class="col"
-                  style="width: 410px:"
-                  outlined
-                  v-model.trim="input.username"
-                  dense
-                />
-                <div style="padding-right: 10px"></div>
-              </div>
-              <div class="row items-center q-pt-lg">
-                <div
-                  class="font18 col-2"
-                  style="padding-left: 16px"
-                  align="left"
-                >
-                  รหัสผ่าน
-                </div>
-                <div class="col-1"></div>
-                <q-input
-                  class="col"
-                  style=""
-                  outlined
-                  v-model.trim="input.password"
-                  dense
-                />
-                <div style="padding-right: 10px"></div>
-              </div>
-              <div class="row">
-                <div class="col-3"></div>
-                <div class="font14" style="color: #646464">
-                  ต้องมีอักษรอย่างน้อย 6 ตัว
-                </div>
-              </div>
-              <!-- radio -->
-              <div class="row q-pt-md">
-                <div
-                  class="font18 col-2"
-                  style="padding-left: 15px"
-                  align="left"
-                >
-                  การเข้าถึง
-                </div>
-                <div class="" style="width: 45px"></div>
-                <div>
-                  <div class="font16px">
-                    <q-checkbox v-model="userAccess.book" />
-                    หนังสือ
-                  </div>
-                  <div class="font16px">
-                    <q-checkbox v-model="userAccess.category" />
-                    หมวดหมู่
-                  </div>
-                  <div class="font16px">
-                    <q-checkbox v-model="userAccess.rank" />
-                    อันดับ
-                  </div>
-                  <div class="font16px">
-                    <q-checkbox v-model="userAccess.ads" />
-                    โฆษณา
-                  </div>
-                  <div class="font16px">
-                    <q-checkbox v-model="userAccess.admin" />
-                    ผู้ใช้งาน
-                  </div>
-                </div>
-              </div>
-            </q-card-section>
-            <q-card-actions align="center">
-              <div class="row">
-                <div
-                  class="cancelAdNewUserDiaBtn"
-                  @click="closeAddNewUserDia()"
-                  align="center"
-                >
-                  ยกเลิก
-                </div>
-                <div style="width: 20px"></div>
-                <div
-                  @click="submitUpdateUser()"
-                  class="submitAdNewUserDiaBtn"
-                  align="center"
-                >
-                  ตกลง
-                </div>
-              </div>
-            </q-card-actions>
-            <br />
-          </q-card>
-        </q-dialog>
-
-        <!-- alert delete dialog  -->
-        <q-dialog v-model="delUserDia" persistent>
-          <q-card>
-            <q-card-section>
-              <div class="items-center">
-                <div class="row">
-                  <div class="col"></div>
-                  <img src="../../public/image/alertBinIcon.svg" alt="" />
-                  <div style="width: 15px"></div>
-                  <div class="font22">ลบผู้ใช้งาน</div>
-                  <div class="col"></div>
-                </div>
-              </div>
-
-              <hr style="width: 400px" />
-              <div align="center">
-                <div>
-                  คุณต้องการลบผู้ใช้งาน:
-                  <i>{{ delItem.name }}</i
-                  >?
-                </div>
-              </div>
-            </q-card-section>
-            <q-card-actions align="center">
-              <div class="row">
-                <div
-                  class="cancelAdNewUserDiaBtn"
-                  @click="closeDelUserDia()"
-                  align="center"
-                >
-                  ยกเลิก
-                </div>
-                <div style="width: 20px"></div>
-                <div
-                  @click="confirmDelUserBtn()"
-                  class="submitAdNewUserDiaBtn"
-                  align="center"
-                >
-                  ลบ
-                </div>
-              </div>
-            </q-card-actions>
-            <br />
-          </q-card>
-        </q-dialog>
       </div>
       <!-- table header -->
       <div class="q-pt-xl row">
@@ -235,7 +74,155 @@
       </div>
       <div class="fullscreen backdrop" v-if="showBackDrop"></div>
     </div>
+    <!-- ad new user dialog -->
+    <q-dialog v-model="addNewUserDia" persistent>
+      <q-card style="width: 700px; max-width: 80vw">
+        <q-card-section>
+          <div class="row">
+            <div class="col"></div>
+            <div class="">
+              <img src="../../public/image/alertAdd.svg" alt="" />
+            </div>
+            <div style="width: 15px"></div>
+            <div class="font22" align="center">เพิ่มผู้ใช้งาน</div>
+            <div align="center"></div>
+            <div class="col"></div>
+          </div>
+          <hr style="width: " />
+        </q-card-section>
+        <q-card-section>
+          <div class="row items-center">
+            <div class="font18 col-2" style="padding-left: 15px" align="left">
+              ชื่อผู้ใช้งาน
+            </div>
+            <div class="col-1"></div>
+            <q-input
+              class="col"
+              style="width: 410px:"
+              outlined
+              v-model.trim="input.username"
+              dense
+            />
+            <div style="padding-right: 10px"></div>
+          </div>
+          <div class="row items-center q-pt-lg">
+            <div class="font18 col-2" style="padding-left: 16px" align="left">
+              รหัสผ่าน
+            </div>
+            <div class="col-1"></div>
+            <q-input
+              class="col"
+              style=""
+              outlined
+              v-model.trim="input.password"
+              dense
+            />
+            <div style="padding-right: 10px"></div>
+          </div>
+          <div class="row">
+            <div class="col-3"></div>
+            <div class="font14" style="color: #646464">
+              ต้องมีอักษรอย่างน้อย 6 ตัว
+            </div>
+          </div>
+          <!-- radio -->
+          <div class="row q-pt-md">
+            <div class="font18 col-2" style="padding-left: 15px" align="left">
+              การเข้าถึง
+            </div>
+            <div class="" style="width: 45px"></div>
+            <div>
+              <div class="font16px">
+                <q-checkbox v-model="userAccess.book" />
+                หนังสือ
+              </div>
+              <div class="font16px">
+                <q-checkbox v-model="userAccess.category" />
+                หมวดหมู่
+              </div>
+              <div class="font16px">
+                <q-checkbox v-model="userAccess.rank" />
+                อันดับ
+              </div>
+              <div class="font16px">
+                <q-checkbox v-model="userAccess.ads" />
+                โฆษณา
+              </div>
+              <div class="font16px">
+                <q-checkbox v-model="userAccess.admin" />
+                ผู้ใช้งาน
+              </div>
+            </div>
+          </div>
+        </q-card-section>
+        <q-card-actions align="center">
+          <div class="row">
+            <div
+              class="cancelAdNewUserDiaBtn"
+              @click="closeAddNewUserDia()"
+              align="center"
+            >
+              ยกเลิก
+            </div>
+            <div style="width: 20px"></div>
+            <div
+              @click="submitUpdateUser()"
+              class="submitAdNewUserDiaBtn"
+              align="center"
+            >
+              ตกลง
+            </div>
+          </div>
+        </q-card-actions>
+        <br />
+      </q-card>
+    </q-dialog>
 
+    <!-- alert delete dialog  -->
+    <q-dialog v-model="delUserDia" persistent>
+      <q-card>
+        <q-card-section>
+          <div class="items-center">
+            <div class="row">
+              <div class="col"></div>
+              <img src="../../public/image/alertBinIcon.svg" alt="" />
+              <div style="width: 15px"></div>
+              <div class="font22">ลบผู้ใช้งาน</div>
+              <div class="col"></div>
+            </div>
+          </div>
+
+          <hr style="width: 400px" />
+          <div align="center">
+            <div>
+              คุณต้องการลบผู้ใช้งาน:
+              <i>{{ delItem.name }}</i
+              >?
+            </div>
+          </div>
+        </q-card-section>
+        <q-card-actions align="center">
+          <div class="row">
+            <div
+              class="cancelAdNewUserDiaBtn"
+              @click="closeDelUserDia()"
+              align="center"
+            >
+              ยกเลิก
+            </div>
+            <div style="width: 20px"></div>
+            <div
+              @click="confirmDelUserBtn()"
+              class="submitAdNewUserDiaBtn"
+              align="center"
+            >
+              ลบ
+            </div>
+          </div>
+        </q-card-actions>
+        <br />
+      </q-card>
+    </q-dialog>
     <!-- problem dialog  -->
     <q-dialog v-model="problemAlertDia" persistent>
       <q-card>
@@ -269,11 +256,11 @@
         <q-card-section>
           <div class="row">
             <div class="col"></div>
-            <div class="q-pt-md">
+            <div>
               <img src="../../public/image/alertEditPenIcon.svg" alt="" />
             </div>
             <div style="width: 15px"></div>
-            <div class="font22 q-pt-md" align="center">แก้ไขผู้ใช้งาน</div>
+            <div class="font22" align="center">แก้ไขผู้ใช้งาน</div>
             <div align="center"></div>
             <div class="col"></div>
           </div>
@@ -488,6 +475,7 @@ export default {
         this.$q.localStorage.clear();
       } else {
         this.userData = res.data;
+        this.userData.sort((a, b) => (a.username > b.username ? 1 : -1));
       }
     },
     // เพื่มผู้ใช้งาน
@@ -527,7 +515,6 @@ export default {
         return;
       }
 
-      // console.log(this.userAccess);
       let key = this.$q.localStorage.getItem("key");
       let dataSend = {
         key: key,
