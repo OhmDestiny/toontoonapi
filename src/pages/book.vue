@@ -49,7 +49,7 @@ export default {
           dateBook: "2020/04/01 18:00",
           bookName: "Bleach เทพมรณะ",
           coverpic: "01.jpg",
-          status: "online",
+          status: 1,
           episode: "12",
           click: 160,
         },
@@ -58,7 +58,7 @@ export default {
           dateBook: "2020/04/02 18:00",
           bookName: "Dragon ball",
           coverpic: "02.jpg",
-          status: "online",
+          status: 1,
           episode: "65",
           click: 260,
         },
@@ -67,7 +67,7 @@ export default {
           dateBook: "2020/04/05 18:00",
           bookName: "One Piece วันพีช",
           coverpic: "03.jpg",
-          status: "offline",
+          status: 0,
           episode: "42",
           click: 560,
         },
@@ -77,7 +77,7 @@ export default {
           bookName:
             "เกิดใหม่ทั้งทีก็กลายเป็นสไลม์ไปซะแล้ว! เกิดใหม่ทั้งทีก็กลายเป็นสไลม์ไปซะแล้ว!",
           coverpic: "03.jpg",
-          status: "offline",
+          status: 0,
           episode: "120",
           click: 56000,
         },
@@ -86,7 +86,7 @@ export default {
           dateBook: "2020/05/01 18:00",
           bookName: "เกิดใหม่ทั้งทีก็กลายเป็นสไลม์ไปซะแล้ว!",
           coverpic: "03.jpg",
-          status: "offline",
+          status: 0,
           episode: "120",
           click: 560,
         },
@@ -95,15 +95,28 @@ export default {
   },
   methods: {
     async loadData(page, catid) {
+      this.dataBook = [];
       let key = this.$q.localStorage.getItem("key");
       let dataTemp = {
         key: key,
         page: page,
         cat: catid,
       };
+      console.log(dataTemp);
       let url = this.serverpath + "loaddatawithpageandcat.php";
       let res = await axios.post(url, JSON.stringify(dataTemp));
-      console.log(res.data);
+      res.data.forEach((item) => {
+        let dataTemp = {
+          bookId: item.bookid,
+          dateBook: item.timestamp,
+          bookName: item.title,
+          coverpic: item.bookid + ".jpg",
+          status: Number(item.online),
+          episode: Number(item.lastchapter),
+          click: Number(item.view),
+        };
+        this.dataBook.push(dataTemp);
+      });
     },
     searchDataOut(dataOut) {
       this.displayMode = dataOut.displayMode;

@@ -97,6 +97,10 @@ export default {
       let key = this.$q.localStorage.getItem("key");
       let dataSend = { key: key };
       let url = this.serverpath + "categorylist.php";
+      this.categoryList.push({
+        label: "ทั้งหมด",
+        value: 0,
+      });
       let res = await axios.post(url, JSON.stringify(dataSend));
       res.data.forEach((item) => {
         let dataTemp = {
