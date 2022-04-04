@@ -101,3 +101,22 @@ body {
 .bgdrop {
   background-color: rgba($color: #535353, $alpha: 0.8);
 }
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(228, 225, 225, 0.3);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ebebeb;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

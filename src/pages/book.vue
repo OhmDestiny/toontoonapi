@@ -4,7 +4,7 @@
     style="width: 100%; max-width: 1600px; margin: auto"
   >
     <div><top-bar @searchDataOut="searchDataOut"></top-bar></div>
-    <div class="row">
+    <div class="row mainShow">
       <div
         class="col-3 q-pa-md"
         align="center"
@@ -51,29 +51,54 @@ export default {
           click: 560,
         },
         {
-          bookId: 3,
+          bookId: 4,
           bookName:
             "เกิดใหม่ทั้งทีก็กลายเป็นสไลม์ไปซะแล้ว! เกิดใหม่ทั้งทีก็กลายเป็นสไลม์ไปซะแล้ว!",
           coverpic: "03.jpg",
           status: "offline",
-          episode: "42",
+          episode: "120",
+          click: 56000,
+        },
+        {
+          bookId: 5,
+          bookName: "เกิดใหม่ทั้งทีก็กลายเป็นสไลม์ไปซะแล้ว!",
+          coverpic: "03.jpg",
+          status: "offline",
+          episode: "120",
           click: 560,
         },
       ],
     };
   },
   methods: {
+    async loadData(page, catid) {
+      let dataTemp = {
+        key: key,
+        page: page,
+        cat: catid,
+      };
+      let url = this.serverpath + "loaddatawithpageandcat.php";
+      let res = await axios.post(url, JSON.stringify(this.input));
+    },
     searchDataOut(dataOut) {
       console.log("searchText: " + dataOut.searchText);
       console.log("searchCat: " + dataOut.searchCat.value);
       console.log("DisplayMode: " + dataOut.displayMode);
     },
   },
+
+  mounted() {
+    this.loadData(1, 0);
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .bookShow {
+  overflow-y: auto;
+}
+.mainShow {
+  height: calc(100vh - 120px);
   overflow-y: auto;
 }
 </style>
