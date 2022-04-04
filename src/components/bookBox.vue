@@ -17,13 +17,6 @@
           <div class="q-px-sm cursor-pointer">
             <img src="../../public/image/edit_symbol.svg" alt="" />
           </div>
-          <div class="cursor-pointer">
-            <img
-              src="../../public/image/plus.svg"
-              alt=""
-              style="height: 20px"
-            />
-          </div>
         </div>
       </div>
       <div class="row q-pb-sm">

@@ -88,7 +88,7 @@ export default {
       showBackDrop: false,
       searchText: "",
       searchTextFinal: "",
-      displayMode: 1, //1=ist mode , 2=thumb nail mode
+      displayMode: 1, //1=list mode , 2=thumb nail mode
     };
   },
   methods: {
