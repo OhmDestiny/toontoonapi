@@ -94,6 +94,10 @@ export default {
     };
   },
   methods: {
+    // statusUpdateBtn(status, id) {
+    //   console.log("test");
+    //   console.log(status, id);
+    // },
     async loadData(page, catid) {
       this.dataBook = [];
       let key = this.$q.localStorage.getItem("key");
@@ -106,11 +110,13 @@ export default {
       let url = this.serverpath + "loaddatawithpageandcat.php";
       let res = await axios.post(url, JSON.stringify(dataTemp));
       res.data.forEach((item) => {
+        let dataLink = this.serverpath + "cover/" + item.bookid + ".jpg";
+        console.log(dataLink);
         let dataTemp = {
           bookId: item.bookid,
           dateBook: item.timestamp,
           bookName: item.title,
-          coverpic: item.bookid + ".jpg",
+          coverpic: dataLink,
           status: Number(item.online),
           episode: Number(item.lastchapter),
           click: Number(item.view),
@@ -122,7 +128,6 @@ export default {
       this.displayMode = dataOut.displayMode;
       console.log("searchText: " + dataOut.searchText);
       console.log("searchCat: " + dataOut.searchCat.value);
-      console.log("DisplayMode: " + dataOut.displayMode);
     },
   },
 
