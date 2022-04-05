@@ -113,7 +113,7 @@
               <div class="iconDiv">
                 <img src="../../public/image/adsblue.svg" alt="" />
               </div>
-              <div class="labelDivBlue">โฆษณา</div>
+              <div class="labelDivBlue" style="padding-top: 5px">โฆษณา</div>
             </div>
             <hr style="width: 270px" />
           </div>
