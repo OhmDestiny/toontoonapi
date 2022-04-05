@@ -36,69 +36,94 @@
 
     <!-- ads ratio -->
     <div class="row justify-evenly">
-      <div class="adsBG scrollBar q-pl-sm q-pt-md font16">
-        <div class="font22">สัดส่วนการโฆษณาบนเว็บไซต์</div>
-
-        <!-- finnBett lotto -->
-        <div class="q-pt-md row items-center">
-          FinnBet หวยอันดับหนึ่ง [ทั่วไป]
-          <div class="q-pl-md q-pt-xs">
-            <q-slider
-              v-model="finnBettlotto"
-              style="width: 202px"
-              :min="0"
-              :max="100"
-              :step="1"
-              dense
-            />
+      <div class="adsBG scrollBar q-pl-sm q-pt-md">
+        <div class="font22 q-pl-sm">สัดส่วนการโฆษณาบนเว็บไซต์</div>
+        <div class="row items-center q-pt-lg">
+          <!-- finnBett lotto -->
+          <div class="col-6 font16 q-pl-sm">
+            FinnBet หวยอันดับหนึ่ง [ทั่วไป]
           </div>
+          <q-slider
+            v-model="finnBettlotto"
+            style="width: 202px"
+            :min="0"
+            :max="100"
+            :step="1"
+            dense
+          />
           <div class="averageBox" align="center">
             {{ finnBettlotto }}
           </div>
         </div>
-        <div style="height: 25px"></div>
+        <div style="height: 35px"></div>
 
-        <!-- slot games -->
-        <div class="q-pt-md row items-center">
-          สล็อตหยุดจักรวาล [เกม/สล็อต]
-          <div class="q-pl-md q-pt-xs">
-            <q-slider
-              v-model="slotGames"
-              style="width: 202px"
-              :min="0"
-              :max="100"
-              :step="1"
-              dense
-            />
-          </div>
+        <div class="row items-center">
+          <!-- slot games -->
+          <div class="col-6 font16 q-pl-sm">สล็อตหยุดจักรวาล [เกม/สล็อต]</div>
+          <q-slider
+            v-model="slotGames"
+            style="width: 202px"
+            :min="0"
+            :max="100"
+            :step="1"
+            dense
+          />
           <div class="averageBox" align="center">
             {{ slotGames }}
           </div>
         </div>
-        <div style="height: 25px"></div>
+        <div style="height: 35px"></div>
 
-        <!-- lotto shutdown the world -->
-        <div class="q-pt-md row" items-center>
-          หวยหยุดโลก [หวย]
-          <div class="q-pl-md q-pt-xs">
-            <q-slider
-              v-model="worldSlot"
-              style="width: 202px"
-              :min="0"
-              :max="100"
-              :step="1"
-              dense
-            />
-          </div>
+        <div class="row items-center">
+          <!-- lotto shutdown the world -->
+          <div class="col-6 font16 q-pl-sm">หวยหยุดโลก [หวย]</div>
+          <q-slider
+            v-model="worldSlot"
+            style="width: 202px"
+            :min="0"
+            :max="100"
+            :step="1"
+            dense
+          />
           <div class="averageBox" align="center">
             {{ worldSlot }}
           </div>
         </div>
-        <div style="height: 25px"></div>
-        <div>คาสิโนไม่ say no [คาสิโน]</div>
-        <div style="height: 25px"></div>
-        <div>แทงบอล [แทงบอล]</div>
-        <div style="height: 25px"></div>
+        <div style="height: 35px"></div>
+
+        <div class="row items-center">
+          <!-- casino never say no -->
+          <div class="col-6 font16 q-pl-sm">คาสิโนไม่ say no [คาสิโน]</div>
+          <q-slider
+            v-model="casioNeversayno"
+            style="width: 202px"
+            :min="0"
+            :max="100"
+            :step="1"
+            dense
+          />
+          <div class="averageBox" align="center">
+            {{ casioNeversayno }}
+          </div>
+        </div>
+        <div style="height: 35px"></div>
+
+        <div class="row items-center">
+          <!-- soccerbetting -->
+          <div class="col-6 font16 q-pl-sm">แทงบอล [แทงบอล]</div>
+          <q-slider
+            v-model="soccerBet"
+            style="width: 202px"
+            :min="0"
+            :max="100"
+            :step="1"
+            dense
+          />
+          <div class="averageBox" align="center">
+            {{ soccerBet }}
+          </div>
+        </div>
+        <div style="height: 35px"></div>
       </div>
       <!-- ads graph ratio -->
       <div class="adsBG">
@@ -116,12 +141,340 @@
     </div>
     <div class="mainPadding">
       <!-- finnbet games -->
-      <div>
-        <div>FinnBet หวยอันดับหนึ่ง [เกม/สล็อต]</div>
+      <div class="q-pt-md">
+        <div class="font22">FinnBet หวยอันดับหนึ่ง [เกม/สล็อต]</div>
+        <div class="row justify-evenly q-pt-lg">
+          <!-- bannerPC -->
+          <div class="smallAdsBG q-pt-sm">
+            <div class="row justify-between">
+              <div class="q-pl-lg font22">PC</div>
+              <div
+                class="q-pr-lg"
+                style="padding-top: 5px"
+                @click="searchBtn()"
+              >
+                <img
+                  style="height: 19px"
+                  src="../../public/image/searchBtn.svg"
+                  alt="searchIcon"
+                />
+              </div>
+            </div>
+            <div class="row q-pl-lg">
+              <img
+                style="width: 295px; height: 100px"
+                src="../../public/image/finnbetads/finnbetAds1.png"
+                alt="searchIcon"
+              />
+              <div class="q-pt-md font16">ยอดคนคลิก</div>
+              <div class="q-pt-md q-pl-sm font16">2510 คลิก</div>
+            </div>
+          </div>
+          <!-- bannerTablet -->
+          <div class="smallAdsBG q-pt-sm">
+            <div class="row justify-between">
+              <div class="q-pl-lg font22">Tablet</div>
+              <div
+                class="q-pr-lg"
+                style="padding-top: 5px"
+                @click="searchBtn()"
+              >
+                <img
+                  style="height: 19px"
+                  src="../../public/image/searchBtn.svg"
+                  alt="searchIcon"
+                />
+              </div>
+            </div>
+            <div class="row q-pl-lg">
+              <img
+                style="width: 295px; height: 100px"
+                src="../../public/image/finnbetads/finnbetAds1.png"
+                alt="searchIcon"
+              />
+              <div class="q-pt-md font16">ยอดคนคลิก</div>
+              <div class="q-pt-md q-pl-sm font16">2510 คลิก</div>
+            </div>
+          </div>
+          <!-- bannerMobile -->
+          <div class="smallAdsBG q-pt-sm">
+            <div class="row justify-between">
+              <div class="q-pl-lg font22">Mobile</div>
+              <div
+                class="q-pr-lg"
+                style="padding-top: 5px"
+                @click="searchBtn()"
+              >
+                <img
+                  style="height: 19px"
+                  src="../../public/image/searchBtn.svg"
+                  alt="searchIcon"
+                />
+              </div>
+            </div>
+            <div class="row q-pl-lg">
+              <img
+                style="width: 295px; height: 100px"
+                src="../../public/image/finnbetads/finnbetAds1.png"
+                alt="searchIcon"
+              />
+              <div class="q-pt-md font16">ยอดคนคลิก</div>
+              <div class="q-pt-md q-pl-sm font16">2510 คลิก</div>
+            </div>
+          </div>
+        </div>
       </div>
       <!-- finnBet lottery -->
-      <div>
-        <div>FinnBet หวยอันดับหนึ่ง [หวย]</div>
+      <div class="q-pt-lg">
+        <div class="font22">FinnBet หวยอันดับหนึ่ง [หวย]</div>
+        <div class="row justify-evenly q-pt-lg">
+          <!-- bannerPC -->
+          <div class="smallAdsBG q-pt-sm">
+            <div class="row justify-between">
+              <div class="q-pl-lg font22">PC</div>
+              <div
+                class="q-pr-lg"
+                style="padding-top: 5px"
+                @click="searchBtn()"
+              >
+                <img
+                  style="height: 19px"
+                  src="../../public/image/searchBtn.svg"
+                  alt="searchIcon"
+                />
+              </div>
+            </div>
+            <div class="row q-pl-lg">
+              <img
+                style="width: 295px; height: 100px"
+                src="../../public/image/finnbetads/finnbetAds2.png"
+                alt="searchIcon"
+              />
+              <div class="q-pt-md font16">ยอดคนคลิก</div>
+              <div class="q-pt-md q-pl-sm font16">2510 คลิก</div>
+            </div>
+          </div>
+          <!-- bannerTablet -->
+          <div class="smallAdsBG q-pt-sm">
+            <div class="row justify-between">
+              <div class="q-pl-lg font22">Tablet</div>
+              <div
+                class="q-pr-lg"
+                style="padding-top: 5px"
+                @click="searchBtn()"
+              >
+                <img
+                  style="height: 19px"
+                  src="../../public/image/searchBtn.svg"
+                  alt="searchIcon"
+                />
+              </div>
+            </div>
+            <div class="row q-pl-lg">
+              <img
+                style="width: 295px; height: 100px"
+                src="../../public/image/finnbetads/finnbetAds2.png"
+                alt="searchIcon"
+              />
+              <div class="q-pt-md font16">ยอดคนคลิก</div>
+              <div class="q-pt-md q-pl-sm font16">2510 คลิก</div>
+            </div>
+          </div>
+          <!-- bannerMobile -->
+          <div class="smallAdsBG q-pt-sm">
+            <div class="row justify-between">
+              <div class="q-pl-lg font22">Mobile</div>
+              <div
+                class="q-pr-lg"
+                style="padding-top: 5px"
+                @click="searchBtn()"
+              >
+                <img
+                  style="height: 19px"
+                  src="../../public/image/searchBtn.svg"
+                  alt="searchIcon"
+                />
+              </div>
+            </div>
+            <div class="row q-pl-lg">
+              <img
+                style="width: 295px; height: 100px"
+                src="../../public/image/finnbetads/finnbetAds2.png"
+                alt="searchIcon"
+              />
+              <div class="q-pt-md font16">ยอดคนคลิก</div>
+              <div class="q-pt-md q-pl-sm font16">2510 คลิก</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- slotBreakUnivers -->
+      <div class="q-pt-lg">
+        <div class="font22">สล็อตหยุดจักรวาล [เกม/สล็อต]</div>
+        <div class="row justify-evenly q-pt-lg">
+          <!-- bannerPC -->
+          <div class="smallAdsBG q-pt-sm">
+            <div class="row justify-between">
+              <div class="q-pl-lg font22">PC</div>
+              <div
+                class="q-pr-lg"
+                style="padding-top: 5px"
+                @click="searchBtn()"
+              >
+                <img
+                  style="height: 19px"
+                  src="../../public/image/searchBtn.svg"
+                  alt="searchIcon"
+                />
+              </div>
+            </div>
+            <div class="row q-pl-lg">
+              <img
+                style="width: 295px; height: 100px"
+                src="../../public/image/finnbetads/finnbetAds1.png"
+                alt="searchIcon"
+              />
+              <div class="q-pt-md font16">ยอดคนคลิก</div>
+              <div class="q-pt-md q-pl-sm font16">2510 คลิก</div>
+            </div>
+          </div>
+          <!-- bannerTablet -->
+          <div class="smallAdsBG q-pt-sm">
+            <div class="row justify-between">
+              <div class="q-pl-lg font22">Tablet</div>
+              <div
+                class="q-pr-lg"
+                style="padding-top: 5px"
+                @click="searchBtn()"
+              >
+                <img
+                  style="height: 19px"
+                  src="../../public/image/searchBtn.svg"
+                  alt="searchIcon"
+                />
+              </div>
+            </div>
+            <div class="row q-pl-lg">
+              <img
+                style="width: 295px; height: 100px"
+                src="../../public/image/finnbetads/finnbetAds1.png"
+                alt="searchIcon"
+              />
+              <div class="q-pt-md font16">ยอดคนคลิก</div>
+              <div class="q-pt-md q-pl-sm font16">2510 คลิก</div>
+            </div>
+          </div>
+          <!-- bannerMobile -->
+          <div class="smallAdsBG q-pt-sm">
+            <div class="row justify-between">
+              <div class="q-pl-lg font22">Mobile</div>
+              <div
+                class="q-pr-lg"
+                style="padding-top: 5px"
+                @click="searchBtn()"
+              >
+                <img
+                  style="height: 19px"
+                  src="../../public/image/searchBtn.svg"
+                  alt="searchIcon"
+                />
+              </div>
+            </div>
+            <div class="row q-pl-lg">
+              <img
+                style="width: 295px; height: 100px"
+                src="../../public/image/finnbetads/finnbetAds1.png"
+                alt="searchIcon"
+              />
+              <div class="q-pt-md font16">ยอดคนคลิก</div>
+              <div class="q-pt-md q-pl-sm font16">2510 คลิก</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- lottoStoptheworld -->
+      <div class="q-pt-lg">
+        <div class="font22">สล็อตหยุดจักรวาล [เกม/สล็อต]</div>
+        <div class="row justify-evenly q-pt-lg">
+          <!-- bannerPC -->
+          <div class="smallAdsBG q-pt-sm">
+            <div class="row justify-between">
+              <div class="q-pl-lg font22">PC</div>
+              <div
+                class="q-pr-lg"
+                style="padding-top: 5px"
+                @click="searchBtn()"
+              >
+                <img
+                  style="height: 19px"
+                  src="../../public/image/searchBtn.svg"
+                  alt="searchIcon"
+                />
+              </div>
+            </div>
+            <div class="row q-pl-lg">
+              <img
+                style="width: 295px; height: 100px"
+                src="../../public/image/finnbetads/finnbetAds2.png"
+                alt="searchIcon"
+              />
+              <div class="q-pt-md font16">ยอดคนคลิก</div>
+              <div class="q-pt-md q-pl-sm font16">2510 คลิก</div>
+            </div>
+          </div>
+          <!-- bannerTablet -->
+          <div class="smallAdsBG q-pt-sm">
+            <div class="row justify-between">
+              <div class="q-pl-lg font22">Tablet</div>
+              <div
+                class="q-pr-lg"
+                style="padding-top: 5px"
+                @click="searchBtn()"
+              >
+                <img
+                  style="height: 19px"
+                  src="../../public/image/searchBtn.svg"
+                  alt="searchIcon"
+                />
+              </div>
+            </div>
+            <div class="row q-pl-lg">
+              <img
+                style="width: 295px; height: 100px"
+                src="../../public/image/finnbetads/finnbetAds2.png"
+                alt="searchIcon"
+              />
+              <div class="q-pt-md font16">ยอดคนคลิก</div>
+              <div class="q-pt-md q-pl-sm font16">2510 คลิก</div>
+            </div>
+          </div>
+          <!-- bannerMobile -->
+          <div class="smallAdsBG q-pt-sm">
+            <div class="row justify-between">
+              <div class="q-pl-lg font22">Mobile</div>
+              <div
+                class="q-pr-lg"
+                style="padding-top: 5px"
+                @click="searchBtn()"
+              >
+                <img
+                  style="height: 19px"
+                  src="../../public/image/searchBtn.svg"
+                  alt="searchIcon"
+                />
+              </div>
+            </div>
+            <div class="row q-pl-lg">
+              <img
+                style="width: 295px; height: 100px"
+                src="../../public/image/finnbetads/finnbetAds2.png"
+                alt="searchIcon"
+              />
+              <div class="q-pt-md font16">ยอดคนคลิก</div>
+              <div class="q-pt-md q-pl-sm font16">2510 คลิก</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -134,6 +487,8 @@ export default {
       finnBettlotto: 40,
       slotGames: 10,
       worldSlot: 15,
+      casioNeversayno: 15,
+      soccerBet: 20,
     };
   },
   methods: {
@@ -146,6 +501,7 @@ export default {
     addInventoryBTN() {
       this.$router.push("/adsinventory");
     },
+    searchBtn() {},
   },
 };
 </script>
@@ -167,6 +523,12 @@ export default {
   border-radius: 5px;
   background-color: white;
 }
+.smallAdsBG {
+  width: 340px;
+  height: 190px;
+  border-radius: 5px;
+  background-color: white;
+}
 .scrollBar {
   overflow-y: auto;
 }
@@ -178,5 +540,6 @@ export default {
   color: #2d6be4;
   margin: auto;
   line-height: 30px;
+  font-size: 16px;
 }
 </style>

@@ -40,6 +40,11 @@ const routes = [
         name: "user",
       },
       {
+        path: "/bookpage/:id",
+        component: () => import("pages/bookpage.vue"),
+        name: "bookpage",
+      },
+      {
         path: "/adsinventory",
         component: () => import("pages/adsinventory.vue"),
         name: "adsinventory",
