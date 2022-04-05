@@ -15,12 +15,12 @@
         <div
           class="onlinebtn"
           v-if="data.status == 1"
-          @click="statusOnline(data.bookId, 0)"
+          @click="upStatus(0, data.bookId)"
         >
           Online
         </div>
 
-        <div class="offlinebtn" v-else @click="statusOnline(data.bookId, 1)">
+        <div class="offlinebtn" v-else @click="upStatus(1, data.bookId)">
           offline
         </div>
       </div>
@@ -28,7 +28,7 @@
         <img
           src="../../public/image/trash_symbol.svg"
           alt=""
-          @click="deleteBtn(data.bookId)"
+          @click="deleteBtn(data.bookId, data.bookName)"
         />
       </div>
       <div style="width: 100px" align="center" class="cursor-pointer">
@@ -46,11 +46,19 @@
 export default {
   props: ["data", "indexNumber"],
   methods: {
-    deleteBtn(id) {
-      console.log(id);
+    deleteBtn(id, bookName) {
+      let dataSend = {
+        id: id,
+        bookName: bookName,
+      };
+      this.$emit("clickDel", dataSend);
     },
-    statusOnline(id, status) {
-      console.log(id, status);
+    upStatus(status, id) {
+      let dataSend = {
+        status: status,
+        id: id,
+      };
+      this.$emit("clickOnline", dataSend);
     },
     bookUrl(id) {
       this.$router.push("bookpage/" + id);

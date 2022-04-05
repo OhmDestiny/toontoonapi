@@ -17,19 +17,107 @@
         </div>
         <div><hr /></div>
         <div v-for="(item, index) in dataBook" :key="index">
-          <book-list :data="item" :indexNumber="index"></book-list>
+          <book-list
+            :data="item"
+            :indexNumber="index"
+            @clickOnline="onlineClick"
+            @clickDel="deleteClick"
+          ></book-list>
+        </div>
+        <div class="q-pa-lg col-12 flex flex-center">
+          <q-pagination
+            v-model="currentPage"
+            color="primary"
+            :max="totalPage"
+            :max-pages="6"
+            boundary-numbers
+            @input="loadData()"
+          />
         </div>
       </div>
+
       <div
-        class="col-3 q-pa-md"
+        class="q-pa-md row items-start"
         align="center"
-        v-for="(item, index) in dataBook"
-        :key="index"
         v-if="displayMode == 2"
+        style="width: 100%"
       >
-        <book-box :data="item"></book-box>
+        <div
+          class="col-3 q-pa-md"
+          v-for="(item, index) in dataBook"
+          :key="index"
+          style="max-height: 490px"
+        >
+          <book-box
+            :data="item"
+            @clickOnline="onlineClick"
+            @clickDel="deleteClick"
+          ></book-box>
+        </div>
+        <div class="q-pa-lg col-12 flex flex-center">
+          <q-pagination
+            v-model="currentPage"
+            color="primary"
+            :max="totalPage"
+            :max-pages="6"
+            boundary-numbers
+            @input="loadData()"
+          />
+        </div>
+      </div>
+
+      <div v-if="totalPage < 1" align="center">
+        <div><img src="../../public/image/searchlogo.svg" alt="" /></div>
+        <div>ไม่พบข้อมูลที่ค้นหา</div>
       </div>
     </div>
+
+    <!-- alert delete dialog  -->
+    <q-dialog v-model="confirmDel" persistent>
+      <q-card>
+        <q-card-section>
+          <div class="items-center">
+            <div class="row">
+              <div class="col"></div>
+              <img src="../../public/image/alertBinIcon.svg" alt="" />
+              <div style="width: 15px"></div>
+              <div class="font18">ลบผู้ใช้งาน</div>
+              <div class="col"></div>
+            </div>
+          </div>
+
+          <hr style="width: 400px" />
+          <div align="center">
+            <div>
+              คุณต้องการลบหนังสือ:
+              <i>{{ deletBookName }}</i
+              >?
+            </div>
+          </div>
+        </q-card-section>
+        <q-card-actions align="center">
+          <div class="row">
+            <div
+              class="cancelAdNewUserDiaBtn"
+              @click="closeDelUserDia()"
+              align="center"
+            >
+              ยกเลิก
+            </div>
+            <div style="width: 20px"></div>
+            <div
+              @click="deleteClickAfterConfirm()"
+              class="submitAdNewUserDiaBtn"
+              align="center"
+            >
+              ลบ
+            </div>
+          </div>
+        </q-card-actions>
+        <br />
+      </q-card>
+    </q-dialog>
+    <div class="fullscreen backdrop" v-if="showBackDrop"></div>
   </div>
 </template>
 
@@ -43,6 +131,14 @@ export default {
   data() {
     return {
       displayMode: 1, // 1 = list view
+      currentPage: 1,
+      totalPage: 0,
+      catIdSelected: 0,
+      searchText: "",
+      confirmDel: false,
+      showBackDrop: false,
+      deleteID: "",
+      deletBookName: "",
       dataBook: [
         {
           bookId: 1,
@@ -53,65 +149,30 @@ export default {
           episode: "12",
           click: 160,
         },
-        {
-          bookId: 2,
-          dateBook: "2020/04/02 18:00",
-          bookName: "Dragon ball",
-          coverpic: "02.jpg",
-          status: 1,
-          episode: "65",
-          click: 260,
-        },
-        {
-          bookId: 3,
-          dateBook: "2020/04/05 18:00",
-          bookName: "One Piece วันพีช",
-          coverpic: "03.jpg",
-          status: 0,
-          episode: "42",
-          click: 560,
-        },
-        {
-          bookId: 4,
-          dateBook: "2020/04/08 18:00",
-          bookName:
-            "เกิดใหม่ทั้งทีก็กลายเป็นสไลม์ไปซะแล้ว! เกิดใหม่ทั้งทีก็กลายเป็นสไลม์ไปซะแล้ว!",
-          coverpic: "03.jpg",
-          status: 0,
-          episode: "120",
-          click: 56000,
-        },
-        {
-          bookId: 5,
-          dateBook: "2020/05/01 18:00",
-          bookName: "เกิดใหม่ทั้งทีก็กลายเป็นสไลม์ไปซะแล้ว!",
-          coverpic: "03.jpg",
-          status: 0,
-          episode: "120",
-          click: 560,
-        },
       ],
     };
   },
   methods: {
-    // statusUpdateBtn(status, id) {
-    //   console.log("test");
-    //   console.log(status, id);
-    // },
-    async loadData(page, catid) {
-      this.dataBook = [];
+    closeDelUserDia() {
+      this.confirmDel = false;
+      this.showBackDrop = false;
+    },
+    async loadData() {
       let key = this.$q.localStorage.getItem("key");
       let dataTemp = {
         key: key,
-        page: page,
-        cat: catid,
+        page: this.currentPage,
+        cat: this.catIdSelected,
+        searchText: this.searchText,
       };
-      console.log(dataTemp);
+      let urlTotal = this.serverpath + "loadtotalpage.php";
+      let resTotal = await axios.post(urlTotal, JSON.stringify(dataTemp));
+      this.totalPage = resTotal.data;
       let url = this.serverpath + "loaddatawithpageandcat.php";
       let res = await axios.post(url, JSON.stringify(dataTemp));
+      this.dataBook = [];
       res.data.forEach((item) => {
         let dataLink = this.serverpath + "cover/" + item.bookid + ".jpg";
-        console.log(dataLink);
         let dataTemp = {
           bookId: item.bookid,
           dateBook: item.timestamp,
@@ -124,15 +185,54 @@ export default {
         this.dataBook.push(dataTemp);
       });
     },
+    async onlineClick(dataOut) {
+      let key = this.$q.localStorage.getItem("key");
+      let dataOuttoAPI = { status: dataOut.status, id: dataOut.id, key: key };
+      let url = this.serverpath + "updateonlineBtn.php";
+      let res = await axios.post(url, JSON.stringify(dataOuttoAPI));
+      if (res.data == "go to login") {
+        this.$q.localStorage.clear();
+        this.$router.push("/");
+      } else if (res.data == "go to welcome") {
+        this.$router.push("/welcome");
+      } else {
+        this.loadData();
+      }
+    },
+    deleteClick(dataOut) {
+      this.confirmDel = true;
+      this.showBackDrop = true;
+      this.deleteID = dataOut.id;
+      this.deletBookName = dataOut.bookName;
+    },
+    async deleteClickAfterConfirm() {
+      //Confirm box
+      let key = this.$q.localStorage.getItem("key");
+      let dataOuttoAPI = { id: this.deleteID, key: key };
+      let url = this.serverpath + "deleteBookBtn.php";
+      let res = await axios.post(url, JSON.stringify(dataOuttoAPI));
+      if (res.data == "go to login") {
+        this.$q.localStorage.clear();
+        this.$router.push("/");
+      } else if (res.data == "go to welcome") {
+        this.$router.push("/welcome");
+      } else {
+        this.confirmDel = false;
+        this.showBackDrop = false;
+        this.loadData();
+      }
+    },
     searchDataOut(dataOut) {
       this.displayMode = dataOut.displayMode;
-      console.log("searchText: " + dataOut.searchText);
-      console.log("searchCat: " + dataOut.searchCat.value);
+      this.searchText = dataOut.searchText;
+      this.catIdSelected = dataOut.searchCat;
+
+      this.loadData();
     },
   },
 
   mounted() {
-    this.loadData(1, 0);
+    // this.loadData();
   },
 };
 </script>
@@ -144,5 +244,8 @@ export default {
 .mainShow {
   height: calc(100vh - 120px);
   overflow-y: auto;
+}
+.backdrop {
+  background-color: rgba($color: #535353, $alpha: 0.8);
 }
 </style>

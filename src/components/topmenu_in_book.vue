@@ -109,7 +109,8 @@ export default {
         };
         this.categoryList.push(dataTemp);
       });
-      this.categorySelected = this.categoryList[0];
+      this.categorySelected = this.categoryList[0].value;
+      this.sendDataOut();
     },
     addNewBtn() {
       this.$router.push("/addnewcartoon");
@@ -130,11 +131,12 @@ export default {
     },
     resetSearch() {
       this.searchTextFinal = "";
+      this.sendDataOut();
     },
     sendDataOut() {
       let dataSearchSendOut = {
         searchText: this.searchTextFinal,
-        searchCat: this.categorySelected,
+        searchCat: Number(this.categorySelected),
         displayMode: this.displayMode,
       };
       this.$emit("searchDataOut", dataSearchSendOut);

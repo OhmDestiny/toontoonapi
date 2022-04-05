@@ -10,20 +10,23 @@
       <div align="left" class="q-px-sm row justify-between">
         <div
           class="onlineBtn"
-          v-if="data.status == 'online'"
+          v-if="data.status == 1"
           @click="upStatus(0, data.bookId)"
         >
           Online
         </div>
         <div
           class="offlineBtn"
-          v-if="data.status != 'online'"
-          @click="upStatus(1, data.BookId)"
+          v-if="data.status != 1"
+          @click="upStatus(1, data.bookId)"
         >
           Offline
         </div>
         <div class="row">
-          <div class="cursor-pointer" @click="trashBtn(data.bookId)">
+          <div
+            class="cursor-pointer"
+            @click="deleteBtn(data.bookId, data.bookName)"
+          >
             <img src="../../public/image/trash_symbol.svg" alt="" />
           </div>
           <div class="q-px-sm cursor-pointer">
@@ -45,16 +48,20 @@ export default {
   props: ["data"],
 
   methods: {
-    trashBtn(id) {
-      console.log("trash : " + id);
-    },
-
     upStatus(status, id) {
       let dataSend = {
         status: status,
         id: id,
       };
-      this.$emit("statusBtn", dataSend);
+
+      this.$emit("clickOnline", dataSend);
+    },
+    deleteBtn(id, bookName) {
+      let dataSend = {
+        id: id,
+        bookName: bookName,
+      };
+      this.$emit("clickDel", dataSend);
     },
   },
 };
@@ -62,6 +69,8 @@ export default {
 
 <style lang="scss" scoped>
 .cartoonBox {
+  padding: 5px;
+
   width: 100%;
   aspect-ratio: 230 / 370;
   background: #ffffff;
