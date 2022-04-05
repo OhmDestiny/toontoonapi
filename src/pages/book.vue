@@ -66,9 +66,15 @@
         </div>
       </div>
 
-      <div v-if="totalPage < 1" align="center">
-        <div><img src="../../public/image/searchlogo.svg" alt="" /></div>
-        <div>ไม่พบข้อมูลที่ค้นหา</div>
+      <div v-if="totalPage < 1" align="center" style="width: 100%">
+        <div>
+          <img
+            src="../../public/image/searchlogo.svg"
+            alt=""
+            style="width: 200px"
+          />
+        </div>
+        <div>ไม่พบข้อมูลที่ค้นหา กรุณาลองค้นหาคำอื่น</div>
       </div>
     </div>
 
