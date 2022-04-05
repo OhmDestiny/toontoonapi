@@ -5,24 +5,29 @@
         {{ data.bookName }}
       </div>
       <div class="q-px-sm" align="center">
-        <img width="100%" src="../../public/poster/bleach.png" alt="" />
+        <img width="100%" :src="data.coverpic" alt="" />
       </div>
       <div align="left" class="q-px-sm row justify-between">
-        <div class="onlineBtn" v-if="data.status == 'online'">Online</div>
-        <div class="offlineBtn" v-if="data.status != 'online'">Offline</div>
+        <div
+          class="onlineBtn"
+          v-if="data.status == 'online'"
+          @click="upStatus(0, data.bookId)"
+        >
+          Online
+        </div>
+        <div
+          class="offlineBtn"
+          v-if="data.status != 'online'"
+          @click="upStatus(1, data.BookId)"
+        >
+          Offline
+        </div>
         <div class="row">
           <div class="cursor-pointer" @click="trashBtn(data.bookId)">
             <img src="../../public/image/trash_symbol.svg" alt="" />
           </div>
           <div class="q-px-sm cursor-pointer">
             <img src="../../public/image/edit_symbol.svg" alt="" />
-          </div>
-          <div class="cursor-pointer">
-            <img
-              src="../../public/image/plus.svg"
-              alt=""
-              style="height: 20px"
-            />
           </div>
         </div>
       </div>
@@ -38,9 +43,18 @@
 <script>
 export default {
   props: ["data"],
+
   methods: {
     trashBtn(id) {
       console.log("trash : " + id);
+    },
+
+    upStatus(status, id) {
+      let dataSend = {
+        status: status,
+        id: id,
+      };
+      this.$emit("statusBtn", dataSend);
     },
   },
 };

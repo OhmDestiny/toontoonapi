@@ -30,6 +30,11 @@ const routes = [
       },
       { path: "/ads", component: () => import("pages/ads.vue"), name: "ads" },
       {
+        path: "/usedads",
+        component: () => import("pages/usedads.vue"),
+        name: "usedads",
+      },
+      {
         path: "/user",
         component: () => import("pages/user.vue"),
         name: "user",
