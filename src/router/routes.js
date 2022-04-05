@@ -34,6 +34,11 @@ const routes = [
         component: () => import("pages/user.vue"),
         name: "user",
       },
+      {
+        path: "/bookpage/:id",
+        component: () => import("pages/bookpage.vue"),
+        name: "bookpage",
+      },
     ],
   },
   {
