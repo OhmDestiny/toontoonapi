@@ -29,7 +29,7 @@
           >
             <img src="../../public/image/trash_symbol.svg" alt="" />
           </div>
-          <div class="q-px-sm cursor-pointer">
+          <div class="q-px-sm cursor-pointer" @click="showDetail(data.bookId)">
             <img src="../../public/image/edit_symbol.svg" alt="" />
           </div>
         </div>
@@ -48,6 +48,9 @@ export default {
   props: ["data"],
 
   methods: {
+    showDetail(id) {
+      this.$router.push("/bookpage/" + id);
+    },
     upStatus(status, id) {
       let dataSend = {
         status: status,

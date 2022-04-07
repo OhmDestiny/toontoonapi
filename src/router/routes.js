@@ -45,6 +45,11 @@ const routes = [
         name: "bookpage",
       },
       {
+        path: "/bookedit/:id",
+        component: () => import("pages/editcartoontitle.vue"),
+        name: "bookedit",
+      },
+      {
         path: "/adsinventory",
         component: () => import("pages/adsinventory.vue"),
         name: "adsinventory",

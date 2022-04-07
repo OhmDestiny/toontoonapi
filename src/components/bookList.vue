@@ -24,19 +24,21 @@
           offline
         </div>
       </div>
-      <div style="width: 100px" align="center" class="cursor-pointer">
-        <img
-          src="../../public/image/trash_symbol.svg"
-          alt=""
-          @click="deleteBtn(data.bookId, data.bookName)"
-        />
+      <div
+        style="width: 100px"
+        align="center"
+        class="cursor-pointer"
+        @click="deleteBtn(data.bookId, data.bookName)"
+      >
+        <img src="../../public/image/trash_symbol.svg" alt="" />
       </div>
-      <div style="width: 100px" align="center" class="cursor-pointer">
-        <img
-          src="../../public/image/edit.svg"
-          alt=""
-          @click="bookUrl(data.bookId)"
-        />
+      <div
+        style="width: 100px"
+        align="center"
+        class="cursor-pointer"
+        @click="bookUrl(data.bookId)"
+      >
+        <img src="../../public/image/edit.svg" alt="" />
       </div>
     </div>
   </div>

@@ -66,7 +66,11 @@
         </div>
       </div>
 
-      <div v-if="totalPage < 1" align="center" style="width: 100%">
+      <div
+        v-if="totalPage < 1 && searchText != ''"
+        align="center"
+        style="width: 100%"
+      >
         <div>
           <img
             src="../../public/image/searchlogo.svg"
@@ -99,6 +103,7 @@
               <i>{{ deletBookName }}</i
               >?
             </div>
+            <div>ข้อมูลในแฟ้มการ์ตูนเรื่องนี้จะถูกลบทั้งหมด</div>
           </div>
         </q-card-section>
         <q-card-actions align="center">

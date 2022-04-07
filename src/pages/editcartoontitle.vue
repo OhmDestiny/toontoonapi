@@ -11,7 +11,7 @@
           alt=""
         />
       </div>
-      <div class="font32 col" align="center">เพิ่มเรื่องใหม่</div>
+      <div class="font32 col" align="center">แก้ไขเนื้อเรื่อง</div>
       <div class="blockDiv"></div>
     </div>
     <hr />
@@ -215,7 +215,7 @@
             <div>
               <div>
                 <q-input
-                  v-model.trim="input.synposis"
+                  v-model.trim="input.synopsis"
                   type="textarea"
                   outlined
                   dense
@@ -279,138 +279,31 @@ export default {
       input: {
         title: "",
         category: [],
-        synposis: "",
+        synopsis: "",
         folder: "",
         coverfile: "",
         theme: [true, false, false, false, false, false, false, false, false],
       },
       categoryList: [],
+      cartoonid: this.$route.params.id,
     };
   },
   methods: {
-    themeClick(themeid) {
-      this.input.theme[0] = false;
-      this.input.theme[1] = false;
-      this.input.theme[2] = false;
-      this.input.theme[3] = false;
-      this.input.theme[4] = false;
-      this.input.theme[5] = false;
-      this.input.theme[6] = false;
-      this.input.theme[7] = false;
-      this.input.theme[8] = false;
-      if (themeid == 1) {
-        this.input.theme[0] = true;
-      } else if (themeid == 2) {
-        this.input.theme[1] = true;
-      } else if (themeid == 3) {
-        this.input.theme[2] = true;
-      } else if (themeid == 4) {
-        this.input.theme[3] = true;
-      } else if (themeid == 5) {
-        this.input.theme[4] = true;
-      } else if (themeid == 6) {
-        this.input.theme[5] = true;
-      } else if (themeid == 7) {
-        this.input.theme[6] = true;
-      } else if (themeid == 8) {
-        this.input.theme[7] = true;
-      }
-      this.input.theme.push("1");
-      this.input.theme.pop();
-    },
-    backBtn() {
-      this.$router.push("/book");
-    },
-    async saveBtn() {
-      //Check input
-      if (
-        this.input.title.length == 0 ||
-        this.input.category.length == 0 ||
-        this.input.synposis.length == 0 ||
-        this.input.folder.length == 0 ||
-        this.input.coverfile[0] == undefined
-      ) {
-        this.redNotify("กรุณาใส่ข้อมูลให้ครบถ้วน");
-        return;
-      }
-      let categoryData = "";
-      this.input.category.forEach((x) => {
-        categoryData += "[" + x + "],";
-      });
-      let themeid;
-      if (this.input.theme[0]) {
-        themeid = 1;
-      } else if (this.input.theme[1]) {
-        themeid = 2;
-      } else if (this.input.theme[2]) {
-        themeid = 3;
-      } else if (this.input.theme[3]) {
-        themeid = 4;
-      } else if (this.input.theme[4]) {
-        themeid = 5;
-      } else if (this.input.theme[5]) {
-        themeid = 6;
-      } else if (this.input.theme[6]) {
-        themeid = 7;
-      } else if (this.input.theme[7]) {
-        themeid = 8;
-      }
-      categoryData = categoryData.slice(0, -1);
+    async loadData() {
       let key = this.$q.localStorage.getItem("key");
-      //add database
       let dataTemp = {
         key: key,
-        title: this.input.title,
-        category: categoryData,
-        synposis: this.input.synposis,
-        folder: this.input.folder,
-        coverfile: this.input.coverfile[0].name,
-        theme: themeid,
+        cartoonid: this.cartoonid,
       };
-      let url = this.serverpath + "addnewbookinfo.php";
+      let url = this.serverpath + "getbookinfo.php";
       let res = await axios.post(url, JSON.stringify(dataTemp));
-      let recordId;
-      if (res.data == "go to welcome") {
-        this.$router.push("/welcome");
-        return;
-      } else if (res.data == "go to login") {
-        this.$q.localStorage.clear();
-        this.$router.push("/");
-        return;
-      } else if (res.data == "The directory exists.") {
-        this.redNotify("แฟ้มข้อมูลนี้มีการใช้งานแล้ว");
-        return;
-      } else {
-        recordId = res.data;
-      }
-
-      //add file
-      const formData = new FormData();
-      formData.append("id", recordId);
-      formData.append("filecoverfile", this.input.coverfile[0]);
-
-      const headers = { "Content-Type": "multipart/form-data" };
-      axios.post(this.serverpath + "getimagefile.php", formData, { headers });
-      this.greenNotify("บันทึกข้อมูลเรียบร้อยแล้ว");
-      this.$router.push("/book");
-    },
-    async loadCategory() {
-      this.categoryList = [];
-      let key = this.$q.localStorage.getItem("key");
-      let dataSend = { key: key };
-      let url = this.serverpath + "categorylist.php";
-      let res = await axios.post(url, JSON.stringify(dataSend));
-      res.data.forEach((item) => {
-        let dataTemp = {
-          label: item.name,
-          value: item.catid,
-        };
-        this.categoryList.push(dataTemp);
-      });
+      this.input.title = res.data[0].title;
+      this.input.synopsis = res.data[0].synopsis;
+      console.log(res.data);
     },
   },
   mounted() {
-    this.loadCategory();
+    this.loadData();
   },
 };
 </script>

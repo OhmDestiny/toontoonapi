@@ -120,3 +120,46 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.bgbook1 {
+  background: linear-gradient(180deg, #414246 0%, #d0d1d3 100%);
+  color: white;
+}
+.bgbook2 {
+  background: linear-gradient(
+    180deg,
+    #fe0002 12.5%,
+    #000000 99.5%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  color: white;
+}
+.bgbook3 {
+  background: linear-gradient(180deg, #ff5702 0%, #ffba58 100%);
+  color: white;
+}
+.bgbook4 {
+  background: linear-gradient(
+    180deg,
+    #538e65 2.24%,
+    #fcf4bd 57.39%,
+    #f5eedc 100%
+  );
+  color: white;
+}
+.bgbook5 {
+  background: linear-gradient(180deg, #2671b2 0%, #76faff 100%);
+  color: white;
+}
+.bgbook6 {
+  background: linear-gradient(180deg, #c518a9 0%, #ffffff 100%);
+  color: white;
+}
+.bgbook7 {
+  background: linear-gradient(180deg, #fbbafa 0%, #16091a 100%);
+  color: white;
+}
+.bgbook8 {
+  background: linear-gradient(180deg, #f9e5d6 0%, #fcbe83 100%);
+  color: black;
+}

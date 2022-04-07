@@ -11,25 +11,18 @@
           alt=""
         />
       </div>
-      <div class="font32 col" align="center">One piece</div>
+      <div class="font32 col" align="center">{{ dataGet.title }}</div>
       <div class="blockDiv"></div>
     </div>
     <hr />
-
-    <div
-      class="mainPoster row"
-      :style="{ 'background-image': 'url(' + bgPic + ')' }"
-    >
+    <!-- poster -->
+    <div class="mainPoster row" :class="themeClass">
       <div class="q-pa-sm q-pt-md" style="vertical-align: middle">
-        <img
-          style="height: 90%"
-          src="../../public/poster/onepunchman.png"
-          alt=""
-        />
+        <img style="height: 90%" :src="coverPic" alt="" />
       </div>
       <div class="col text-white q-pa-sm">
         <div align="right">
-          <div class="editBtn row justify-evenly">
+          <div class="editBtn row justify-evenly" @click="editPage()">
             <img
               style="width: 15px"
               src="../../public/image/editwhite.svg"
@@ -38,44 +31,90 @@
             <div class="font18">แก้ไข</div>
           </div>
         </div>
-        <div class="font32 q-pt-lg">One Punch Man วันพันช์แมน</div>
+        <div class="font32 q-pt-lg">{{ dataGet.title }}</div>
         <div class="font16 q-pt-sm q-pr-sm">
-          รัฐฟลอริดา สหรัฐอเมริกา ปี ค.ศ. 2011
-          หลังเกิดอุบัติเหตุขณะขับรถกับคนรัก โจลีน คูโจห์ (Jolyne Cujoh)
-          ถูกตัดสินจำคุก 15
-          ปีที่เรือนจำกรีนดอลฟินสตรีทซึ่งเป็นทัณฑสถานของรัฐที่มีการรักษาความปลอดภัยอย่างเข้มงวดสูงสุดจนเรียกกันว่า
-          “อควาเรียม” ในช่วงเวลาที่ใกล้หมดหวัง เธอได้รับจี้เส้นหนึ่งจากพ่อ
-          ซึ่งทำให้พลังลึกลับบางอย่างตื่นขึ้นมาในตัวเธอ
-          “มีบางสิ่งในโลกนี้ที่น่ากลัวยิ่งกว่าความตาย
-          และหนึ่งในนั้นก็คือสิ่งที่เกิดขึ้นในคุกแห่งนี้อย่างไม่ต้องสงสัย”
-          ข้อความจากเด็กชายลึกลับที่ปรากฏต่อหน้าโจลีน
-          เหตุการณ์ลึกลับที่เกิดขึ้นอย่างต่อเนื่อง
-          ความจริงอันน่าสยดสยองที่พ่อบอกกับเธอเมื่อเขามาเยี่ยม และชื่อ “ดีโอ”
-          ในที่สุดโจลีนจะได้เป็นอิสระจากกำแพงหินกลางมหาสมุทรแห่งนี้หรือไม่
-          และการต่อสู้ครั้งสุดท้ายเพื่อยุติการเผชิญหน้าอันยาวนานนับศตวรรษระหว่างครอบครัวโจสตาร์และดีโอกำลังจะเริ่มต้นขึ้น
+          {{ dataGet.synopsis }}
         </div>
         <div class="col"></div>
-        <div class="font16 text-white footer">แอ็คชั่น | พลังวิเศษ</div>
+        <div class="font16 text-white footer">{{ categoryListText }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
-      bgPic: "",
+      coverPic: "",
+      dataGet: {
+        title: "",
+        synopsis: "",
+        category: [],
+        theme: "",
+        bookid: "",
+      },
+      cartoonid: this.$route.params.id,
+      categoryList: [],
+      categoryListText: [],
+      themeClass: "",
     };
   },
   methods: {
+    editPage() {
+      this.$router.push("/bookedit/" + this.dataGet.bookid);
+    },
+    async loadAllCat() {
+      let key = this.$q.localStorage.getItem("key");
+      let dataSend = {
+        key: key,
+      };
+      let url = this.serverpath + "loadallcat.php";
+      let res = await axios.post(url, JSON.stringify(dataSend));
+      this.categoryList = res.data;
+    },
+    covertType(data) {
+      //load all category
+      let catRaw = data.split(",");
+      let catNumberArray = catRaw.map((x) =>
+        Number(x.replace("[", "").replace("]", ""))
+      );
+      let catTextArray = catNumberArray.map((x) => {
+        return this.categoryList.filter((y) => y.catid == x)[0].name;
+      });
+      return catTextArray;
+    },
+
     backBtn() {
       this.$router.push("/book");
     },
+    async loadData() {
+      let key = this.$q.localStorage.getItem("key");
+      let dataSend = { key: key, pageid: this.cartoonid };
+      let url = this.serverpath + "cartoonDetailTitle.php";
+      let res = await axios.post(url, JSON.stringify(dataSend));
+      console.log(res.data);
+      this.dataGet.bookid = res.data[0].bookid;
+      this.dataGet.title = res.data[0].title;
+      this.dataGet.synopsis = res.data[0].synopsis;
+      this.dataGet.category = this.covertType(res.data[0].catid);
+      this.dataGet.theme = res.data[0].theme;
+      this.dataGet.category.forEach((x, index) => {
+        if (index == 0) {
+          this.categoryListText += x;
+        } else {
+          this.categoryListText += " | " + x;
+        }
+      });
+      this.themeClass = "bgbook" + this.dataGet.theme;
+      this.coverPic =
+        this.serverpath + "cover/" + res.data[0]["bookid"] + ".jpg";
+    },
   },
-  mounted() {
-    this.bgPic = "http://localhost/cartoon_api/cover/blackred.png";
-    console.log(this.$route.params.id);
+  async mounted() {
+    await this.loadAllCat();
+    this.loadData();
   },
 };
 </script>
