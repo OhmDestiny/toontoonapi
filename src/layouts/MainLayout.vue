@@ -605,19 +605,19 @@ export default {
       this.logoutDialog = true;
     },
     menuAds() {
-      this.$router.push("ads");
+      this.$router.push("/ads");
     },
     menuRank() {
-      this.$router.push("rank");
+      this.$router.push("/rank");
     },
     menuBook() {
-      this.$router.push("book");
+      this.$router.push("/book");
     },
     menuUser() {
-      this.$router.push("user");
+      this.$router.push("/user");
     },
     menuCategory() {
-      this.$router.push("category");
+      this.$router.push("/category");
     },
     async loadMenu() {
       let key = this.$q.localStorage.getItem("key");

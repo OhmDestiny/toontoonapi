@@ -248,7 +248,17 @@
             <div>ภาพหน้าปก</div>
             <div class="font12 text-grey">ขนาด 225x325px</div>
           </div>
-          <div class="col" style="padding-top: 30px">
+          <div class="col row" style="padding-top: 30px" v-if="!delFileCover">
+            <div>{{ oldFileName }}</div>
+            <div
+              style="padding-left: 5px"
+              class="cursor-pointer"
+              @click="deleteFile()"
+            >
+              <img src="../../public/image/trash_symbol.svg" alt="" />
+            </div>
+          </div>
+          <div class="col row" style="padding-top: 30px" v-else>
             <q-input
               v-model="input.coverfile"
               type="file"
@@ -268,6 +278,48 @@
         </div>
       </div>
     </div>
+    <!-- alert delete dialog  -->
+    <q-dialog v-model="delFileDialog" persistent>
+      <q-card>
+        <q-card-section>
+          <div class="items-center">
+            <div class="row">
+              <div class="col"></div>
+              <img src="../../public/image/alertBinIcon.svg" alt="" />
+              <div style="width: 15px"></div>
+              <div class="font18">ลบรูปภาพ</div>
+              <div class="col"></div>
+            </div>
+          </div>
+
+          <hr style="width: 400px" />
+          <div align="center">
+            <div>คุณต้องการลบรูปภาพ?</div>
+          </div>
+        </q-card-section>
+        <q-card-actions align="center">
+          <div class="row">
+            <div
+              class="cancelAdNewUserDiaBtn"
+              @click="closeDelDia()"
+              align="center"
+            >
+              ยกเลิก
+            </div>
+            <div style="width: 20px"></div>
+            <div
+              @click="confirmDelBtn()"
+              class="submitAdNewUserDiaBtn"
+              align="center"
+            >
+              ลบ
+            </div>
+          </div>
+        </q-card-actions>
+        <br />
+      </q-card>
+    </q-dialog>
+    <div class="fullscreen backdrop" v-if="showBackDrop"></div>
   </div>
 </template>
 
@@ -284,11 +336,98 @@ export default {
         coverfile: "",
         theme: [true, false, false, false, false, false, false, false, false],
       },
+      oldFileName: "",
       categoryList: [],
       cartoonid: this.$route.params.id,
+      delFileDialog: false,
+      showBackDrop: false,
+      delFileCover: false,
     };
   },
   methods: {
+    saveBtn() {
+      //Check data
+      if (
+        this.input.title.length == 0 ||
+        this.input.category.length == 0 ||
+        this.input.synopsis.length == 0 ||
+        this.input.folder.length == 0
+      ) {
+        this.redNotify("กรุณาใส่ข้อมูลให้ครบถ้วน");
+        return;
+      }
+      if (this.delFileCover) {
+        if (this.input.coverfile[0] == undefined) {
+          this.redNotify("กรุณาใส่ข้อมูลให้ครบถ้วน");
+          return;
+        }
+      }
+
+      let categoryData = "";
+      this.input.category.forEach((x) => {
+        categoryData += "[" + x + "],";
+      });
+      let themeid;
+      if (this.input.theme[0]) {
+        themeid = 1;
+      } else if (this.input.theme[1]) {
+        themeid = 2;
+      } else if (this.input.theme[2]) {
+        themeid = 3;
+      } else if (this.input.theme[3]) {
+        themeid = 4;
+      } else if (this.input.theme[4]) {
+        themeid = 5;
+      } else if (this.input.theme[5]) {
+        themeid = 6;
+      } else if (this.input.theme[6]) {
+        themeid = 7;
+      } else if (this.input.theme[7]) {
+        themeid = 8;
+      }
+      categoryData = categoryData.slice(0, -1);
+      let key = this.$q.localStorage.getItem("key");
+      //add database
+      let dataTemp;
+      if (this.delFileCover) {
+        dataTemp = {
+          key: key,
+          title: this.input.title,
+          category: categoryData,
+          synposis: this.input.synposis,
+          folder: this.input.folder,
+          coverfile: this.input.coverfile[0].name,
+          theme: themeid,
+        };
+      } else {
+        dataTemp = {
+          key: key,
+          title: this.input.title,
+          category: categoryData,
+          synposis: this.input.synposis,
+          folder: this.input.folder,
+          coverfile: this.oldFileName,
+          theme: themeid,
+        };
+      }
+      console.log(dataTemp);
+    },
+    confirmDelBtn() {
+      this.delFileCover = true;
+      this.delFileDialog = false;
+      this.showBackDrop = false;
+    },
+    deleteFile() {
+      this.delFileDialog = true;
+      this.showBackDrop = true;
+    },
+    closeDelDia() {
+      this.delFileDialog = false;
+      this.showBackDrop = false;
+    },
+    backBtn() {
+      this.$router.push("/bookpage/" + this.cartoonid);
+    },
     async loadData() {
       let key = this.$q.localStorage.getItem("key");
       let dataTemp = {
@@ -299,10 +438,57 @@ export default {
       let res = await axios.post(url, JSON.stringify(dataTemp));
       this.input.title = res.data[0].title;
       this.input.synopsis = res.data[0].synopsis;
+      this.input.theme[0] = false;
+      this.input.theme[1] = false;
+      this.input.theme[2] = false;
+      this.input.theme[3] = false;
+      this.input.theme[4] = false;
+      this.input.theme[5] = false;
+      this.input.theme[6] = false;
+      this.input.theme[7] = false;
+      this.input.theme[8] = false;
+      let themeid = Number(res.data[0].theme);
+      if (themeid == 1) {
+        this.input.theme[0] = true;
+      } else if (themeid == 2) {
+        this.input.theme[1] = true;
+      } else if (themeid == 3) {
+        this.input.theme[2] = true;
+      } else if (themeid == 4) {
+        this.input.theme[3] = true;
+      } else if (themeid == 5) {
+        this.input.theme[4] = true;
+      } else if (themeid == 6) {
+        this.input.theme[5] = true;
+      } else if (themeid == 7) {
+        this.input.theme[6] = true;
+      } else if (themeid == 8) {
+        this.input.theme[7] = true;
+      }
+      this.input.category = res.data[0].catid
+        .split(",")
+        .map((x) => x.replace("[", "").replace("]", ""));
+      this.input.folder = res.data[0].folder;
+      this.oldFileName = res.data[0].coverfile;
       console.log(res.data);
     },
+    async loadCategory() {
+      this.categoryList = [];
+      let key = this.$q.localStorage.getItem("key");
+      let dataSend = { key: key };
+      let url = this.serverpath + "categorylist.php";
+      let res = await axios.post(url, JSON.stringify(dataSend));
+      res.data.forEach((item) => {
+        let dataTemp = {
+          label: item.name,
+          value: item.catid,
+        };
+        this.categoryList.push(dataTemp);
+      });
+    },
   },
-  mounted() {
+  async mounted() {
+    await this.loadCategory();
     this.loadData();
   },
 };
@@ -329,5 +515,8 @@ export default {
   height: 60px;
   line-height: 60px;
   border-radius: 5px;
+}
+.backdrop {
+  background-color: rgba($color: #535353, $alpha: 0.8);
 }
 </style>
