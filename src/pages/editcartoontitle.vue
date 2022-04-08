@@ -337,6 +337,7 @@ export default {
         theme: [true, false, false, false, false, false, false, false, false],
       },
       oldFileName: "",
+      oldfolder: "",
       categoryList: [],
       cartoonid: this.$route.params.id,
       delFileDialog: false,
@@ -345,7 +346,37 @@ export default {
     };
   },
   methods: {
-    saveBtn() {
+    themeClick(themeid) {
+      this.input.theme[0] = false;
+      this.input.theme[1] = false;
+      this.input.theme[2] = false;
+      this.input.theme[3] = false;
+      this.input.theme[4] = false;
+      this.input.theme[5] = false;
+      this.input.theme[6] = false;
+      this.input.theme[7] = false;
+      this.input.theme[8] = false;
+      if (themeid == 1) {
+        this.input.theme[0] = true;
+      } else if (themeid == 2) {
+        this.input.theme[1] = true;
+      } else if (themeid == 3) {
+        this.input.theme[2] = true;
+      } else if (themeid == 4) {
+        this.input.theme[3] = true;
+      } else if (themeid == 5) {
+        this.input.theme[4] = true;
+      } else if (themeid == 6) {
+        this.input.theme[5] = true;
+      } else if (themeid == 7) {
+        this.input.theme[6] = true;
+      } else if (themeid == 8) {
+        this.input.theme[7] = true;
+      }
+      this.input.theme.push("1");
+      this.input.theme.pop();
+    },
+    async saveBtn() {
       //Check data
       if (
         this.input.title.length == 0 ||
@@ -394,23 +425,42 @@ export default {
           key: key,
           title: this.input.title,
           category: categoryData,
-          synposis: this.input.synposis,
+          synopsis: this.input.synopsis,
           folder: this.input.folder,
           coverfile: this.input.coverfile[0].name,
           theme: themeid,
+          newfile: true,
+          id: this.cartoonid,
+          oldfolder: this.oldfolder,
         };
       } else {
         dataTemp = {
           key: key,
           title: this.input.title,
           category: categoryData,
-          synposis: this.input.synposis,
+          synopsis: this.input.synopsis,
           folder: this.input.folder,
           coverfile: this.oldFileName,
           theme: themeid,
+          newfile: false,
+          id: this.cartoonid,
+          oldfolder: this.oldfolder,
         };
       }
-      console.log(dataTemp);
+      let url = this.serverpath + "editbookinfo.php";
+      let res = await axios.post(url, JSON.stringify(dataTemp));
+
+      //add file
+      if (this.delFileCover) {
+        const formData = new FormData();
+        formData.append("id", this.cartoonid);
+        formData.append("filecoverfile", this.input.coverfile[0]);
+
+        const headers = { "Content-Type": "multipart/form-data" };
+        axios.post(this.serverpath + "getimagefile.php", formData, { headers });
+      }
+      this.greenNotify("บันทึกข้อมูลเรียบร้อยแล้ว");
+      this.$router.push("/bookpage/" + this.cartoonid);
     },
     confirmDelBtn() {
       this.delFileCover = true;
@@ -469,8 +519,9 @@ export default {
         .split(",")
         .map((x) => x.replace("[", "").replace("]", ""));
       this.input.folder = res.data[0].folder;
+      this.oldfolder = res.data[0].folder;
       this.oldFileName = res.data[0].coverfile;
-      console.log(res.data);
+      // console.log(res.data);
     },
     async loadCategory() {
       this.categoryList = [];

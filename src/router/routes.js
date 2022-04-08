@@ -54,6 +54,11 @@ const routes = [
         component: () => import("pages/adsinventory.vue"),
         name: "adsinventory",
       },
+      {
+        path: "/addchapter/:id",
+        component: () => import("pages/addchapter.vue"),
+        name: "addchapter",
+      },
     ],
   },
   {

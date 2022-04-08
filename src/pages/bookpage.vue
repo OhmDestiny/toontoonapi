@@ -20,7 +20,7 @@
       <div class="q-pa-sm q-pt-md" style="vertical-align: middle">
         <img style="height: 90%" :src="coverPic" alt="" />
       </div>
-      <div class="col text-white q-pa-sm">
+      <div class="col q-pa-sm">
         <div align="right">
           <div class="editBtn row justify-evenly" @click="editPage()">
             <img
@@ -36,7 +36,22 @@
           {{ dataGet.synopsis }}
         </div>
         <div class="col"></div>
-        <div class="font16 text-white footer">{{ categoryListText }}</div>
+        <div class="font16 footer">{{ categoryListText }}</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="row justify-end q-pt-md">
+        <div class="addbtn" @click="addNewBtn()">
+          <div class="row" style="padding-top: 5px; padding-left: 5px">
+            <div><img src="../../public/image/plus.svg" alt="" /></div>
+            <div
+              style="padding-left: 10px; padding-top: 3px; padding-right: 10px"
+            >
+              เพิ่มตอนใหม่
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -62,6 +77,9 @@ export default {
     };
   },
   methods: {
+    addNewBtn() {
+      this.$router.push("/addchapter/" + this.cartoonid);
+    },
     editPage() {
       this.$router.push("/bookedit/" + this.dataGet.bookid);
     },
@@ -109,7 +127,11 @@ export default {
       });
       this.themeClass = "bgbook" + this.dataGet.theme;
       this.coverPic =
-        this.serverpath + "cover/" + res.data[0]["bookid"] + ".jpg";
+        this.serverpath +
+        "cover/" +
+        res.data[0]["bookid"] +
+        ".jpg?" +
+        Math.random() * 2000;
     },
   },
   async mounted() {
@@ -148,12 +170,14 @@ export default {
   position: absolute;
   bottom: 20px;
 }
-.adNewChapter {
-  width: 160px;
+
+.addbtn {
+  border: 1px solid #959699;
   height: 40px;
-  line-height: 40px;
-  border: 1px solid #313131;
-  color: #313131;
+  color: #333;
+  font-size: 16px;
+  border-radius: 3px;
   cursor: pointer;
+  width: 150px;
 }
 </style>
