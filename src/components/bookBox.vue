@@ -4,7 +4,7 @@
       <div class="q-pa-sm titleBox ellipsis-2-lines" align="left">
         {{ data.bookName }}
       </div>
-      <div class="q-px-sm" align="center">
+      <div class="q-px-sm imgbox" align="center">
         <img width="100%" :src="data.coverpic" alt="" />
       </div>
       <div align="left" class="q-px-sm row justify-between">
@@ -73,11 +73,14 @@ export default {
 <style lang="scss" scoped>
 .cartoonBox {
   padding: 5px;
-
   width: 100%;
-  aspect-ratio: 230 / 370;
+  // aspect-ratio: 230 / 370;
+  height: 470px;
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.imgbox {
+  min-height: 350px;
 }
 .titleBox {
   font-size: 16px;

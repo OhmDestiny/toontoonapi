@@ -47,164 +47,6 @@
             />
           </div>
         </div>
-        <div class="row q-pt-md">
-          <div class="labelDiv">รูปแบบ</div>
-          <div class="col">
-            <div class="row">
-              <div
-                class="q-pa-sm cursor-pointer"
-                v-if="input.theme[0] == false"
-                @click="themeClick(1)"
-              >
-                <img
-                  src="../../public/image/theme/t1.svg"
-                  alt=""
-                  style="width: 40px"
-                />
-              </div>
-              <div class="q-pa-sm" v-else>
-                <img
-                  src="../../public/image/theme/t1x.svg"
-                  alt=""
-                  style="width: 40px"
-                />
-              </div>
-
-              <div
-                class="q-py-sm cursor-pointer"
-                @click="themeClick(2)"
-                v-if="input.theme[1] == false"
-              >
-                <img
-                  src="../../public/image/theme/t2.svg"
-                  alt=""
-                  style="width: 40px"
-                />
-              </div>
-              <div class="q-py-sm cursor-pointer" v-else>
-                <img
-                  src="../../public/image/theme/t2x.svg"
-                  alt=""
-                  style="width: 40px"
-                />
-              </div>
-
-              <div
-                class="q-pa-sm cursor-pointer"
-                @click="themeClick(3)"
-                v-if="input.theme[2] == false"
-              >
-                <img
-                  src="../../public/image/theme/t3.svg"
-                  alt=""
-                  style="width: 40px"
-                />
-              </div>
-              <div class="q-pa-sm cursor-pointer" v-else>
-                <img
-                  src="../../public/image/theme/t3x.svg"
-                  alt=""
-                  style="width: 40px"
-                />
-              </div>
-
-              <div
-                class="q-py-sm cursor-pointer"
-                @click="themeClick(4)"
-                v-if="input.theme[3] == false"
-              >
-                <img
-                  src="../../public/image/theme/t4.svg"
-                  alt=""
-                  style="width: 40px"
-                />
-              </div>
-              <div class="q-py-sm cursor-pointer" v-else>
-                <img
-                  src="../../public/image/theme/t4x.svg"
-                  alt=""
-                  style="width: 40px"
-                />
-              </div>
-
-              <div
-                class="q-pa-sm cursor-pointer"
-                @click="themeClick(5)"
-                v-if="input.theme[4] == false"
-              >
-                <img
-                  src="../../public/image/theme/t5.svg"
-                  alt=""
-                  style="width: 40px"
-                />
-              </div>
-              <div class="q-pa-sm cursor-pointer" v-else>
-                <img
-                  src="../../public/image/theme/t5x.svg"
-                  alt=""
-                  style="width: 40px"
-                />
-              </div>
-
-              <div
-                class="q-py-sm cursor-pointer"
-                @click="themeClick(6)"
-                v-if="input.theme[5] == false"
-              >
-                <img
-                  src="../../public/image/theme/t6.svg"
-                  alt=""
-                  style="width: 40px"
-                />
-              </div>
-              <div class="q-py-sm cursor-pointer" v-else>
-                <img
-                  src="../../public/image/theme/t6x.svg"
-                  alt=""
-                  style="width: 40px"
-                />
-              </div>
-
-              <div
-                class="q-pa-sm cursor-pointer"
-                @click="themeClick(7)"
-                v-if="input.theme[6] == false"
-              >
-                <img
-                  src="../../public/image/theme/t7.svg"
-                  alt=""
-                  style="width: 40px"
-                />
-              </div>
-              <div class="q-pa-sm cursor-pointer" v-else>
-                <img
-                  src="../../public/image/theme/t7x.svg"
-                  alt=""
-                  style="width: 40px"
-                />
-              </div>
-
-              <div
-                class="q-py-sm cursor-pointer"
-                @click="themeClick(8)"
-                v-if="input.theme[7] == false"
-              >
-                <img
-                  src="../../public/image/theme/t8.svg"
-                  alt=""
-                  style="width: 40px"
-                />
-              </div>
-              <div class="q-py-sm cursor-pointer" v-else>
-                <img
-                  src="../../public/image/theme/t8x.svg"
-                  alt=""
-                  style="width: 40px"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
 
         <div class="row q-pt-sm">
           <div class="labelDiv">
@@ -282,42 +124,11 @@ export default {
         synposis: "",
         folder: "",
         coverfile: "",
-        theme: [true, false, false, false, false, false, false, false, false],
       },
       categoryList: [],
     };
   },
   methods: {
-    themeClick(themeid) {
-      this.input.theme[0] = false;
-      this.input.theme[1] = false;
-      this.input.theme[2] = false;
-      this.input.theme[3] = false;
-      this.input.theme[4] = false;
-      this.input.theme[5] = false;
-      this.input.theme[6] = false;
-      this.input.theme[7] = false;
-      this.input.theme[8] = false;
-      if (themeid == 1) {
-        this.input.theme[0] = true;
-      } else if (themeid == 2) {
-        this.input.theme[1] = true;
-      } else if (themeid == 3) {
-        this.input.theme[2] = true;
-      } else if (themeid == 4) {
-        this.input.theme[3] = true;
-      } else if (themeid == 5) {
-        this.input.theme[4] = true;
-      } else if (themeid == 6) {
-        this.input.theme[5] = true;
-      } else if (themeid == 7) {
-        this.input.theme[6] = true;
-      } else if (themeid == 8) {
-        this.input.theme[7] = true;
-      }
-      this.input.theme.push("1");
-      this.input.theme.pop();
-    },
     backBtn() {
       this.$router.push("/book");
     },
@@ -337,24 +148,7 @@ export default {
       this.input.category.forEach((x) => {
         categoryData += "[" + x + "],";
       });
-      let themeid;
-      if (this.input.theme[0]) {
-        themeid = 1;
-      } else if (this.input.theme[1]) {
-        themeid = 2;
-      } else if (this.input.theme[2]) {
-        themeid = 3;
-      } else if (this.input.theme[3]) {
-        themeid = 4;
-      } else if (this.input.theme[4]) {
-        themeid = 5;
-      } else if (this.input.theme[5]) {
-        themeid = 6;
-      } else if (this.input.theme[6]) {
-        themeid = 7;
-      } else if (this.input.theme[7]) {
-        themeid = 8;
-      }
+
       categoryData = categoryData.slice(0, -1);
       let key = this.$q.localStorage.getItem("key");
       //add database
@@ -365,7 +159,6 @@ export default {
         synposis: this.input.synposis,
         folder: this.input.folder,
         coverfile: this.input.coverfile[0].name,
-        theme: themeid,
       };
       let url = this.serverpath + "addnewbookinfo.php";
       let res = await axios.post(url, JSON.stringify(dataTemp));

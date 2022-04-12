@@ -16,9 +16,9 @@
     </div>
     <hr />
     <!-- poster -->
-    <div class="mainPoster row" :class="themeClass">
+    <div class="mainPoster row">
       <div class="q-pa-sm q-pt-md" style="vertical-align: middle">
-        <img style="height: 90%" :src="coverPic" alt="" />
+        <img style="height: 300px" :src="coverPic" alt="" />
       </div>
       <div class="col q-pa-sm">
         <div align="right">
@@ -54,6 +54,183 @@
         </div>
       </div>
     </div>
+
+    <div v-if="chapterExtra.length > 0">
+      <div class="font22">ตอนพิเศษ</div>
+      <div class="row">
+        <div style="width: 240px">วันที่</div>
+        <div style="width: 100px" align="center">ลำดับ</div>
+        <div class="col">ตอนพิเศษ</div>
+        <div style="width: 100px" align="center">สถานะ</div>
+        <div style="width: 100px" align="center">ลบออก</div>
+        <div style="width: 100px" align="center">แก้ไข</div>
+        <div style="width: 100px" align="center">พรีวิว</div>
+      </div>
+      <hr />
+      <div
+        v-for="(item, index) in chapterExtra"
+        :key="index"
+        class="row lineData"
+        :class="[index % 2 == 1 ? 'stripRow' : '']"
+      >
+        <div style="width: 240px">{{ item.timestamp }}</div>
+        <div style="width: 100px" align="center">{{ item.orderid }}</div>
+        <div class="col">{{ item.chapter }}</div>
+        <div style="width: 100px" class="q-pt-sm">
+          <div
+            class="onlinebtn"
+            @click="changeCategoryData(item.id, 0)"
+            v-if="item.online == 1"
+            align="center"
+          >
+            Online
+          </div>
+
+          <div
+            class="offlinebtn"
+            @click="changeCategoryData(item.id, 1)"
+            v-else
+            align="center"
+          >
+            offline
+          </div>
+        </div>
+        <div
+          style="width: 100px"
+          align="center"
+          @click="deleteBtn(item.id, item.chapter)"
+          class="cursor-pointer"
+        >
+          <img src="../../public/image/trash_symbol.svg" alt="" />
+        </div>
+        <div
+          style="width: 100px"
+          align="center"
+          @click="editBtn(item.id)"
+          class="cursor-pointer"
+        >
+          <img src="../../public/image/edit_symbol.svg" alt="" />
+        </div>
+        <div
+          style="width: 100px"
+          align="center"
+          @click="previewBtn(item.id)"
+          class="cursor-pointer"
+        >
+          <img src="../../public/image/preview.svg" alt="" />
+        </div>
+      </div>
+      <br />
+    </div>
+
+    <div v-if="chapterNormal.length > 0">
+      <div class="font22">ตอนทั่วไป</div>
+      <div class="row">
+        <div style="width: 240px">วันที่</div>
+        <div style="width: 100px" align="center">ลำดับ</div>
+        <div class="col">ตอน</div>
+        <div style="width: 100px" align="center">สถานะ</div>
+        <div style="width: 100px" align="center">ลบออก</div>
+        <div style="width: 100px" align="center">แก้ไข</div>
+        <div style="width: 100px" align="center">พรีวิว</div>
+      </div>
+      <hr />
+      <div
+        v-for="(item, index) in chapterNormal"
+        :key="index"
+        class="row lineData"
+        :class="[index % 2 == 1 ? 'stripRow' : '']"
+      >
+        <div style="width: 240px">{{ item.timestamp }}</div>
+        <div style="width: 100px" align="center">{{ item.orderid }}</div>
+        <div class="col">{{ item.chapter }}</div>
+        <div style="width: 100px" align="center" class="q-pt-sm">
+          <div
+            class="onlinebtn"
+            @click="changeCategoryData(item.id, 0)"
+            v-if="item.online == 1"
+            align="center"
+          >
+            Online
+          </div>
+
+          <div
+            class="offlinebtn"
+            @click="changeCategoryData(item.id, 1)"
+            v-else
+            align="center"
+          >
+            offline
+          </div>
+        </div>
+        <div
+          style="width: 100px"
+          align="center"
+          @click="deleteBtn(item.id, item.chapter)"
+          class="cursor-pointer"
+        >
+          <img src="../../public/image/trash_symbol.svg" alt="" />
+        </div>
+        <div
+          style="width: 100px"
+          align="center"
+          @click="editBtn(item.id)"
+          class="cursor-pointer"
+        >
+          <img src="../../public/image/edit_symbol.svg" alt="" />
+        </div>
+        <div
+          style="width: 100px"
+          align="center"
+          @click="previewBtn(item.id)"
+          class="cursor-pointer"
+        >
+          <img src="../../public/image/preview.svg" alt="" />
+        </div>
+      </div>
+    </div>
+    <!-- alert delete dialog  -->
+    <q-dialog v-model="delDia" persistent>
+      <q-card>
+        <q-card-section>
+          <div class="items-center">
+            <div class="row">
+              <div class="col"></div>
+              <img src="../../public/image/alertBinIcon.svg" alt="" />
+              <div style="width: 15px"></div>
+              <div class="font18">ลบตอนการ์ตูน</div>
+              <div class="col"></div>
+            </div>
+          </div>
+
+          <hr style="width: 400px" />
+          <div align="center">
+            <div>คุณต้องการลบตอน {{ delChapterText }}</div>
+          </div>
+        </q-card-section>
+        <q-card-actions align="center">
+          <div class="row">
+            <div
+              class="cancelAdNewUserDiaBtn"
+              @click="closeDelDia()"
+              align="center"
+            >
+              ยกเลิก
+            </div>
+            <div style="width: 20px"></div>
+            <div
+              @click="confirmDelBtn()"
+              class="submitAdNewUserDiaBtn"
+              align="center"
+            >
+              ลบ
+            </div>
+          </div>
+        </q-card-actions>
+        <br />
+      </q-card>
+    </q-dialog>
+    <div class="fullscreen backdrop" v-if="showBackDrop"></div>
   </div>
 </template>
 
@@ -67,16 +244,59 @@ export default {
         title: "",
         synopsis: "",
         category: [],
-        theme: "",
         bookid: "",
       },
       cartoonid: this.$route.params.id,
       categoryList: [],
       categoryListText: [],
-      themeClass: "",
+      chapterExtra: [],
+      chapterNormal: [],
+      delDia: false,
+      delChapter: "",
+      showBackDrop: false,
+      delChapterText: "",
     };
   },
   methods: {
+    editBtn(chapterid) {
+      this.$router.push(
+        "/editchapter/" + chapterid + "/" + this.$route.params.id
+      );
+    },
+    previewBtn(chapterid) {
+      this.$router.push("/preview/" + chapterid + "/" + this.$route.params.id);
+    },
+    async confirmDelBtn() {
+      let delTemp = {
+        id: this.delChapter,
+        cartoonid: this.cartoonid,
+      };
+      let url = this.serverpath + "cartoondel.php";
+      let res = await axios.post(url, JSON.stringify(delTemp));
+      this.greenNotify("ลบตอนสำเร็จ");
+      this.loadChapter();
+    },
+    deleteBtn(id, chapter) {
+      this.delChapterText = chapter;
+      this.delChapter = id;
+      this.delDia = true;
+      this.showBackDrop = true;
+    },
+    closeDelDia() {
+      this.delDia = false;
+      this.showBackDrop = false;
+    },
+    async changeCategoryData(bookid, online) {
+      let dataTemp = {
+        bookid: bookid,
+        online: online,
+      };
+      let url = this.serverpath + "cartoononline.php";
+      let res = await axios.post(url, JSON.stringify(dataTemp));
+      if (res.data == "finish") {
+        this.loadChapter();
+      }
+    },
     addNewBtn() {
       this.$router.push("/addchapter/" + this.cartoonid);
     },
@@ -112,12 +332,10 @@ export default {
       let dataSend = { key: key, pageid: this.cartoonid };
       let url = this.serverpath + "cartoonDetailTitle.php";
       let res = await axios.post(url, JSON.stringify(dataSend));
-      console.log(res.data);
       this.dataGet.bookid = res.data[0].bookid;
       this.dataGet.title = res.data[0].title;
       this.dataGet.synopsis = res.data[0].synopsis;
       this.dataGet.category = this.covertType(res.data[0].catid);
-      this.dataGet.theme = res.data[0].theme;
       this.dataGet.category.forEach((x, index) => {
         if (index == 0) {
           this.categoryListText += x;
@@ -125,7 +343,6 @@ export default {
           this.categoryListText += " | " + x;
         }
       });
-      this.themeClass = "bgbook" + this.dataGet.theme;
       this.coverPic =
         this.serverpath +
         "cover/" +
@@ -133,10 +350,29 @@ export default {
         ".jpg?" +
         Math.random() * 2000;
     },
+
+    async loadChapter() {
+      let key = this.$q.localStorage.getItem("key");
+      let dataSend = { key: key, pageid: this.cartoonid };
+      let url = this.serverpath + "cartoonchapter.php";
+      let res = await axios.post(url, JSON.stringify(dataSend));
+      this.chapterExtra = res.data.filter((x) => x.type == "ตอนพิเศษ");
+      if (this.chapterExtra.length > 0) {
+        this.chapterExtra.sort((a, b) => Number(a.orderid) - Number(b.orderid));
+      }
+      this.chapterNormal = res.data.filter((x) => x.type == "ตอนปกติ");
+      if (this.chapterNormal.length > 0) {
+        this.chapterNormal.sort(
+          (a, b) => Number(a.orderid) - Number(b.orderid)
+        );
+      }
+      console.log(this.chapterExtra);
+    },
   },
   async mounted() {
     await this.loadAllCat();
-    this.loadData();
+    await this.loadData();
+    await this.loadChapter();
   },
 };
 </script>
@@ -155,6 +391,7 @@ export default {
   margin: auto;
   width: 100%;
   height: 340px;
+  background-color: #dfdede;
 }
 .editBtn {
   width: 120px;
@@ -170,7 +407,9 @@ export default {
   position: absolute;
   bottom: 20px;
 }
-
+.stripRow {
+  background-color: rgba($color: #7291ff, $alpha: 0.15);
+}
 .addbtn {
   border: 1px solid #959699;
   height: 40px;
@@ -179,5 +418,31 @@ export default {
   border-radius: 3px;
   cursor: pointer;
   width: 150px;
+}
+.onlinebtn {
+  font-size: 12px;
+  color: #1f8616;
+  border: 1px solid #1f8616;
+  width: 60px;
+  height: 25px;
+  line-height: 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: auto;
+}
+.offlinebtn {
+  font-size: 12px;
+  color: #ec5454;
+  border: 1px solid #ec5454;
+  width: 60px;
+  height: 25px;
+  line-height: 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: auto;
+}
+.lineData {
+  height: 40px;
+  line-height: 49px;
 }
 </style>

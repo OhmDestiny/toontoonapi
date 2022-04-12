@@ -59,6 +59,16 @@ const routes = [
         component: () => import("pages/addchapter.vue"),
         name: "addchapter",
       },
+      {
+        path: "/preview/:id/:cartoon",
+        component: () => import("pages/preview.vue"),
+        name: "preview",
+      },
+      {
+        path: "/editchapter/:id/:cartoon",
+        component: () => import("pages/editchapter.vue"),
+        name: "editchapter",
+      },
     ],
   },
   {
