@@ -28,9 +28,12 @@ export default {
   },
   methods: {
     loadData() {
+      let key = this.$q.localStorage.getItem("key");
+      if (key == null) {
+        this.$router.push("/");
+      }
       this.bgPic = this.serverpath + "image/bgwelcome.jpg?1";
       this.baloonPic = this.serverpath + "image/baloon.png";
-      console.log(this.bgPic);
     },
   },
   mounted() {

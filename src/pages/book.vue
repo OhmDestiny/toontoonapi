@@ -172,29 +172,17 @@ export default {
       let key = this.$q.localStorage.getItem("key");
       let dataTemp = {
         key: key,
-        page: this.currentPage,
-        cat: this.catIdSelected,
-        searchText: this.searchText,
       };
-      let urlTotal = this.serverpath + "loadtotalpage.php";
-      let resTotal = await axios.post(urlTotal, JSON.stringify(dataTemp));
-      this.totalPage = resTotal.data;
-      let url = this.serverpath + "loaddatawithpageandcat.php";
-      let res = await axios.post(url, JSON.stringify(dataTemp));
-      this.dataBook = [];
-      res.data.forEach((item) => {
-        let dataLink = this.serverpath + "cover/" + item.bookid + ".jpg";
-        let dataTemp = {
-          bookId: item.bookid,
-          dateBook: item.timestamp,
-          bookName: item.title,
-          coverpic: dataLink,
-          status: Number(item.online),
-          episode: Number(item.lastchapter),
-          click: Number(item.view),
-        };
-        this.dataBook.push(dataTemp);
-      });
+      let urlTotal = this.serverpath + "checkbook.php";
+      let res = await axios.post(urlTotal, JSON.stringify(dataTemp));
+      if (res.data == "go to welcome") {
+        this.$router.push("welcome");
+        return;
+      } else if (res.data == "go to login") {
+        this.$q.localStorage.clear();
+        this.$router.push("/");
+        return;
+      }
     },
     async onlineClick(dataOut) {
       let key = this.$q.localStorage.getItem("key");
@@ -243,7 +231,7 @@ export default {
   },
 
   mounted() {
-    // this.loadData();
+    this.loadData();
   },
 };
 </script>

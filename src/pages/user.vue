@@ -473,6 +473,7 @@ export default {
         this.$router.push("welcome");
       } else if (res.data == "go to login") {
         this.$q.localStorage.clear();
+        this.$router.push("/");
       } else {
         this.userData = res.data;
         this.userData.sort((a, b) => (a.username > b.username ? 1 : -1));

@@ -176,7 +176,6 @@ export default {
         synopsis: "",
         folder: "",
         coverfile: "",
-        theme: [true, false, false, false, false, false, false, false, false],
       },
       oldFileName: "",
       oldfolder: "",
@@ -188,36 +187,6 @@ export default {
     };
   },
   methods: {
-    themeClick(themeid) {
-      this.input.theme[0] = false;
-      this.input.theme[1] = false;
-      this.input.theme[2] = false;
-      this.input.theme[3] = false;
-      this.input.theme[4] = false;
-      this.input.theme[5] = false;
-      this.input.theme[6] = false;
-      this.input.theme[7] = false;
-      this.input.theme[8] = false;
-      if (themeid == 1) {
-        this.input.theme[0] = true;
-      } else if (themeid == 2) {
-        this.input.theme[1] = true;
-      } else if (themeid == 3) {
-        this.input.theme[2] = true;
-      } else if (themeid == 4) {
-        this.input.theme[3] = true;
-      } else if (themeid == 5) {
-        this.input.theme[4] = true;
-      } else if (themeid == 6) {
-        this.input.theme[5] = true;
-      } else if (themeid == 7) {
-        this.input.theme[6] = true;
-      } else if (themeid == 8) {
-        this.input.theme[7] = true;
-      }
-      this.input.theme.push("1");
-      this.input.theme.pop();
-    },
     async saveBtn() {
       //Check data
       if (
@@ -241,23 +210,6 @@ export default {
         categoryData += "[" + x + "],";
       });
       let themeid;
-      if (this.input.theme[0]) {
-        themeid = 1;
-      } else if (this.input.theme[1]) {
-        themeid = 2;
-      } else if (this.input.theme[2]) {
-        themeid = 3;
-      } else if (this.input.theme[3]) {
-        themeid = 4;
-      } else if (this.input.theme[4]) {
-        themeid = 5;
-      } else if (this.input.theme[5]) {
-        themeid = 6;
-      } else if (this.input.theme[6]) {
-        themeid = 7;
-      } else if (this.input.theme[7]) {
-        themeid = 8;
-      }
       categoryData = categoryData.slice(0, -1);
       let key = this.$q.localStorage.getItem("key");
       //add database
@@ -270,7 +222,6 @@ export default {
           synopsis: this.input.synopsis,
           folder: this.input.folder,
           coverfile: this.input.coverfile[0].name,
-          theme: themeid,
           newfile: true,
           id: this.cartoonid,
           oldfolder: this.oldfolder,
@@ -283,7 +234,6 @@ export default {
           synopsis: this.input.synopsis,
           folder: this.input.folder,
           coverfile: this.oldFileName,
-          theme: themeid,
           newfile: false,
           id: this.cartoonid,
           oldfolder: this.oldfolder,

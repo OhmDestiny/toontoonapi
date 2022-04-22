@@ -34,7 +34,14 @@
         :class="[index % 2 == 1 ? 'stripRow' : '']"
       >
         <div class="colTable font18" align="center">{{ index + 1 }}</div>
-        <div class="colTable2 q-pl-xl font18">{{ item.name }}</div>
+        <div class="colTable2 q-pl-xl font18">
+          <img
+            :src="showIcon(item.catid)"
+            alt=""
+            height="25px"
+            class="q-pr-sm"
+          />{{ item.name }}
+        </div>
         <div class="colTable" align="center">
           <div
             class="onlinebtn"
@@ -62,7 +69,7 @@
         <div
           class="iconDiv colTable"
           align="center"
-          @click="editFormBtn(item.catid, item.name)"
+          @click="editFormBtn(item.catid, item.name, item.filename)"
         >
           <img width="20px" src="../../public/image/edit_symbol.svg" alt="" />
         </div>
@@ -70,7 +77,7 @@
 
       <!-- add category alert -->
       <q-dialog v-model="addNewDialog" persistent>
-        <q-card class="mainDialog" style="height: 200px">
+        <q-card class="mainDialog" style="height: 250px">
           <div class="row">
             <div class="col"></div>
             <div class="q-pt-md">
@@ -82,15 +89,24 @@
           </div>
           <hr />
           <div class="row">
-            <div class="col-3 labelTxt q-pt-xs" align="center">
-              ชื่อหมวดหมู่
+            <div class="col-3 labelTxt q-pt-xs" align="left">ชื่อหมวดหมู่</div>
+            <div class="col-8 q-pt-xs">
+              <q-input v-model.trim="categoryName" outlined dense />
+            </div>
+            <div class="col-1"></div>
+          </div>
+          <div class="row">
+            <div class="col-3 labelTxt2line q-pt-xs" align="left">
+              รูป icon<br />
+              <span class="font12">svg 40x40px</span>
             </div>
             <div class="col-8 q-pt-xs">
               <q-input
-                v-model.trim="categoryName"
                 outlined
                 dense
-                @keyup.enter="saveBtn()"
+                v-model="iconFile"
+                type="file"
+                accept=".svg"
               />
             </div>
             <div class="col-1"></div>
@@ -164,7 +180,7 @@
 
       <!-- edit category alert -->
       <q-dialog v-model="editDialog" persistent>
-        <q-card class="mainDialog" style="height: 200px">
+        <q-card class="mainDialog" style="height: 250px">
           <div class="row">
             <div class="col"></div>
             <div class="q-pt-md">
@@ -177,15 +193,39 @@
           </div>
           <hr />
           <div class="row">
-            <div class="col-3 labelTxt q-pt-xs" align="center">
-              ชื่อหมวดหมู่
-            </div>
+            <div class="col-3 labelTxt q-pt-xs" align="left">ชื่อหมวดหมู่</div>
             <div class="col-8 q-pt-sm">
               <q-input
                 v-model.trim="editItem.name"
                 outlined
                 dense
                 @keyup.enter="saveEditBtn()"
+              />
+            </div>
+            <div class="col-1"></div>
+          </div>
+          <div class="row">
+            <div class="col-3 labelTxt2line q-pt-xs" align="left">
+              รูป icon<br />
+              <span class="font12">svg 40x40px</span>
+            </div>
+            <div class="col-8 q-pt-sm">
+              <div
+                class="iconDivMain row justify-between"
+                v-if="!shownEditFile"
+              >
+                <div class="icondiv">{{ editItem.fileName }}</div>
+                <div class="trashIcon cursor-pointer" @click="delIcon()">
+                  <img src="../../public/image/trash_symbol.svg" alt="" />
+                </div>
+              </div>
+              <q-input
+                v-model.trim="editNewFile"
+                outlined
+                dense
+                type="file"
+                accept=".svg"
+                v-else
               />
             </div>
             <div class="col-1"></div>
@@ -213,6 +253,47 @@
       </q-dialog>
       <div class="fullscreen backdrop" v-if="showBackdrop"></div>
     </div>
+    <!-- alert delete dialog  -->
+    <q-dialog v-model="delFileDialog" persistent>
+      <q-card>
+        <q-card-section>
+          <div class="items-center">
+            <div class="row">
+              <div class="col"></div>
+              <img src="../../public/image/alertBinIcon.svg" alt="" />
+              <div style="width: 15px"></div>
+              <div class="font18">ลบรูปภาพ</div>
+              <div class="col"></div>
+            </div>
+          </div>
+
+          <hr style="width: 400px" />
+          <div align="center">
+            <div>คุณต้องการลบรูปภาพ?</div>
+          </div>
+        </q-card-section>
+        <q-card-actions align="center">
+          <div class="row">
+            <div
+              class="cancelAdNewUserDiaBtn"
+              @click="closeDelDia()"
+              align="center"
+            >
+              ยกเลิก
+            </div>
+            <div style="width: 20px"></div>
+            <div
+              @click="confirmDelBtn()"
+              class="submitAdNewUserDiaBtn"
+              align="center"
+            >
+              ลบ
+            </div>
+          </div>
+        </q-card-actions>
+        <br />
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -226,6 +307,7 @@ export default {
       category: [],
       addNewDialog: false,
       categoryName: "",
+      iconFile: "",
       delDialog: false,
       showBackdrop: false,
       deleteItem: {
@@ -236,10 +318,27 @@ export default {
       editItem: {
         id: "",
         name: "",
+        fileName: "",
       },
+      delFileDialog: false,
+      shownEditFile: false,
+      editNewFile: null,
     };
   },
   methods: {
+    confirmDelBtn() {
+      this.shownEditFile = true;
+      this.delFileDialog = false;
+    },
+    closeDelDia() {
+      this.delFileDialog = false;
+    },
+    delIcon() {
+      this.delFileDialog = true;
+    },
+    showIcon(id) {
+      return this.serverpath + "icon/" + id + ".svg?" + Math.random() * 2000;
+    },
     async loadData() {
       this.category = [];
       let key = this.$q.localStorage.getItem("key");
@@ -284,20 +383,37 @@ export default {
       this.showBackdrop = false;
     },
     async saveBtn() {
+      if (this.categoryName.length == 0 || this.iconFile == "") {
+        this.redNotify("กรุณากรอกข้อมูลให้ครบถ้วน");
+        return;
+      }
       let url = this.serverpath + "addcategory.php";
       let key = this.$q.localStorage.getItem("key");
       let dataSend = {
         category: this.categoryName,
+        fileName: this.iconFile[0].name,
         key: key,
       };
       let res = await axios.post(url, JSON.stringify(dataSend));
+
       this.showBackdrop = false;
       if (res.data == "go to welcome") {
         this.$router.push("welcome");
+        return;
       } else if (res.data == "go to login") {
         this.$q.localStorage.clear();
         this.$router.push("/");
+        return;
       } else {
+        let recordId = res.data;
+        const formData = new FormData();
+        formData.append("id", recordId);
+        formData.append("filecoverfile", this.iconFile[0]);
+
+        const headers = { "Content-Type": "multipart/form-data" };
+        axios.post(this.serverpath + "saveiconcategoryfile.php", formData, {
+          headers,
+        });
         this.loadData();
         this.addNewDialog = false;
         this.categoryName = "";
@@ -334,11 +450,14 @@ export default {
       this.delDialog = false;
       this.showBackdrop = false;
     },
-    editFormBtn(id, name) {
+    editFormBtn(id, name, fileName) {
       this.editItem.name = name;
       this.editItem.id = id;
+      this.editItem.fileName = fileName;
       this.editDialog = true;
       this.showBackdrop = true;
+      this.shownEditFile = false;
+      this.editNewFile = null;
     },
     cancelEditBtn() {
       this.editDialog = false;
@@ -349,10 +468,21 @@ export default {
       let dataSend = {
         id: this.editItem.id,
         name: this.editItem.name,
+        fileName: this.editNewFile[0].name,
         key: key,
       };
       let url = this.serverpath + "editcategory.php";
       let res = await axios.post(url, JSON.stringify(dataSend));
+      if (this.editNewFile != null) {
+        const formData = new FormData();
+        formData.append("id", this.editItem.id);
+        formData.append("filecoverfile", this.editNewFile[0]);
+
+        const headers = { "Content-Type": "multipart/form-data" };
+        axios.post(this.serverpath + "saveediticoncategoryfile.php", formData, {
+          headers,
+        });
+      }
       this.showBackdrop = false;
       if (res.data == "go to welcome") {
         this.$router.push("welcome");
@@ -373,6 +503,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.trashIcon {
+  padding-top: 7px;
+  padding-right: 5px;
+}
+.icondiv {
+  font-size: 16px;
+  padding-left: 10px;
+  padding-top: 4px;
+}
+.iconDivMain {
+  width: 100%;
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid #bbbcbf;
+}
 .adNewCategory {
   width: 135px;
   height: 40px;
@@ -430,6 +575,13 @@ export default {
 .labelTxt {
   line-height: 45px;
   font-size: 16px;
+  padding-left: 40px;
+}
+.labelTxt2line {
+  line-height: 20px;
+  font-size: 16px;
+  padding-left: 40px;
+  padding-top: 8px;
 }
 .backdrop {
   background-color: rgba($color: #535353, $alpha: 0.8);

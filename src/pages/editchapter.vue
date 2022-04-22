@@ -149,8 +149,6 @@ export default {
       this.$router.push("/bookpage/" + this.cartoonid);
     },
     async saveBtn() {
-      console.log(this.input.cartoonFile[0]);
-      return;
       if (this.input.orderid.length == 0 || this.input.episode.length == 0) {
         this.redNotify("กรุณากรอกข้อมูลให้ครบถ้วน");
         return;
@@ -187,6 +185,8 @@ export default {
       const formData = new FormData();
       formData.append("id", this.pageid);
       formData.append("cartoonId", this.cartoonid);
+      formData.append("coverfileSend", cartoonFileSave);
+      formData.append("cartoonfileSend", this.cartoonFileSave);
       formData.append("coverfile", this.input.coverPage[0]);
       formData.append("cartoonfile", this.input.cartoonFile[0]);
       const headers = { "Content-Type": "multipart/form-data" };
@@ -200,12 +200,25 @@ export default {
       this.backBtn();
     },
     async loadData() {
+      let key = this.$q.localStorage.getItem("key");
+      if (key == null) {
+        this.$router.push("/");
+        return;
+      }
       let dataTemp = {
         id: this.pageid,
+        key: key,
       };
       let url = this.serverpath + "loadchapterinfo.php";
       let res = await axios.post(url, JSON.stringify(dataTemp));
-      console.log(res.data);
+      if (res.data == "go to welcome") {
+        this.$router.push("/welcome");
+        return;
+      } else if (res.data == "go to login") {
+        this.localStorage.clear();
+        this.$router.push("/");
+        return;
+      }
       this.input.orderid = res.data[0].orderid;
       this.input.type = res.data[0].type;
       this.input.episode = res.data[0].chapter;

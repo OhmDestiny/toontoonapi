@@ -310,6 +310,14 @@ export default {
       };
       let url = this.serverpath + "loadallcat.php";
       let res = await axios.post(url, JSON.stringify(dataSend));
+      if (res.data == "go to welcome") {
+        this.$router.push("welcome");
+        return;
+      } else if (res.data == "go to login") {
+        this.$q.localStorage.clear();
+        this.$router.push("/");
+        return;
+      }
       this.categoryList = res.data;
     },
     covertType(data) {

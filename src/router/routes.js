@@ -29,11 +29,7 @@ const routes = [
         name: "rank",
       },
       { path: "/ads", component: () => import("pages/ads.vue"), name: "ads" },
-      {
-        path: "/usedads",
-        component: () => import("pages/usedads.vue"),
-        name: "usedads",
-      },
+
       {
         path: "/user",
         component: () => import("pages/user.vue"),
@@ -49,11 +45,7 @@ const routes = [
         component: () => import("pages/editcartoontitle.vue"),
         name: "bookedit",
       },
-      {
-        path: "/adsinventory",
-        component: () => import("pages/adsinventory.vue"),
-        name: "adsinventory",
-      },
+
       {
         path: "/addchapter/:id",
         component: () => import("pages/addchapter.vue"),

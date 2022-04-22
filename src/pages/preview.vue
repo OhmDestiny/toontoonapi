@@ -11,9 +11,18 @@
           alt=""
         />
       </div>
-      <div class="font32 col" align="center">ตอนที่ {{ pageName }}</div>
+      <div class="font32 col">
+        <div class="row justify-center">
+          <img :src="fileBook" height="100px" />
+          <div>
+            <div class="q-pl-md q-pt-sm font32">{{ title }}</div>
+            <div class="q-pl-md font22">ตอนที่ {{ pageName }}</div>
+          </div>
+        </div>
+      </div>
       <div class="blockDiv"></div>
     </div>
+
     <hr />
     <div class="pageMain">
       <div
@@ -38,6 +47,8 @@ export default {
       fileList: [],
       pageName: "",
       folder: "",
+      title: "",
+      fileBook: "",
     };
   },
   methods: {
@@ -45,14 +56,35 @@ export default {
       this.$router.push("/bookpage/" + this.$route.params.cartoon);
     },
     async loadData() {
+      let key = this.$q.localStorage.getItem("key");
+      if (key == null) {
+        this.$router.push("/");
+        return;
+      }
       let dataTemp = {
         page: this.pageid,
         cartoonid: this.cartoonid,
+        key: key,
       };
       let url2 = this.serverpath + "previewcartooninfo.php";
       let res2 = await axios.post(url2, JSON.stringify(dataTemp));
-      console.log(res2.data);
+      if (res2.data == "go to welcome") {
+        this.$router.push("welcome");
+        return;
+      } else if (res2.data == "go to login") {
+        this.localStorage.clear();
+        this.$router.push("/");
+        return;
+      }
+      this.title = res2.data[0].title;
       this.pageName = res2.data[0].name;
+      this.fileBook =
+        this.serverpath +
+        "cartoon/" +
+        res2.data[0].folder +
+        "/" +
+        this.pageid +
+        "/cover.jpg";
       this.folder =
         this.serverpath +
         "cartoon/" +
