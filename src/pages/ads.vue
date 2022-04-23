@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -25,10 +26,23 @@ export default {
     };
   },
   methods: {
-    loadData() {
+    async loadData() {
       this.bgPic = this.serverpath + "image/bgwelcome.jpg?1";
       this.baloonPic = this.serverpath + "image/baloon.png";
-      console.log(this.bgPic);
+      let key = this.$q.localStorage.getItem("key");
+      let dataTemp = {
+        key: key,
+      };
+      let urlTotal = this.serverpath + "checkads.php";
+      let res = await axios.post(urlTotal, JSON.stringify(dataTemp));
+      if (res.data == "go to welcome") {
+        this.$router.push("welcome");
+        return;
+      } else if (res.data == "go to login") {
+        this.$q.localStorage.clear();
+        this.$router.push("/");
+        return;
+      }
     },
   },
   mounted() {
