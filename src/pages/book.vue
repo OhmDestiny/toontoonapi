@@ -183,6 +183,32 @@ export default {
         this.$router.push("/");
         return;
       }
+      let dataTemp2 = {
+        key: key,
+        page: this.currentPage,
+        cat: this.catIdSelected,
+        searchText: this.searchText,
+      };
+      urlTotal = this.serverpath + "loadtotalpage.php";
+      let resTotal = await axios.post(urlTotal, JSON.stringify(dataTemp2));
+      console.log(resTotal.data);
+      this.totalPage = resTotal.data;
+      let url = this.serverpath + "loaddatawithpageandcat.php";
+      let res2 = await axios.post(url, JSON.stringify(dataTemp2));
+      this.dataBook = [];
+      res2.data.forEach((item) => {
+        let dataLink = this.serverpath + "cover/" + item.bookid + ".jpg";
+        let dataTemp = {
+          bookId: item.bookid,
+          dateBook: item.timestamp,
+          bookName: item.title,
+          coverpic: dataLink,
+          status: Number(item.online),
+          episode: Number(item.lastchapter),
+          click: Number(item.view),
+        };
+        this.dataBook.push(dataTemp);
+      });
     },
     async onlineClick(dataOut) {
       let key = this.$q.localStorage.getItem("key");

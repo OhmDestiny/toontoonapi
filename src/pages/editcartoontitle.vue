@@ -280,33 +280,7 @@ export default {
       let res = await axios.post(url, JSON.stringify(dataTemp));
       this.input.title = res.data[0].title;
       this.input.synopsis = res.data[0].synopsis;
-      this.input.theme[0] = false;
-      this.input.theme[1] = false;
-      this.input.theme[2] = false;
-      this.input.theme[3] = false;
-      this.input.theme[4] = false;
-      this.input.theme[5] = false;
-      this.input.theme[6] = false;
-      this.input.theme[7] = false;
-      this.input.theme[8] = false;
-      let themeid = Number(res.data[0].theme);
-      if (themeid == 1) {
-        this.input.theme[0] = true;
-      } else if (themeid == 2) {
-        this.input.theme[1] = true;
-      } else if (themeid == 3) {
-        this.input.theme[2] = true;
-      } else if (themeid == 4) {
-        this.input.theme[3] = true;
-      } else if (themeid == 5) {
-        this.input.theme[4] = true;
-      } else if (themeid == 6) {
-        this.input.theme[5] = true;
-      } else if (themeid == 7) {
-        this.input.theme[6] = true;
-      } else if (themeid == 8) {
-        this.input.theme[7] = true;
-      }
+
       this.input.category = res.data[0].catid
         .split(",")
         .map((x) => x.replace("[", "").replace("]", ""));

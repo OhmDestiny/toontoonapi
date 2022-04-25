@@ -118,6 +118,22 @@ export default {
     };
   },
   methods: {
+    async loadData() {
+      let key = this.$q.localStorage.getItem("key");
+      let dataTemp = {
+        key: key,
+      };
+      let urlTotal = this.serverpath + "checkbook.php";
+      let res = await axios.post(urlTotal, JSON.stringify(dataTemp));
+      if (res.data == "go to welcome") {
+        this.$router.push("welcome");
+        return;
+      } else if (res.data == "go to login") {
+        this.$q.localStorage.clear();
+        this.$router.push("/");
+        return;
+      }
+    },
     backBtn() {
       this.$router.push("/bookpage/" + this.cartoonid);
     },
@@ -159,6 +175,9 @@ export default {
       this.greenNotify("เพิ่มตอนใหม่สำเร็จ");
       this.backBtn();
     },
+  },
+  mounted() {
+    this.loadData();
   },
 };
 </script>

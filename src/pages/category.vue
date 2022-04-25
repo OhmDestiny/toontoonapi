@@ -375,6 +375,8 @@ export default {
       this.loadData();
     },
     addCategoryBtn() {
+      this.iconFile = "";
+      this.categoryName = "";
       this.addNewDialog = true;
       this.showBackdrop = true;
     },
@@ -465,12 +467,23 @@ export default {
     },
     async saveEditBtn() {
       let key = this.$q.localStorage.getItem("key");
-      let dataSend = {
-        id: this.editItem.id,
-        name: this.editItem.name,
-        fileName: this.editNewFile[0].name,
-        key: key,
-      };
+      let dataSend = [];
+      if (this.editNewFile != null) {
+        dataSend = {
+          id: this.editItem.id,
+          name: this.editItem.name,
+          fileName: this.editNewFile[0].name,
+          key: key,
+        };
+      } else {
+        dataSend = {
+          id: this.editItem.id,
+          name: this.editItem.name,
+          fileName: null,
+          key: key,
+        };
+      }
+      console.log(dataSend);
       let url = this.serverpath + "editcategory.php";
       let res = await axios.post(url, JSON.stringify(dataSend));
       if (this.editNewFile != null) {
