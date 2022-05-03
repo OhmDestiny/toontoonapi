@@ -8,19 +8,22 @@
         <img width="100%" :src="data.coverpic" alt="" />
       </div>
       <div align="left" class="q-px-sm row justify-between">
-        <div
-          class="onlineBtn"
-          v-if="data.status == 1"
-          @click="upStatus(0, data.bookId)"
-        >
-          Online
-        </div>
-        <div
-          class="offlineBtn"
-          v-if="data.status != 1"
-          @click="upStatus(1, data.bookId)"
-        >
-          Offline
+        <div class="row">
+          <div
+            class="onlineBtn"
+            v-if="data.status == 1"
+            @click="upStatus(0, data.bookId)"
+          >
+            Online
+          </div>
+          <div
+            class="offlineBtn"
+            v-if="data.status != 1"
+            @click="upStatus(1, data.bookId)"
+          >
+            Offline
+          </div>
+          <div class="font12 hotBtn q-ml-sm" v-if="data.hotItem">HOT</div>
         </div>
         <div class="row">
           <div
@@ -107,5 +110,16 @@ export default {
   line-height: 25px;
   color: #ec5454;
   cursor: pointer;
+}
+.hotBtn {
+  border: 1px solid #ec5454;
+  background-color: #ec5454;
+  border-radius: 3px;
+  width: 60px;
+  height: 25px;
+  font-size: 12px;
+  text-align: center;
+  line-height: 25px;
+  color: white;
 }
 </style>

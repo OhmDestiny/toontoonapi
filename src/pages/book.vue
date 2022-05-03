@@ -155,6 +155,7 @@ export default {
           bookId: 1,
           dateBook: "2020/04/01 18:00",
           bookName: "Bleach เทพมรณะ",
+          hotItem: false,
           coverpic: "01.jpg",
           status: 1,
           episode: "12",
@@ -191,7 +192,6 @@ export default {
       };
       urlTotal = this.serverpath + "loadtotalpage.php";
       let resTotal = await axios.post(urlTotal, JSON.stringify(dataTemp2));
-      console.log(resTotal.data);
       this.totalPage = resTotal.data;
       let url = this.serverpath + "loaddatawithpageandcat.php";
       let res2 = await axios.post(url, JSON.stringify(dataTemp2));
@@ -203,6 +203,7 @@ export default {
           dateBook: item.timestamp,
           bookName: item.title,
           coverpic: dataLink,
+          hotItem: item.hotitem == 1 ? true : false,
           status: Number(item.online),
           episode: Number(item.lastchapter),
           click: Number(item.view),

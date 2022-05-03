@@ -31,8 +31,8 @@ export default function (/* { store, ssrContext } */) {
 Vue.mixin({
   data() {
     return {
-      // serverpath: "https://yaksaconcept.com/toontoon/api/",
-      serverpath: "http://localhost/cartoon_api/",
+      serverpath: "https://yaksaconcept.com/toontoon/api/",
+      // serverpath: "http://localhost/cartoon_api/",
     };
   },
   methods: {

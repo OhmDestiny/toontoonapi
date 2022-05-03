@@ -27,51 +27,57 @@
 
       <hr />
       <!-- category column -->
-      <div
-        v-for="(item, index) in category"
-        :key="index"
-        class="q-pt-md row stripMain"
-        :class="[index % 2 == 1 ? 'stripRow' : '']"
-      >
-        <div class="colTable font18" align="center">{{ index + 1 }}</div>
-        <div class="colTable2 q-pl-xl font18">
-          <img
-            :src="showIcon(item.catid)"
-            alt=""
-            height="25px"
-            class="q-pr-sm"
-          />{{ item.name }}
-        </div>
-        <div class="colTable" align="center">
-          <div
-            class="onlinebtn"
-            @click="changeCategoryData(item.catid, item.online)"
-            v-if="item.online == 1"
-          >
-            Online
+      <div class="mainDisplay">
+        <div
+          v-for="(item, index) in category"
+          :key="index"
+          class="q-pt-md row stripMain"
+          :class="[index % 2 == 1 ? 'stripRow' : '']"
+        >
+          <div class="colTable font18" align="center">{{ index + 1 }}</div>
+          <div class="colTable2 q-pl-xl font18">
+            <img
+              :src="showIcon(item.catid)"
+              alt=""
+              height="25px"
+              class="q-pr-sm"
+            />{{ item.name }}
           </div>
+          <div class="colTable" align="center">
+            <div
+              class="onlinebtn"
+              @click="changeCategoryData(item.catid, item.online)"
+              v-if="item.online == 1"
+            >
+              Online
+            </div>
 
-          <div
-            class="offlinebtn"
-            @click="changeCategoryData(item.catid, item.online)"
-            v-else
-          >
-            offline
+            <div
+              class="offlinebtn"
+              @click="changeCategoryData(item.catid, item.online)"
+              v-else
+            >
+              offline
+            </div>
           </div>
-        </div>
-        <div
-          class="iconDiv colTable"
-          align="center"
-          @click="delFormBtn(item.catid, item.name)"
-        >
-          <img width="20px" src="../../public/image/trash_symbol.svg" alt="" />
-        </div>
-        <div
-          class="iconDiv colTable"
-          align="center"
-          @click="editFormBtn(item.catid, item.name, item.filename)"
-        >
-          <img width="20px" src="../../public/image/edit_symbol.svg" alt="" />
+          <div
+            class="iconDiv colTable"
+            align="center"
+            @click="delFormBtn(item.catid, item.name)"
+          >
+            <img
+              width="20px"
+              src="../../public/image/trash_symbol.svg"
+              alt=""
+            />
+          </div>
+          <div
+            class="iconDiv colTable"
+            align="center"
+            @click="editFormBtn(item.catid, item.name, item.filename)"
+          >
+            <img width="20px" src="../../public/image/edit_symbol.svg" alt="" />
+          </div>
         </div>
       </div>
 

@@ -6,8 +6,13 @@
       :class="[indexNumber % 2 == 1 ? 'stripRow' : '']"
     >
       <div style="width: 200px" class="q-px-sm">{{ data.dateBook }}</div>
-      <div class="col">
-        <span @click="bookUrl(data.bookId)">{{ data.bookName }}</span>
+      <div class="col row">
+        <div>
+          <span @click="bookUrl(data.bookId)" class="cursor-pointer"
+            ><u>{{ data.bookName }}</u></span
+          >
+        </div>
+        <div class="hotItemBtn q-ml-sm" v-if="data.hotItem">HOT</div>
       </div>
       <div style="width: 100px" align="center">{{ data.episode }}</div>
       <div style="width: 100px" align="center">{{ data.click }}</div>
@@ -94,5 +99,14 @@ export default {
   border-radius: 5px;
   cursor: pointer;
   margin: auto;
+}
+.hotItemBtn {
+  font-size: 12px;
+  background-color: #ec5454;
+  color: white;
+  line-height: 25px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5px;
 }
 </style>

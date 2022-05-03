@@ -72,6 +72,11 @@
             <q-input v-model.trim="input.folder" outlined dense />
           </div>
         </div>
+        <div class="row q-pt-md">
+          <div class="labelDiv">มาแรง</div>
+
+          <q-checkbox v-model="input.hotItem" />
+        </div>
       </div>
     </div>
     <hr />
@@ -124,6 +129,7 @@ export default {
         synposis: "",
         folder: "",
         coverfile: "",
+        hotItem: false,
       },
       categoryList: [],
     };
@@ -158,6 +164,7 @@ export default {
         category: categoryData,
         synposis: this.input.synposis,
         folder: this.input.folder,
+        hotItem: this.input.hotItem,
         coverfile: this.input.coverfile[0].name,
       };
       let url = this.serverpath + "addnewbookinfo.php";

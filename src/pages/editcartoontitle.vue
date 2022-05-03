@@ -72,6 +72,10 @@
             <q-input v-model.trim="input.folder" outlined dense />
           </div>
         </div>
+        <div class="row q-pt-md">
+          <div class="labelDiv">มาแรง</div>
+          <q-checkbox v-model="input.hotItem" />
+        </div>
       </div>
     </div>
     <hr />
@@ -176,6 +180,7 @@ export default {
         synopsis: "",
         folder: "",
         coverfile: "",
+        hotItem: false,
       },
       oldFileName: "",
       oldfolder: "",
@@ -223,6 +228,7 @@ export default {
           folder: this.input.folder,
           coverfile: this.input.coverfile[0].name,
           newfile: true,
+          hotitem: this.input.hotItem == true ? 1 : 0,
           id: this.cartoonid,
           oldfolder: this.oldfolder,
         };
@@ -235,6 +241,7 @@ export default {
           folder: this.input.folder,
           coverfile: this.oldFileName,
           newfile: false,
+          hotitem: this.input.hotItem == true ? 1 : 0,
           id: this.cartoonid,
           oldfolder: this.oldfolder,
         };
@@ -280,7 +287,7 @@ export default {
       let res = await axios.post(url, JSON.stringify(dataTemp));
       this.input.title = res.data[0].title;
       this.input.synopsis = res.data[0].synopsis;
-
+      this.input.hotItem = res.data[0].hotitem == 1 ? true : false;
       this.input.category = res.data[0].catid
         .split(",")
         .map((x) => x.replace("[", "").replace("]", ""));
